@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carga de Trabajo · Equipo</title>
+<title>Carga de Trabajo · Moodin</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -20,16 +20,40 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:360px;}
+.login-logo{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;letter-spacing:-.02em;margin-bottom:.25rem;}
+.login-logo span{color:var(--text3);}
+.login-sub{font-size:13px;color:var(--text3);margin-bottom:1.75rem;}
+.login-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.375rem;display:block;}
+.login-input{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--surface);color:var(--text);outline:none;margin-bottom:1rem;}
+.login-input:focus{border-color:var(--text);}
+.login-btn{width:100%;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:9px;border-radius:var(--rs);border:none;background:var(--text);color:var(--surface);cursor:pointer;transition:opacity .15s;}
+.login-btn:hover{opacity:.85;}
+.login-btn:disabled{opacity:.5;cursor:not-allowed;}
+.login-error{font-size:12px;color:var(--red);margin-top:.75rem;text-align:center;min-height:18px;}
+
+/* HEADER */
 header{background:var(--surface);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:200;}
 .logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:-.02em;}
 .logo span{color:var(--text3);}
+.header-right{display:flex;align-items:center;gap:12px;}
 .sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--text3);transition:background .3s;}
 .dot.on{background:var(--green);}.dot.saving{background:var(--amber);}
+.user-pill{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;}
+.logout-btn{font-size:11px;padding:3px 8px;border:1px solid var(--border2);border-radius:var(--rs);background:transparent;color:var(--text2);cursor:pointer;}
+.logout-btn:hover{background:var(--surface2);}
+.viewer-banner{background:var(--blue-bg);border-bottom:1px solid var(--blue-bd);padding:6px 1.5rem;font-size:12px;color:var(--blue);text-align:center;}
+
+/* TABS */
 .tabs-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:52px;z-index:199;}
 .tnav{font-size:13px;padding:10px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;}
 .tnav:hover{color:var(--text);}
 .tnav.active{color:var(--text);border-bottom-color:var(--text);font-weight:500;}
+
 .container{max-width:1200px;margin:0 auto;padding:1.5rem;}
 .tab-pane{display:none;}.tab-pane.active{display:block;}
 .btn{font-family:'DM Sans',sans-serif;font-size:13px;padding:5px 12px;border-radius:var(--rs);border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:background .15s;}
@@ -38,7 +62,7 @@ header{background:var(--surface);border-bottom:1px solid var(--border);height:52
 input[type=text],input[type=number],select{font-family:'DM Sans',sans-serif;font-size:13px;padding:4px 8px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
 input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--text);}
 input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--text);}
-input.over{border-color:var(--red-bd) !important;background:var(--red-bg) !important;}
+input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!important;}
 .flabel{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
 .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;border:1px solid;white-space:nowrap;}
 .b-senior{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
@@ -51,6 +75,8 @@ input.over{border-color:var(--red-bd) !important;background:var(--red-bg) !impor
 .b-profit{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
 .b-loss{background:var(--red-bg);color:var(--red);border-color:var(--red-bd);}
 .b-break{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd);}
+.b-admin{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd);}
+.b-viewer{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
 
 /* EQUIPO */
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
@@ -73,7 +99,6 @@ input.over{border-color:var(--red-bd) !important;background:var(--red-bg) !impor
 .assign-mini td{padding:5px 6px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:12px;}
 .assign-mini tr:last-child td{border-bottom:none;}
 .assign-mini tr.off td{opacity:.38;}
-.assign-mini input[type=number]{width:62px;font-size:12px;padding:3px 5px;}
 .hint{font-size:10px;color:var(--text3);margin-top:1px;font-family:'DM Mono',monospace;}
 .hint.red{color:var(--red);}
 .proj-rentabilidad{margin-top:.75rem;padding:.625rem .75rem;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);}
@@ -117,43 +142,63 @@ input.over{border-color:var(--red-bd) !important;background:var(--red-bg) !impor
 </head>
 <body>
 
-<header>
-  <div class="logo">carga<span>/</span>equipo</div>
-  <div class="sync"><div class="dot" id="dot"></div><span id="slbl">Conectando...</span></div>
-</header>
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">carga<span>/</span>equipo</div>
+    <div class="login-sub">Moodin · Acceso privado</div>
+    <label class="login-label">Email</label>
+    <input class="login-input" type="email" id="login-email" placeholder="tu@email.com">
+    <label class="login-label">Contraseña</label>
+    <input class="login-input" type="password" id="login-pass" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
 
-<nav class="tabs-nav">
-  <button class="tnav active" onclick="showTab('equipo',this)">Equipo</button>
-  <button class="tnav" onclick="showTab('proyectos',this)">Proyectos</button>
-  <button class="tnav" onclick="showTab('dashboard',this)">Dashboard</button>
-</nav>
-
-<div class="container">
-  <div id="app-loading" class="loading"><div class="spinner"></div>Conectando...</div>
-  <div id="app" style="display:none">
-
-    <div class="tab-pane active" id="tab-equipo">
-      <div class="section-header"><span class="section-title">Empleados</span><button class="btn" onclick="addPerson('senior')">+ Empleado</button></div>
-      <div class="people-grid" id="list-senior"></div>
-      <div class="section-header"><span class="section-title">Becarios</span><button class="btn" onclick="addPerson('intern')">+ Becario</button></div>
-      <div class="people-grid" id="list-intern"></div>
-      <div class="section-header"><span class="section-title">Socios</span><button class="btn" onclick="addPerson('partner')">+ Socio</button></div>
-      <div class="people-grid" id="list-partner"></div>
+<!-- APP -->
+<div id="app-wrap" style="display:none">
+  <header>
+    <div class="logo">carga<span>/</span>equipo</div>
+    <div class="header-right">
+      <div class="sync"><div class="dot" id="dot"></div><span id="slbl">Conectando...</span></div>
+      <div class="user-pill">
+        <span id="user-email"></span>
+        <span id="user-role-badge"></span>
+        <button class="logout-btn" onclick="doLogout()">Salir</button>
+      </div>
     </div>
-
-    <div class="tab-pane" id="tab-proyectos">
-      <div class="section-header"><span class="section-title">Proyectos</span><button class="btn" onclick="addProject()">+ Proyecto</button></div>
-      <div class="proj-grid" id="proj-list"></div>
+  </header>
+  <div id="viewer-banner" class="viewer-banner" style="display:none">
+    Modo visualización — solo puedes ver el dashboard
+  </div>
+  <nav class="tabs-nav" id="tabs-nav">
+    <button class="tnav active" onclick="showTab('dashboard',this)">Dashboard</button>
+  </nav>
+  <div class="container">
+    <div id="data-loading" class="loading"><div class="spinner"></div>Cargando datos...</div>
+    <div id="app" style="display:none">
+      <div class="tab-pane active" id="tab-equipo">
+        <div class="section-header"><span class="section-title">Empleados</span><button class="btn" onclick="addPerson('senior')">+ Empleado</button></div>
+        <div class="people-grid" id="list-senior"></div>
+        <div class="section-header"><span class="section-title">Becarios</span><button class="btn" onclick="addPerson('intern')">+ Becario</button></div>
+        <div class="people-grid" id="list-intern"></div>
+        <div class="section-header"><span class="section-title">Socios</span><button class="btn" onclick="addPerson('partner')">+ Socio</button></div>
+        <div class="people-grid" id="list-partner"></div>
+      </div>
+      <div class="tab-pane" id="tab-proyectos">
+        <div class="section-header"><span class="section-title">Proyectos</span><button class="btn" onclick="addProject()">+ Proyecto</button></div>
+        <div class="proj-grid" id="proj-list"></div>
+      </div>
+      <div class="tab-pane active" id="tab-dashboard">
+        <div class="dash-summary" id="dash-summary"></div>
+        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Carga del equipo</span></div>
+        <div class="dash-grid" id="dash-carga"></div>
+        <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rentabilidad por proyecto</span></div>
+        <div class="dash-rent-grid" id="dash-rent"></div>
+      </div>
     </div>
-
-    <div class="tab-pane" id="tab-dashboard">
-      <div class="dash-summary" id="dash-summary"></div>
-      <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Carga del equipo</span></div>
-      <div class="dash-grid" id="dash-carga"></div>
-      <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rentabilidad por proyecto</span></div>
-      <div class="dash-rent-grid" id="dash-rent"></div>
-    </div>
-
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -161,6 +206,8 @@ input.over{border-color:var(--red-bd) !important;background:var(--red-bg) !impor
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, set } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 
 const FB={
   apiKey:"AIzaSyBXgUaOsFPzsMQyhYFAM77dr061gQn9jL8",
@@ -171,8 +218,92 @@ const FB={
   messagingSenderId:"183723016420",
   appId:"1:183723016420:web:72e48c81ed2c83ba066cf1"
 };
-const db=getDatabase(initializeApp(FB));
-const dataRef=ref(db,'estado5');
+
+const firebaseApp = initializeApp(FB);
+const db  = getDatabase(firebaseApp);
+const auth= getAuth(firebaseApp);
+const dataRef = ref(db,'estado5');
+
+// ADMIN email
+const ADMIN_EMAIL = 'marc@moodin.eu';
+
+let S=null, saveTO=null, firstData=true, isAdmin=false;
+const dot=document.getElementById('dot'), slbl=document.getElementById('slbl');
+
+/* ── AUTH ── */
+window.doLogin=async function(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass =document.getElementById('login-pass').value;
+  const btn  =document.getElementById('login-btn');
+  const err  =document.getElementById('login-error');
+  err.textContent='';
+  btn.disabled=true;
+  btn.textContent='Entrando...';
+  try{
+    await signInWithEmailAndPassword(auth,email,pass);
+  } catch(e){
+    err.textContent='Email o contraseña incorrectos';
+    btn.disabled=false;
+    btn.textContent='Entrar';
+  }
+};
+
+window.doLogout=async function(){
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, user=>{
+  if(user){
+    isAdmin = user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app-wrap').style.display='block';
+    document.getElementById('user-email').textContent=user.email;
+    document.getElementById('user-role-badge').innerHTML=
+      isAdmin?'<span class="badge b-admin">Admin</span>':'<span class="badge b-viewer">Viewer</span>';
+
+    // Tabs según rol
+    const nav=document.getElementById('tabs-nav');
+    if(isAdmin){
+      nav.innerHTML=`
+        <button class="tnav" onclick="showTab('equipo',this)">Equipo</button>
+        <button class="tnav" onclick="showTab('proyectos',this)">Proyectos</button>
+        <button class="tnav active" onclick="showTab('dashboard',this)">Dashboard</button>`;
+      document.getElementById('viewer-banner').style.display='none';
+    } else {
+      nav.innerHTML=`<button class="tnav active" onclick="showTab('dashboard',this)">Dashboard</button>`;
+      document.getElementById('viewer-banner').style.display='block';
+    }
+    initData();
+  } else {
+    document.getElementById('login-screen').style.display='flex';
+    document.getElementById('app-wrap').style.display='none';
+    S=null; firstData=true;
+  }
+});
+
+/* ── DATA ── */
+function initData(){
+  onValue(dataRef, snap=>{
+    const data=snap.val();
+    if(firstData){
+      firstData=false;
+      document.getElementById('data-loading').style.display='none';
+      document.getElementById('app').style.display='block';
+      sync('on');
+      if(!data){S=JSON.parse(JSON.stringify(DEFAULT));if(isAdmin)save();}
+      else{S=data;fixState();}
+      // mostrar dashboard por defecto
+      document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+      document.getElementById('tab-dashboard').classList.add('active');
+      renderAll();
+    } else if(data){
+      S=data;fixState();sync('on');renderAll();
+    }
+  },()=>{
+    document.getElementById('data-loading').innerHTML=
+      '<div style="color:var(--red);padding:2rem;text-align:center;">Error de conexión con Firebase.</div>';
+  });
+}
 
 const DEFAULT={
   people:[
@@ -190,213 +321,123 @@ const DEFAULT={
   _pid:5,_ppid:3
 };
 
-let S=null,saveTO=null,first=true;
-const dot=document.getElementById('dot'),slbl=document.getElementById('slbl');
-
+function fixState(){
+  S.people=S.people||[];S.projects=S.projects||[];
+  S.projects.forEach(p=>{p.assignations=p.assignations||{};p.ingresos=p.ingresos||0;});
+  S._pid=S._pid||20;S._ppid=S._ppid||20;
+}
 function sync(s){
   dot.className='dot '+(s==='on'?'on':s==='saving'?'saving':'');
   slbl.textContent=s==='on'?'Sincronizado':s==='saving'?'Guardando...':'Conectando...';
 }
 function save(){
+  if(!isAdmin)return;
   sync('saving');clearTimeout(saveTO);
   saveTO=setTimeout(()=>set(dataRef,S).then(()=>sync('on')).catch(()=>toast('Error al guardar')),700);
 }
 function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmt(n){return Math.round(Number(n)).toLocaleString('es-ES');}
-
-// horas de una persona en un proyecto (campo directo)
 function hPA(a){if(!a||!a.active)return 0;return +a.horas||0;}
-
-// total horas asignadas de una persona en todos los proyectos
-function horasTotalesPer(peId){
-  return S.projects.reduce((s,p)=>{
-    const a=p.assignations[peId];
-    return s+(a&&a.active?+a.horas||0:0);
-  },0);
-}
-
-// total % asignado de un socio
-function pctTotalSocio(peId){
-  return S.projects.reduce((s,p)=>{
-    const a=p.assignations[peId];
-    return s+(a&&a.active?+a.pct||0:0);
-  },0);
-}
-
-// coste proporcional de una persona en un proyecto
+function horasTotalesPer(peId){return S.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.horas||0:0);},0);}
+function pctTotalSocio(peId){return S.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.pct||0:0);},0);}
 function costePers(pe,proj){
-  const a=proj.assignations[pe.id];
-  if(!a||!a.active)return 0;
-  if(pe.type==='partner'){
-    return(pe.coste||0)*((+a.pct||0)/100);
-  } else {
-    const hEste=+a.horas||0;
-    const hTot=horasTotalesPer(pe.id);
-    if(hTot===0)return 0;
-    return(hEste/hTot)*(pe.coste||0);
-  }
+  const a=proj.assignations[pe.id];if(!a||!a.active)return 0;
+  if(pe.type==='partner')return(pe.coste||0)*((+a.pct||0)/100);
+  const hEste=+a.horas||0,hTot=horasTotalesPer(pe.id);
+  if(hTot===0)return 0;
+  return(hEste/hTot)*(pe.coste||0);
 }
 
-onValue(dataRef,snap=>{
-  const data=snap.val();
-  if(first){
-    first=false;
-    document.getElementById('app-loading').style.display='none';
-    document.getElementById('app').style.display='block';
-    sync('on');
-    if(!data){S=JSON.parse(JSON.stringify(DEFAULT));save();}
-    else{S=data;fixState();}
-    renderAll();
-  } else if(data){S=data;fixState();sync('on');renderAll();}
-},()=>{
-  document.getElementById('app-loading').innerHTML='<div style="color:var(--red);padding:2rem;text-align:center;">Error de conexión con Firebase.</div>';
-});
-
-function fixState(){
-  S.people=S.people||[];S.projects=S.projects||[];
-  S.projects.forEach(p=>{p.assignations=p.assignations||{};p.ingresos=p.ingresos||0;});
-  S._pid=S._pid||20;S._ppid=S._ppid||20;
-}
-
+/* ── ACCIONES (solo admin) ── */
 window.showTab=function(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
-  if(id==='dashboard')renderDashboard();
 };
-window.addPerson=function(type){
-  S.people.push({id:S._pid++,name:'Nueva persona',type,hours:type==='partner'?0:40,coste:0});
-  save();renderEquipo();renderDashboard();
-};
-window.removePerson=function(id){
-  S.people=S.people.filter(p=>p.id!==id);
-  S.projects.forEach(p=>{if(p.assignations)delete p.assignations[id];});
-  save();renderAll();
-};
-window.updatePerson=function(id,k,v){
-  const p=S.people.find(p=>p.id===id);
-  if(p)p[k]=(k==='hours'||k==='coste')?+v:v;
-  save();renderEquipo();renderDashboard();
-};
-window.addProject=function(){
-  S.projects.push({id:S._ppid++,name:'Nuevo proyecto',ingresos:0,assignations:{}});
-  save();renderProyectos();renderDashboard();
-};
-window.removeProject=function(id){
-  S.projects=S.projects.filter(p=>p.id!==id);save();renderAll();
-};
-window.updateProject=function(id,k,v){
-  const p=S.projects.find(p=>p.id===id);
-  if(p)p[k]=k==='ingresos'?+v:v;
-  save();renderProyectos();renderDashboard();
-};
+window.addPerson=function(type){if(!isAdmin)return;S.people.push({id:S._pid++,name:'Nueva persona',type,hours:type==='partner'?0:40,coste:0});save();renderEquipo();renderDashboard();};
+window.removePerson=function(id){if(!isAdmin)return;S.people=S.people.filter(p=>p.id!==id);S.projects.forEach(p=>{if(p.assignations)delete p.assignations[id];});save();renderAll();};
+window.updatePerson=function(id,k,v){if(!isAdmin)return;const p=S.people.find(p=>p.id===id);if(p)p[k]=(k==='hours'||k==='coste')?+v:v;save();renderEquipo();renderDashboard();};
+window.addProject=function(){if(!isAdmin)return;S.projects.push({id:S._ppid++,name:'Nuevo proyecto',ingresos:0,assignations:{}});save();renderProyectos();renderDashboard();};
+window.removeProject=function(id){if(!isAdmin)return;S.projects=S.projects.filter(p=>p.id!==id);save();renderAll();};
+window.updateProject=function(id,k,v){if(!isAdmin)return;const p=S.projects.find(p=>p.id===id);if(p)p[k]=k==='ingresos'?+v:v;save();renderProyectos();renderDashboard();};
 window.toggleAssign=function(pjId,peId,chk){
+  if(!isAdmin)return;
   const p=S.projects.find(p=>p.id===pjId);if(!p)return;
   const pe=S.people.find(p=>p.id===peId);
-  if(!p.assignations[peId]){
-    p.assignations[peId]=pe&&pe.type==='partner'
-      ?{active:false,pct:0}
-      :{active:false,horas:0};
-  }
+  if(!p.assignations[peId])p.assignations[peId]=pe&&pe.type==='partner'?{active:false,pct:0}:{active:false,horas:0};
   p.assignations[peId].active=chk;
   save();renderProyectos();renderDashboard();
 };
 window.updateHoras=function(pjId,peId,v,inputEl){
+  if(!isAdmin)return;
   const pe=S.people.find(p=>p.id===peId);
-  const val=+v;
-  const cap=pe?pe.hours:999;
-  const usadas=horasTotalesPer(peId);
-  const p=S.projects.find(p=>p.id===pjId);
-  if(!p||!p.assignations[peId])return;
+  const val=+v,cap=pe?pe.hours:999;
+  const p=S.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
   const actuales=+p.assignations[peId].horas||0;
-  const nuevasTot=usadas-actuales+val;
+  const nuevasTot=horasTotalesPer(peId)-actuales+val;
   if(val<0){inputEl.value=0;return;}
-  if(nuevasTot>cap){
-    inputEl.classList.add('over');
-    inputEl.title=`⚠ Supera las ${cap}h disponibles (total: ${nuevasTot}h)`;
-    toast(`⚠ ${pe.name} solo tiene ${cap}h/sem. Total asignado: ${nuevasTot}h`);
-  } else {
-    inputEl.classList.remove('over');
-    inputEl.title='';
-  }
-  p.assignations[peId].horas=val;
-  save();renderDashboard();
+  inputEl.classList.toggle('over',nuevasTot>cap);
+  if(nuevasTot>cap)toast(`⚠ ${pe.name} solo tiene ${cap}h/sem. Total: ${nuevasTot}h`);
+  p.assignations[peId].horas=val;save();renderDashboard();
 };
 window.updatePct=function(pjId,peId,v,inputEl){
+  if(!isAdmin)return;
   const pe=S.people.find(p=>p.id===peId);
   const val=Math.min(100,Math.max(0,+v));
-  const p=S.projects.find(p=>p.id===pjId);
-  if(!p||!p.assignations[peId])return;
+  const p=S.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
   const actuales=+p.assignations[peId].pct||0;
-  const totalSinEste=pctTotalSocio(peId)-actuales;
-  const nuevoTotal=totalSinEste+val;
-  if(nuevoTotal>100){
-    inputEl.classList.add('over');
-    inputEl.title=`⚠ Total asignado: ${nuevoTotal}%`;
-    toast(`⚠ ${pe?pe.name:''} supera el 100% (total: ${nuevoTotal}%)`);
-  } else {
-    inputEl.classList.remove('over');
-    inputEl.title='';
-  }
-  p.assignations[peId].pct=val;
-  save();renderEquipo();renderDashboard();
+  const nuevoTotal=pctTotalSocio(peId)-actuales+val;
+  inputEl.classList.toggle('over',nuevoTotal>100);
+  if(nuevoTotal>100)toast(`⚠ ${pe?pe.name:''} supera el 100% (total: ${nuevoTotal}%)`);
+  p.assignations[peId].pct=val;save();renderEquipo();renderDashboard();
 };
 
-/* RENDER EQUIPO */
+/* ── RENDERS ── */
 function renderEquipo(){
   ['senior','intern','partner'].forEach(type=>{
     const el=document.getElementById('list-'+type);
     const list=S.people.filter(p=>p.type===type);
-    if(!list.length){
-      el.innerHTML=`<div class="empty">No hay ${type==='senior'?'empleados':type==='intern'?'becarios':'socios'} aún.</div>`;
-      return;
-    }
+    if(!list.length){el.innerHTML=`<div class="empty">No hay ${type==='senior'?'empleados':type==='intern'?'becarios':'socios'} aún.</div>`;return;}
     el.innerHTML=list.map(p=>{
       const usadas=type!=='partner'?horasTotalesPer(p.id):0;
-      const cap=p.hours||0;
-      const over=usadas>cap;
-      const totalPct=type==='partner'?pctTotalSocio(p.id):0;
-      const pctOver=totalPct>100;
+      const cap=p.hours||0,over=usadas>cap;
+      const totalPct=type==='partner'?pctTotalSocio(p.id):0,pctOver=totalPct>100;
+      const ro=!isAdmin?'readonly disabled':'';
       return `
       <div class="person-edit-card">
         <div class="pec-top">
-          <input type="text" value="${esc(p.name)}" onchange="updatePerson(${p.id},'name',this.value)" style="font-weight:500;width:150px;">
-          <button class="del-btn" onclick="removePerson(${p.id})">✕</button>
+          <input type="text" value="${esc(p.name)}" ${ro} onchange="updatePerson(${p.id},'name',this.value)" style="font-weight:500;width:150px;">
+          <button class="del-btn" onclick="removePerson(${p.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
         </div>
         ${type!=='partner'?`
         <div class="pec-row">
           <span class="flabel">Horas disponibles/sem</span>
-          <input type="number" value="${cap}" min="1" max="50" step="1" onchange="updatePerson(${p.id},'hours',this.value)" style="width:70px;">
+          <input type="number" value="${cap}" min="1" max="50" step="1" ${ro} onchange="updatePerson(${p.id},'hours',this.value)" style="width:70px;">
         </div>
         <div class="pec-row">
           <span class="flabel">Horas asignadas</span>
-          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${over?'var(--red)':usadas>0?'var(--green)':'var(--text3)'};">
-            ${usadas}h / ${cap}h ${over?'⚠':''}
-          </span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${over?'var(--red)':usadas>0?'var(--green)':'var(--text3)'};">${usadas}h / ${cap}h ${over?'⚠':''}</span>
         </div>`:''}
         <div class="pec-row">
           <span class="flabel">Coste mensual €</span>
-          <input type="number" value="${p.coste||0}" min="0" step="100" onchange="updatePerson(${p.id},'coste',this.value)" style="width:110px;">
+          <input type="number" value="${p.coste||0}" min="0" step="100" ${ro} onchange="updatePerson(${p.id},'coste',this.value)" style="width:110px;">
         </div>
         ${type==='partner'?`
         <div class="pec-row">
           <span class="flabel">% asignado total</span>
-          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${pctOver?'var(--red)':totalPct===100?'var(--green)':'var(--amber)'};">
-            ${totalPct}% ${pctOver?'⚠ supera 100%':totalPct===100?'✓ completo':'de 100%'}
-          </span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${pctOver?'var(--red)':totalPct===100?'var(--green)':'var(--amber)'};">${totalPct}% ${pctOver?'⚠ supera 100%':totalPct===100?'✓ completo':'de 100%'}</span>
         </div>`:''}
       </div>`;
     }).join('');
   });
 }
 
-/* RENDER PROYECTOS */
 function renderProyectos(){
   const el=document.getElementById('proj-list');
   if(!S.projects.length){el.innerHTML='<div class="empty">No hay proyectos aún.</div>';return;}
-
+  const ro=!isAdmin?'readonly disabled':'';
   el.innerHTML=S.projects.map(proj=>{
     const rows=S.people.map(pe=>{
       const isPartner=pe.type==='partner';
@@ -404,73 +445,51 @@ function renderProyectos(){
       const on=!!a.active;
       const badgeCls=pe.type==='intern'?'b-intern':pe.type==='partner'?'b-partner':'b-senior';
       const badgeLbl=pe.type==='intern'?'Bec':pe.type==='partner'?'Soc':'Emp';
-
       if(isPartner){
-        const totalPct=pctTotalSocio(pe.id);
-        const over=totalPct>100;
+        const totalPct=pctTotalSocio(pe.id),over=totalPct>100;
         return `<tr class="${on?'':'off'}">
-          <td>
-            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
-              <input type="checkbox" ${on?'checked':''} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
-              <span>${esc(pe.name)}</span>
-              <span class="badge ${badgeCls}" style="font-size:9px;">${badgeLbl}</span>
-            </label>
-          </td>
-          <td>
-            ${on?`<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
-              <input type="number" value="${+a.pct||0}" min="0" max="100" step="5" ${on?'':'disabled'}
-                class="${over?'over':''}"
-                oninput="updatePct(${proj.id},${pe.id},this.value,this)"
-                style="width:58px;font-size:12px;padding:3px 5px;">
-              <span style="font-size:11px;color:var(--text3);">% → ${fmt((pe.coste||0)*(+a.pct||0)/100)} €</span>
-            </div>
-            <div class="hint ${over?'red':''}">total ${totalPct}% ${over?'⚠':''}</div>`:'—'}
-          </td>
+          <td><label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
+            <input type="checkbox" ${on?'checked':''} ${ro} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
+            <span>${esc(pe.name)}</span><span class="badge ${badgeCls}" style="font-size:9px;">${badgeLbl}</span>
+          </label></td>
+          <td>${on?`<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
+            <input type="number" value="${+a.pct||0}" min="0" max="100" step="5" ${ro} class="${over?'over':''}"
+              oninput="updatePct(${proj.id},${pe.id},this.value,this)" style="width:58px;font-size:12px;padding:3px 5px;">
+            <span style="font-size:11px;color:var(--text3);">% → ${fmt((pe.coste||0)*(+a.pct||0)/100)} €</span>
+          </div>
+          <div class="hint ${over?'red':''}">total ${totalPct}% ${over?'⚠':''}</div>`:'—'}</td>
         </tr>`;
       } else {
-        const usadas=horasTotalesPer(pe.id);
-        const cap=pe.hours||0;
-        const hEste=+a.horas||0;
-        const over=usadas>cap;
+        const usadas=horasTotalesPer(pe.id),cap=pe.hours||0,over=usadas>cap;
         return `<tr class="${on?'':'off'}">
-          <td>
-            <label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
-              <input type="checkbox" ${on?'checked':''} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
-              <span>${esc(pe.name)}</span>
-              <span class="badge ${badgeCls}" style="font-size:9px;">${badgeLbl}</span>
-            </label>
-          </td>
-          <td>
-            ${on?`<div style="display:flex;align-items:center;gap:5px;">
-              <input type="number" value="${hEste}" min="0" max="${cap}" step="0.5" ${on?'':'disabled'}
-                class="${over?'over':''}"
-                oninput="updateHoras(${proj.id},${pe.id},this.value,this)"
-                style="width:62px;font-size:12px;padding:3px 5px;">
-              <span style="font-size:11px;color:var(--text3);">h/sem</span>
-            </div>
-            <div class="hint ${over?'red':''}">asignadas: ${usadas}h / ${cap}h ${over?'⚠':''}</div>`:'—'}
-          </td>
+          <td><label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
+            <input type="checkbox" ${on?'checked':''} ${ro} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
+            <span>${esc(pe.name)}</span><span class="badge ${badgeCls}" style="font-size:9px;">${badgeLbl}</span>
+          </label></td>
+          <td>${on?`<div style="display:flex;align-items:center;gap:5px;">
+            <input type="number" value="${+a.horas||0}" min="0" max="${cap}" step="0.5" ${ro} class="${over?'over':''}"
+              oninput="updateHoras(${proj.id},${pe.id},this.value,this)" style="width:62px;font-size:12px;padding:3px 5px;">
+            <span style="font-size:11px;color:var(--text3);">h/sem</span>
+          </div>
+          <div class="hint ${over?'red':''}">asignadas: ${usadas}h / ${cap}h ${over?'⚠':''}</div>`:'—'}</td>
         </tr>`;
       }
     }).join('');
-
     const costeTotal=S.people.reduce((s,pe)=>s+costePers(pe,proj),0);
-    const ing=+proj.ingresos||0;
-    const margen=ing-costeTotal;
+    const ing=+proj.ingresos||0,margen=ing-costeTotal;
     const pct=ing>0?Math.round((margen/ing)*100):0;
     const mCls=margen>100?'pos':margen<-100?'neg':'zer';
     const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
     const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
-
     return `
     <div class="proj-card">
       <div class="proj-card-header">
-        <input type="text" value="${esc(proj.name)}" onchange="updateProject(${proj.id},'name',this.value)" style="font-weight:500;width:170px;">
-        <button class="del-btn" onclick="removeProject(${proj.id})">✕</button>
+        <input type="text" value="${esc(proj.name)}" ${ro} onchange="updateProject(${proj.id},'name',this.value)" style="font-weight:500;width:170px;">
+        <button class="del-btn" onclick="removeProject(${proj.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
       </div>
       <div class="proj-ingresos">
         <span class="flabel">Ingresos/mes €</span>
-        <input type="number" value="${proj.ingresos||0}" min="0" step="100" onchange="updateProject(${proj.id},'ingresos',this.value)" style="width:120px;">
+        <input type="number" value="${proj.ingresos||0}" min="0" step="100" ${ro} onchange="updateProject(${proj.id},'ingresos',this.value)" style="width:120px;">
       </div>
       <table class="assign-mini">
         <thead><tr><th>Persona</th><th>Dedicación</th></tr></thead>
@@ -479,8 +498,7 @@ function renderProyectos(){
       <div class="proj-rentabilidad">
         <div class="rent-row"><span>Ingresos</span><span>${fmt(ing)} €</span></div>
         <div class="rent-row"><span>Coste equipo</span><span>${fmt(costeTotal)} €</span></div>
-        <div class="rent-row total">
-          <span>Margen <span class="badge ${bCls}">${bLbl}</span></span>
+        <div class="rent-row total"><span>Margen <span class="badge ${bCls}">${bLbl}</span></span>
           <span class="${mCls}">${margen>=0?'+':''}${fmt(margen)} € ${ing>0?'('+pct+'%)':''}</span>
         </div>
       </div>
@@ -488,19 +506,16 @@ function renderProyectos(){
   }).join('');
 }
 
-/* RENDER DASHBOARD */
 function renderDashboard(){
   const nonPartners=S.people.filter(p=>p.type!=='partner');
   let cFree=0,cOk=0,cWarn=0,cOver=0;
   nonPartners.forEach(pe=>{
-    const tot=horasTotalesPer(pe.id);
-    const pct=pe.hours>0?(tot/pe.hours)*100:0;
+    const tot=horasTotalesPer(pe.id),pct=pe.hours>0?(tot/pe.hours)*100:0;
     if(pct<=70)cFree++;else if(pct<=90)cOk++;else if(pct<=105)cWarn++;else cOver++;
   });
   const totalIng=S.projects.reduce((s,p)=>s+(+p.ingresos||0),0);
   const totalCoste=S.people.reduce((s,p)=>s+(+p.coste||0),0);
   const margenTotal=totalIng-totalCoste;
-
   document.getElementById('dash-summary').innerHTML=`
     <div class="metric"><div class="mval">${S.people.length}</div><div class="mlbl">Personas</div></div>
     <div class="metric"><div class="mval">${S.projects.length}</div><div class="mlbl">Proyectos</div></div>
@@ -508,83 +523,57 @@ function renderDashboard(){
     <div class="metric"><div class="mval ca">${cWarn}</div><div class="mlbl">Al límite</div></div>
     <div class="metric"><div class="mval cr">${cOver}</div><div class="mlbl">Saturados</div></div>
     <div class="metric"><div class="mval cb">${cFree}</div><div class="mlbl">Con margen</div></div>
-    <div class="metric"><div class="mval ${margenTotal>=0?'cg':'cr'}">${margenTotal>=0?'+':''}${fmt(margenTotal/1000)}k€</div><div class="mlbl">Margen/mes</div></div>
-  `;
-
+    <div class="metric"><div class="mval ${margenTotal>=0?'cg':'cr'}">${margenTotal>=0?'+':''}${fmt(margenTotal/1000)}k€</div><div class="mlbl">Margen/mes</div></div>`;
   const dashCarga=document.getElementById('dash-carga');
   if(!nonPartners.length){dashCarga.innerHTML='<div class="empty">No hay empleados ni becarios.</div>';}
-  else{
-    dashCarga.innerHTML=nonPartners.map(pe=>{
-      const myP=S.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
-      const tot=horasTotalesPer(pe.id);
-      const cap=pe.hours||1;
-      const pct=(tot/cap)*100;
-      const pr=Math.round(pct);
-      const free=Math.max(0,cap-tot);
-      let cls,lbl,color;
-      if(pct<=70){cls='b-free';lbl='Con margen';color='#378ADD';}
-      else if(pct<=90){cls='b-ok';lbl='Carga sana';color='#1D9E75';}
-      else if(pct<=105){cls='b-warn';lbl='Al límite';color='#EF9F27';}
-      else{cls='b-over';lbl='Saturado';color='#E24B4A';}
-      const rb=pe.type==='intern'?'b-intern':'b-senior';
-      const projRows=myP.map(p=>{
-        const a=p.assignations[pe.id];
-        return `<div class="dp-proj-row"><span>${esc(p.name)}</span><span>${(+a.horas||0).toFixed(1)}h</span></div>`;
-      }).join('');
-      return `
-      <div class="dash-person">
-        <div class="dp-header">
-          <div>
-            <div class="dp-name">${esc(pe.name)}<span class="badge ${rb}">${pe.type==='intern'?'Becario':'Empleado'}</span></div>
-            <div class="dp-meta">${tot.toFixed(1)}h / ${cap}h · ${myP.length} proyecto${myP.length!==1?'s':''}</div>
-          </div>
-          <div>
-            <div class="dp-pct" style="color:${color}">${pr}%</div>
-            <div style="text-align:right;margin-top:4px;"><span class="badge ${cls}">${lbl}</span></div>
-          </div>
+  else{dashCarga.innerHTML=nonPartners.map(pe=>{
+    const myP=S.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
+    const tot=horasTotalesPer(pe.id),cap=pe.hours||1,pct=(tot/cap)*100,pr=Math.round(pct),free=Math.max(0,cap-tot);
+    let cls,lbl,color;
+    if(pct<=70){cls='b-free';lbl='Con margen';color='#378ADD';}
+    else if(pct<=90){cls='b-ok';lbl='Carga sana';color='#1D9E75';}
+    else if(pct<=105){cls='b-warn';lbl='Al límite';color='#EF9F27';}
+    else{cls='b-over';lbl='Saturado';color='#E24B4A';}
+    const rb=pe.type==='intern'?'b-intern':'b-senior';
+    const projRows=myP.map(p=>{const a=p.assignations[pe.id];return `<div class="dp-proj-row"><span>${esc(p.name)}</span><span>${(+a.horas||0).toFixed(1)}h</span></div>`;}).join('');
+    return `<div class="dash-person">
+      <div class="dp-header">
+        <div>
+          <div class="dp-name">${esc(pe.name)}<span class="badge ${rb}">${pe.type==='intern'?'Becario':'Empleado'}</span></div>
+          <div class="dp-meta">${tot.toFixed(1)}h / ${cap}h · ${myP.length} proyecto${myP.length!==1?'s':''}</div>
         </div>
-        <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pr,100)}%;background:${color};"></div></div>
-        <div class="bar-leg"><span>0h</span><span>${tot.toFixed(1)} / ${cap}h</span></div>
-        <div class="dp-projs">${projRows||'<div style="font-size:11px;color:var(--text3);">Sin proyectos asignados</div>'}</div>
-        <div class="free-tag ${free>5?'ok':'warn'}">${free.toFixed(1)}h libres</div>
-      </div>`;
-    }).join('');
-  }
-
+        <div><div class="dp-pct" style="color:${color}">${pr}%</div>
+        <div style="text-align:right;margin-top:4px;"><span class="badge ${cls}">${lbl}</span></div></div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pr,100)}%;background:${color};"></div></div>
+      <div class="bar-leg"><span>0h</span><span>${tot.toFixed(1)} / ${cap}h</span></div>
+      <div class="dp-projs">${projRows||'<div style="font-size:11px;color:var(--text3);">Sin proyectos asignados</div>'}</div>
+      <div class="free-tag ${free>5?'ok':'warn'}">${free.toFixed(1)}h libres</div>
+    </div>`;
+  }).join('');}
   const dashRent=document.getElementById('dash-rent');
   if(!S.projects.length){dashRent.innerHTML='<div class="empty">No hay proyectos.</div>';}
-  else{
-    dashRent.innerHTML=S.projects.map(proj=>{
-      const ing=+proj.ingresos||0;
-      const asignados=S.people.filter(pe=>{const a=proj.assignations[pe.id];return a&&a.active;});
-      const costeTotal=asignados.reduce((s,pe)=>s+costePers(pe,proj),0);
-      const margen=ing-costeTotal;
-      const pct=ing>0?Math.round((margen/ing)*100):0;
-      const mCls=margen>100?'pos':margen<-100?'neg':'zer';
-      const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
-      const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
-      const personasRows=asignados.map(pe=>{
-        const c=costePers(pe,proj);
-        const a=proj.assignations[pe.id];
-        const detalle=pe.type==='partner'?`${+a.pct||0}%`:`${(+a.horas||0).toFixed(1)}h`;
-        return `<div class="dr-row">
-          <span>${esc(pe.name)} <span style="font-size:10px;color:var(--text3);">(${detalle})</span></span>
-          <span style="font-family:'DM Mono',monospace;">${fmt(c)} €</span>
-        </div>`;
-      }).join('');
-      return `
-      <div class="dr-card">
-        <div class="dr-name">${esc(proj.name)}<span class="badge ${bCls}">${bLbl}</span></div>
-        <div class="dr-row"><span>Ingresos/mes</span><span style="font-family:'DM Mono',monospace;">${fmt(ing)} €</span></div>
-        <div class="divider"></div>
-        ${personasRows||'<div style="font-size:11px;color:var(--text3);">Sin personas asignadas</div>'}
-        <div class="dr-total">
-          <span>Margen</span>
-          <span class="${mCls}">${margen>=0?'+':''}${fmt(margen)} € ${ing>0?'('+pct+'%)':''}</span>
-        </div>
-      </div>`;
+  else{dashRent.innerHTML=S.projects.map(proj=>{
+    const ing=+proj.ingresos||0;
+    const asignados=S.people.filter(pe=>{const a=proj.assignations[pe.id];return a&&a.active;});
+    const costeTotal=asignados.reduce((s,pe)=>s+costePers(pe,proj),0);
+    const margen=ing-costeTotal,pct=ing>0?Math.round((margen/ing)*100):0;
+    const mCls=margen>100?'pos':margen<-100?'neg':'zer';
+    const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
+    const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
+    const personasRows=asignados.map(pe=>{
+      const c=costePers(pe,proj),a=proj.assignations[pe.id];
+      const detalle=pe.type==='partner'?`${+a.pct||0}%`:`${(+a.horas||0).toFixed(1)}h`;
+      return `<div class="dr-row"><span>${esc(pe.name)} <span style="font-size:10px;color:var(--text3);">(${detalle})</span></span><span style="font-family:'DM Mono',monospace;">${fmt(c)} €</span></div>`;
     }).join('');
-  }
+    return `<div class="dr-card">
+      <div class="dr-name">${esc(proj.name)}<span class="badge ${bCls}">${bLbl}</span></div>
+      <div class="dr-row"><span>Ingresos/mes</span><span style="font-family:'DM Mono',monospace;">${fmt(ing)} €</span></div>
+      <div class="divider"></div>
+      ${personasRows||'<div style="font-size:11px;color:var(--text3);">Sin personas asignadas</div>'}
+      <div class="dr-total"><span>Margen</span><span class="${mCls}">${margen>=0?'+':''}${fmt(margen)} € ${ing>0?'('+pct+'%)':''}</span></div>
+    </div>`;
+  }).join('');}
 }
 
 function renderAll(){renderEquipo();renderProyectos();renderDashboard();}
