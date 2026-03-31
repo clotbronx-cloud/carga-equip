@@ -6,468 +6,473 @@
 <title>Carga de Trabajo · Equipo</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#F5F4F0;--surface:#FFFFFF;--surface2:#EEEDEA;
-  --border:rgba(0,0,0,0.10);--border2:rgba(0,0,0,0.18);
+:root{
+  --bg:#F5F4F0;--surface:#FFF;--surface2:#EEEDEA;
+  --border:rgba(0,0,0,.09);--border2:rgba(0,0,0,.17);
   --text:#1A1A18;--text2:#6B6B67;--text3:#9E9E99;
-  --green:#1D9E75;--green-bg:#EAF3DE;--green-border:#97C459;
-  --amber:#BA7517;--amber-bg:#FAEEDA;--amber-border:#EF9F27;
-  --red:#A32D2D;--red-bg:#FCEBEB;--red-border:#F09595;
-  --blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;
-  --teal:#0F6E56;--teal-bg:#E1F5EE;--teal-border:#5DCAA5;
-  --radius:10px;--radius-sm:6px;
+  --green:#1D9E75;--green-bg:#EAF3DE;--green-bd:#97C459;
+  --amber:#BA7517;--amber-bg:#FAEEDA;--amber-bd:#EF9F27;
+  --red:#A32D2D;--red-bg:#FCEBEB;--red-bd:#F09595;
+  --blue:#185FA5;--blue-bg:#E6F1FB;--blue-bd:#85B7EB;
+  --teal:#0F6E56;--teal-bg:#E1F5EE;--teal-bd:#5DCAA5;
+  --purple:#534AB7;--purple-bg:#EEEDFE;--purple-bd:#AFA9EC;
+  --r:10px;--rs:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;}
-.logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:-0.02em;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
+
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:200;}
+.logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:-.02em;}
 .logo span{color:var(--text3);}
-.sync-indicator{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);transition:background .3s;}
-.sync-dot.connected{background:var(--green);}
-.sync-dot.saving{background:var(--amber);}
-.container{max-width:1100px;margin:0 auto;padding:2rem;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
-@media(max-width:720px){.grid-2{grid-template-columns:1fr;}}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:2rem;}
-.panel-header{padding:.875rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.panel-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--text2);}
-.panel-body{padding:1rem 1.25rem;}
-.item-card{border:1px solid var(--border);border-radius:var(--radius-sm);padding:.875rem 1rem;margin-bottom:.625rem;background:var(--bg);}
-.item-card:last-child{margin-bottom:0;}
-.item-row{display:flex;align-items:center;gap:8px;margin-bottom:.5rem;flex-wrap:wrap;}
-.item-row:last-child{margin-bottom:0;}
-.field-label{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
-input[type=text],input[type=number],select{font-family:'DM Sans',sans-serif;font-size:13px;padding:5px 9px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
-input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--text);}
-input[type=text]{width:150px;}
-input[type=number]{width:64px;}
-input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--text);}
-.del-btn{margin-left:auto;font-size:11px;padding:3px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--text3);cursor:pointer;transition:all .15s;}
-.del-btn:hover{border-color:var(--red-border);color:var(--red);background:var(--red-bg);}
-.divider{border:none;border-top:1px solid var(--border);margin:.625rem 0;}
-.btn{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 14px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:background .15s;}
+.sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--text3);transition:background .3s;}
+.dot.on{background:var(--green);}.dot.saving{background:var(--amber);}
+
+/* TABS NAV */
+.tabs-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:52px;z-index:199;}
+.tnav{font-size:13px;padding:10px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;}
+.tnav:hover{color:var(--text);}
+.tnav.active{color:var(--text);border-bottom-color:var(--text);font-weight:500;}
+
+/* CONTAINER */
+.container{max-width:1200px;margin:0 auto;padding:1.5rem;}
+.tab-pane{display:none;}.tab-pane.active{display:block;}
+
+/* GENERIC */
+.btn{font-family:'DM Sans',sans-serif;font-size:13px;padding:5px 12px;border-radius:var(--rs);border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:background .15s;}
 .btn:hover{background:var(--surface2);}
-.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;border:1px solid;white-space:nowrap;}
-.badge-intern{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-border);}
-.badge-senior{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border);}
-.badge-free{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border);}
-.badge-ok{background:var(--green-bg);color:var(--green);border-color:var(--green-border);}
-.badge-warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-border);}
-.badge-over{background:var(--red-bg);color:var(--red);border-color:var(--red-border);}
+.divider{border:none;border-top:1px solid var(--border);margin:.5rem 0;}
+input[type=text],input[type=number],select{font-family:'DM Sans',sans-serif;font-size:13px;padding:4px 8px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--surface);color:var(--text);outline:none;}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--text);}
+input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--text);}
+.flabel{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
 
-/* Tabla de asignación por proyecto */
-.assign-table{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:13px;}
-.assign-table th{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
-.assign-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.assign-table tr:last-child td{border-bottom:none;}
-.assign-table tr.inactive td{opacity:.4;}
-.assign-table input[type=number]{width:58px;}
-.assign-sub{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:2px;}
-.proj-total{font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--border);}
+/* BADGES */
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;border:1px solid;white-space:nowrap;}
+.b-senior{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
+.b-intern{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-bd);}
+.b-partner{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd);}
+.b-free{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
+.b-ok{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.b-warn{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd);}
+.b-over{background:var(--red-bg);color:var(--red);border-color:var(--red-bd);}
+.b-profit{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.b-loss{background:var(--red-bg);color:var(--red);border-color:var(--red-bd);}
+.b-break{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd);}
 
-/* Dashboard */
-.summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem;}
-.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.875rem 1rem;}
-.metric-val{font-size:26px;font-weight:500;line-height:1;font-family:'DM Mono',monospace;}
-.metric-val.c-green{color:var(--green);}.metric-val.c-amber{color:var(--amber);}
-.metric-val.c-red{color:var(--red);}.metric-val.c-blue{color:var(--blue);}
-.metric-lbl{font-size:11px;color:var(--text3);margin-top:5px;text-transform:uppercase;letter-spacing:.06em;}
-.person-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem;}
-.pc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;gap:12px;}
-.pc-name{font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px;}
-.pc-meta{font-size:12px;color:var(--text2);margin-top:3px;font-family:'DM Mono',monospace;}
-.pc-right{text-align:right;flex-shrink:0;}
-.pc-pct{font-size:28px;font-weight:300;font-family:'DM Mono',monospace;line-height:1;}
-.bar-wrap{margin-bottom:1rem;}
-.bar-bg{background:var(--surface2);border-radius:99px;height:8px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:99px;transition:width .4s ease;}
-.bar-legend{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-top:4px;font-family:'DM Mono',monospace;}
-.proj-breakdown{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;}
-.proj-block{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.75rem .875rem;}
-.proj-block-name{font-size:13px;font-weight:500;margin-bottom:.5rem;}
-.proj-line{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);padding:2px 0;}
-.proj-line.total{border-top:1px solid var(--border);margin-top:4px;padding-top:4px;font-weight:500;color:var(--text);font-family:'DM Mono',monospace;}
-.free-hours{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);background:var(--surface2);border-radius:var(--radius-sm);padding:4px 10px;margin-top:8px;font-family:'DM Mono',monospace;}
-.free-hours.highlight{background:var(--green-bg);color:var(--green);}
-.empty-state{padding:2rem;text-align:center;color:var(--text3);font-size:13px;}
-.loading{display:flex;align-items:center;justify-content:center;padding:3rem;color:var(--text3);font-size:13px;gap:10px;}
+/* ── PESTAÑA EQUIPO ── */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.section-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text2);}
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+.person-edit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
+.pec-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.pec-name{font-size:14px;font-weight:500;}
+.del-btn{font-size:11px;padding:2px 7px;border:1px solid var(--border);border-radius:var(--rs);background:transparent;color:var(--text3);cursor:pointer;}
+.del-btn:hover{border-color:var(--red-bd);color:var(--red);background:var(--red-bg);}
+.pec-row{display:flex;align-items:center;gap:8px;margin-bottom:.4rem;flex-wrap:wrap;}
+.pec-row:last-child{margin-bottom:0;}
+
+/* ── PESTAÑA PROYECTOS ── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.75rem;}
+.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
+.proj-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.proj-card-name{font-size:14px;font-weight:500;}
+.proj-ingresos{display:flex;align-items:center;gap:8px;margin-bottom:.75rem;}
+.assign-mini{width:100%;}
+.assign-mini th{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:4px 6px;text-align:left;border-bottom:1px solid var(--border);}
+.assign-mini td{padding:4px 6px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:12px;}
+.assign-mini tr:last-child td{border-bottom:none;}
+.assign-mini tr.off td{opacity:.38;}
+.assign-mini input[type=number]{width:52px;font-size:12px;padding:3px 5px;}
+.proj-rentabilidad{margin-top:.75rem;padding:.625rem .75rem;border-radius:var(--rs);border:1px solid var(--border);}
+.rent-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:var(--text2);}
+.rent-row.total{font-weight:500;color:var(--text);border-top:1px solid var(--border);margin-top:4px;padding-top:6px;font-family:'DM Mono',monospace;}
+.rent-row.total span:last-child.pos{color:var(--green);}
+.rent-row.total span:last-child.neg{color:var(--red);}
+.rent-row.total span:last-child.zer{color:var(--amber);}
+
+/* ── PESTAÑA DASHBOARD ── */
+.dash-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.625rem;margin-bottom:1.5rem;}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.75rem 1rem;}
+.mval{font-size:24px;font-weight:500;font-family:'DM Mono',monospace;line-height:1;}
+.mval.cg{color:var(--green);}.mval.ca{color:var(--amber);}.mval.cr{color:var(--red);}.mval.cb{color:var(--blue);}
+.mlbl{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}
+
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem;margin-bottom:2rem;}
+.dash-person{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
+.dp-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;}
+.dp-name{font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.dp-meta{font-size:11px;color:var(--text2);margin-top:2px;font-family:'DM Mono',monospace;}
+.dp-pct{font-size:24px;font-weight:300;font-family:'DM Mono',monospace;line-height:1;text-align:right;}
+.bar-bg{background:var(--surface2);border-radius:99px;height:6px;overflow:hidden;margin:.5rem 0 2px;}
+.bar-fill{height:100%;border-radius:99px;transition:width .4s;}
+.bar-leg{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;margin-bottom:.625rem;}
+.dp-projs{display:flex;flex-direction:column;gap:4px;}
+.dp-proj-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);padding:3px 6px;background:var(--bg);border-radius:var(--rs);}
+.dp-proj-row span:last-child{font-family:'DM Mono',monospace;color:var(--text);}
+.free-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:99px;margin-top:6px;font-family:'DM Mono',monospace;}
+.free-tag.ok{background:var(--green-bg);color:var(--green);}
+.free-tag.warn{background:var(--amber-bg);color:var(--amber);}
+
+/* DASH RENTABILIDAD */
+.dash-rent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem;}
+.dr-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
+.dr-name{font-size:14px;font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between;}
+.dr-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);padding:2px 0;}
+.dr-total{display:flex;justify-content:space-between;font-size:13px;font-weight:500;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;}
+.pos{color:var(--green);}.neg{color:var(--red);}.zer{color:var(--amber);}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;padding:4rem;color:var(--text3);font-size:13px;gap:10px;}
 .spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:var(--surface);font-size:13px;padding:10px 16px;border-radius:var(--radius-sm);opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:var(--surface);font-size:13px;padding:9px 15px;border-radius:var(--rs);opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
 .toast.show{opacity:1;}
+.empty{padding:1.5rem;text-align:center;color:var(--text3);font-size:13px;}
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo">carga<span>/</span>equipo</div>
-  <div class="sync-indicator">
-    <div class="sync-dot" id="sync-dot"></div>
-    <span id="sync-label">Conectando...</span>
-  </div>
+  <div class="sync"><div class="dot" id="dot"></div><span id="slbl">Conectando...</span></div>
 </header>
 
+<nav class="tabs-nav">
+  <button class="tnav active" onclick="showTab('equipo',this)">Equipo</button>
+  <button class="tnav" onclick="showTab('proyectos',this)">Proyectos</button>
+  <button class="tnav" onclick="showTab('dashboard',this)">Dashboard</button>
+</nav>
+
 <div class="container">
-  <div id="app-loading" class="loading">
-    <div class="spinner"></div>
-    Conectando con la base de datos...
-  </div>
-  <div id="app-content" style="display:none">
-    <div class="grid-2">
-      <!-- EQUIPO -->
-      <div class="panel">
-        <div class="panel-header">
-          <span class="panel-title">Equipo</span>
-          <button class="btn" onclick="addPerson()">+ Persona</button>
-        </div>
-        <div class="panel-body"><div id="people-list"></div></div>
-      </div>
-      <!-- PROYECTOS -->
-      <div class="panel" style="margin-bottom:0">
-        <div class="panel-header">
-          <span class="panel-title">Proyectos</span>
-          <button class="btn" onclick="addProject()">+ Proyecto</button>
-        </div>
-        <div class="panel-body"><div id="proj-list"></div></div>
-      </div>
+  <div id="app-loading" class="loading"><div class="spinner"></div>Conectando...</div>
+  <div id="app" style="display:none">
+
+    <!-- EQUIPO -->
+    <div class="tab-pane active" id="tab-equipo">
+      <div class="section-header"><span class="section-title">Empleados</span><button class="btn" onclick="addPerson('senior')">+ Empleado</button></div>
+      <div class="people-grid" id="list-senior"></div>
+      <div class="section-header"><span class="section-title">Becarios</span><button class="btn" onclick="addPerson('intern')">+ Becario</button></div>
+      <div class="people-grid" id="list-intern"></div>
+      <div class="section-header"><span class="section-title">Socios</span><button class="btn" onclick="addPerson('partner')">+ Socio</button></div>
+      <div class="people-grid" id="list-partner"></div>
+    </div>
+
+    <!-- PROYECTOS -->
+    <div class="tab-pane" id="tab-proyectos">
+      <div class="section-header"><span class="section-title">Proyectos</span><button class="btn" onclick="addProject()">+ Proyecto</button></div>
+      <div class="proj-grid" id="proj-list"></div>
     </div>
 
     <!-- DASHBOARD -->
-    <div class="panel">
-      <div class="panel-header">
-        <span class="panel-title">Dashboard de carga semanal</span>
-      </div>
-      <div class="panel-body">
-        <div class="summary-row" id="summary"></div>
-        <div id="dashboard"></div>
-      </div>
+    <div class="tab-pane" id="tab-dashboard">
+      <div class="dash-summary" id="dash-summary"></div>
+      <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Carga del equipo</span></div>
+      <div class="dash-grid" id="dash-carga"></div>
+      <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rentabilidad por proyecto</span></div>
+      <div class="dash-rent-grid" id="dash-rent"></div>
     </div>
+
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, onValue, set } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBXgUaOsFPzsMQyhYFAM77dr061gQn9jL8",
-  authDomain: "carga-de-treball.firebaseapp.com",
-  databaseURL: "https://carga-de-treball-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "carga-de-treball",
-  storageBucket: "carga-de-treball.firebasestorage.app",
-  messagingSenderId: "183723016420",
-  appId: "1:183723016420:web:72e48c81ed2c83ba066cf1"
+const FB = {
+  apiKey:"AIzaSyBXgUaOsFPzsMQyhYFAM77dr061gQn9jL8",
+  authDomain:"carga-de-treball.firebaseapp.com",
+  databaseURL:"https://carga-de-treball-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"carga-de-treball",
+  storageBucket:"carga-de-treball.firebasestorage.app",
+  messagingSenderId:"183723016420",
+  appId:"1:183723016420:web:72e48c81ed2c83ba066cf1"
 };
+const db = getDatabase(initializeApp(FB));
+const dataRef = ref(db,'estado2');
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-const dataRef = ref(db, 'estado');
-
-// assignations[projectId][personId] = { active, reunCliente, reunInterna, horasDia }
 const DEFAULT = {
-  people: [
-    {id:1, name:'Ana García',   type:'senior', hours:40},
-    {id:2, name:'Luis Martín',  type:'senior', hours:40},
-    {id:3, name:'María López',  type:'intern',  hours:20},
+  people:[
+    {id:1,name:'Ana García',  type:'senior', hours:40, coste:3200},
+    {id:2,name:'Luis Martín', type:'senior', hours:40, coste:2800},
+    {id:3,name:'María López', type:'intern',  hours:20, coste:800},
+    {id:4,name:'Carlos Vega', type:'partner', hours:0,  coste:0},
   ],
-  projects: [
-    {id:1, name:'Cliente Alfa', assignations:{ 1:{active:true,reunCliente:1,reunInterna:1,horasDia:1.5}, 2:{active:true,reunCliente:1,reunInterna:1,horasDia:1} }},
-    {id:2, name:'Cliente Beta', assignations:{ 1:{active:true,reunCliente:1,reunInterna:1,horasDia:1},   3:{active:true,reunCliente:1,reunInterna:0.5,horasDia:0.5} }},
+  projects:[
+    {id:1,name:'Cliente Alfa',ingresos:4500,
+      assignations:{1:{active:true,reunCliente:1,reunInterna:1,horasDia:1.5},2:{active:true,reunCliente:1,reunInterna:1,horasDia:1}}},
+    {id:2,name:'Cliente Beta',ingresos:2200,
+      assignations:{1:{active:true,reunCliente:1,reunInterna:1,horasDia:0.5},3:{active:true,reunCliente:1,reunInterna:0.5,horasDia:0.5}}},
   ],
-  _pid:4, _ppid:3,
+  _pid:5,_ppid:3
 };
 
-let state = null;
-let saveTimeout = null;
-let isFirst = true;
+let S=null,saveTO=null,first=true;
+const dot=document.getElementById('dot'),slbl=document.getElementById('slbl');
 
-const dot = document.getElementById('sync-dot');
-const lbl = document.getElementById('sync-label');
-
-function setSync(s) {
-  dot.className = 'sync-dot ' + s;
-  lbl.textContent = s==='connected'?'Sincronizado': s==='saving'?'Guardando...':'Conectando...';
+function sync(s){dot.className='dot '+(s==='on'?'on':s==='saving'?'saving':'');slbl.textContent=s==='on'?'Sincronizado':s==='saving'?'Guardando...':'Conectando...';}
+function save(){sync('saving');clearTimeout(saveTO);saveTO=setTimeout(()=>set(dataRef,S).then(()=>sync('on')).catch(()=>toast('Error al guardar')),700);}
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmt(n){return Number(n).toLocaleString('es-ES');}
+function hPA(a){if(!a||!a.active)return 0;return(+a.reunCliente||0)+(+a.reunInterna||0)+(+a.horasDia||0)*5;}
+// coste proporcional de una persona en un proyecto según horas dedicadas vs horas totales de esa persona en todos los proyectos
+function costeProporcional(pe,proj){
+  const a=proj.assignations[pe.id];
+  if(!a||!a.active)return 0;
+  const hEsteProyecto=hPA(a);
+  const hTotales=S.projects.reduce((s,p)=>{const aa=p.assignations[pe.id];return s+(aa&&aa.active?hPA(aa):0);},0);
+  if(hTotales===0)return 0;
+  return(hEsteProyecto/hTotales)*(pe.coste||0);
 }
 
-function save() {
-  setSync('saving');
-  clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(() => {
-    set(dataRef, state)
-      .then(()=>setSync('connected'))
-      .catch(()=>{ setSync(''); toast('Error al guardar'); });
-  }, 600);
-}
-
-onValue(dataRef, snap => {
-  const data = snap.val();
-  if (isFirst) {
-    isFirst = false;
-    document.getElementById('app-loading').style.display = 'none';
-    document.getElementById('app-content').style.display = 'block';
-    setSync('connected');
-    if (!data) {
-      state = JSON.parse(JSON.stringify(DEFAULT));
-      save();
-    } else {
-      state = data;
-      state.people   = state.people   || [];
-      state.projects = state.projects || [];
-      state.projects.forEach(p => { p.assignations = p.assignations || {}; });
-      state._pid  = state._pid  || 10;
-      state._ppid = state._ppid || 10;
-    }
+onValue(dataRef,snap=>{
+  const data=snap.val();
+  if(first){
+    first=false;
+    document.getElementById('app-loading').style.display='none';
+    document.getElementById('app').style.display='block';
+    sync('on');
+    if(!data){S=JSON.parse(JSON.stringify(DEFAULT));save();}
+    else{S=data;fixState();}
     renderAll();
-  } else if (data) {
-    state = data;
-    state.people   = state.people   || [];
-    state.projects = state.projects || [];
-    state.projects.forEach(p => { p.assignations = p.assignations || {}; });
-    setSync('connected');
-    renderAll();
-  }
-}, () => {
-  document.getElementById('app-loading').innerHTML =
-    '<div style="color:var(--red);padding:2rem;text-align:center;">Error de conexión. Comprueba las reglas de Realtime Database.</div>';
-});
+  } else if(data){S=data;fixState();sync('on');renderAll();}
+},()=>{document.getElementById('app-loading').innerHTML='<div style="color:var(--red);padding:2rem;text-align:center;">Error de conexión con Firebase.</div>';});
 
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function toast(m){ const e=document.getElementById('toast'); e.textContent=m; e.classList.add('show'); setTimeout(()=>e.classList.remove('show'),2500); }
-
-// horas que una persona dedica a un proyecto esta semana
-function hPersonaProyecto(a) {
-  if (!a || !a.active) return 0;
-  return (a.reunCliente||0) + (a.reunInterna||0) + (a.horasDia||0) * 5;
+function fixState(){
+  S.people=S.people||[];S.projects=S.projects||[];
+  S.projects.forEach(p=>{p.assignations=p.assignations||{};p.ingresos=p.ingresos||0;});
+  S._pid=S._pid||20;S._ppid=S._ppid||20;
 }
 
-window.addPerson = () => {
-  state.people.push({id:state._pid++, name:'Nueva persona', type:'senior', hours:40});
-  save(); renderAll();
-};
-window.removePerson = id => {
-  state.people = state.people.filter(p=>p.id!==id);
-  state.projects.forEach(p=>{ delete p.assignations[id]; });
-  save(); renderAll();
-};
-window.updatePerson = (id,k,v) => {
-  const p = state.people.find(p=>p.id===id);
-  if(p) p[k]=v;
-  save(); renderDashboard();
-};
-window.addProject = () => {
-  state.projects.push({id:state._ppid++, name:'Nuevo proyecto', assignations:{}});
-  save(); renderAll();
-};
-window.removeProject = id => {
-  state.projects = state.projects.filter(p=>p.id!==id);
-  save(); renderAll();
-};
-window.updateProject = (id,k,v) => {
-  const p = state.projects.find(p=>p.id===id);
-  if(p) p[k]=v;
-  save(); renderProjects(); renderDashboard();
+/* ── ACCIONES ── */
+window.showTab=function(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='dashboard')renderDashboard();
 };
 
-// activar/desactivar persona en proyecto
-window.toggleAssign = (projId, personId, checked) => {
-  const p = state.projects.find(p=>p.id===projId);
-  if (!p) return;
-  if (!p.assignations[personId]) {
-    p.assignations[personId] = {active:false, reunCliente:1, reunInterna:1, horasDia:1};
-  }
-  p.assignations[personId].active = checked;
-  save(); renderProjects(); renderDashboard();
+window.addPerson=function(type){
+  S.people.push({id:S._pid++,name:'Nueva persona',type,hours:type==='partner'?0:40,coste:0});
+  save();renderEquipo();renderDashboard();
+};
+window.removePerson=function(id){
+  S.people=S.people.filter(p=>p.id!==id);
+  S.projects.forEach(p=>{if(p.assignations)delete p.assignations[id];});
+  save();renderAll();
+};
+window.updatePerson=function(id,k,v){
+  const p=S.people.find(p=>p.id===id);if(p)p[k]=k==='hours'||k==='coste'?+v:v;
+  save();renderDashboard();
+};
+window.addProject=function(){
+  S.projects.push({id:S._ppid++,name:'Nuevo proyecto',ingresos:0,assignations:{}});
+  save();renderProyectos();renderDashboard();
+};
+window.removeProject=function(id){
+  S.projects=S.projects.filter(p=>p.id!==id);save();renderAll();
+};
+window.updateProject=function(id,k,v){
+  const p=S.projects.find(p=>p.id===id);if(p)p[k]=k==='ingresos'?+v:v;
+  save();renderProyectos();renderDashboard();
+};
+window.toggleAssign=function(pjId,peId,chk){
+  const p=S.projects.find(p=>p.id===pjId);if(!p)return;
+  if(!p.assignations[peId])p.assignations[peId]={active:false,reunCliente:1,reunInterna:1,horasDia:1};
+  p.assignations[peId].active=chk;
+  save();renderProyectos();renderDashboard();
+};
+window.updateAssign=function(pjId,peId,k,v){
+  const p=S.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
+  p.assignations[peId][k]=+v;save();renderDashboard();
 };
 
-// actualizar campo de asignación
-window.updateAssign = (projId, personId, key, val) => {
-  const p = state.projects.find(p=>p.id===projId);
-  if (!p || !p.assignations[personId]) return;
-  p.assignations[personId][key] = val;
-  save(); renderDashboard();
-};
-
-function renderPeople() {
-  const el = document.getElementById('people-list');
-  if (!state.people.length) { el.innerHTML='<div class="empty-state">No hay personas en el equipo.</div>'; return; }
-  el.innerHTML = state.people.map(p=>`
-    <div class="item-card">
-      <div class="item-row">
-        <input type="text" value="${esc(p.name)}" onchange="updatePerson(${p.id},'name',this.value)" style="width:170px;font-weight:500;">
-        <select onchange="updatePerson(${p.id},'type',this.value)">
-          <option value="senior" ${p.type==='senior'?'selected':''}>Empleado</option>
-          <option value="intern"  ${p.type==='intern' ?'selected':''}>Becario</option>
-        </select>
-        <button class="del-btn" onclick="removePerson(${p.id})">Eliminar</button>
-      </div>
-      <div class="item-row">
-        <span class="field-label">Horas disponibles/sem</span>
-        <input type="number" value="${p.hours}" min="4" max="50" step="1" onchange="updatePerson(${p.id},'hours',+this.value)">
-      </div>
-    </div>`).join('');
+/* ── RENDER EQUIPO ── */
+function renderEquipo(){
+  ['senior','intern','partner'].forEach(type=>{
+    const el=document.getElementById('list-'+type);
+    const list=S.people.filter(p=>p.type===type);
+    if(!list.length){el.innerHTML=`<div class="empty">No hay ${type==='senior'?'empleados':type==='intern'?'becarios':'socios'} aún.</div>`;return;}
+    el.innerHTML=list.map(p=>`
+      <div class="person-edit-card">
+        <div class="pec-top">
+          <input type="text" value="${esc(p.name)}" onchange="updatePerson(${p.id},'name',this.value)" style="font-weight:500;width:150px;">
+          <button class="del-btn" onclick="removePerson(${p.id})">✕</button>
+        </div>
+        ${type!=='partner'?`
+        <div class="pec-row">
+          <span class="flabel">Horas/sem</span>
+          <input type="number" value="${p.hours}" min="1" max="50" step="1" onchange="updatePerson(${p.id},'hours',this.value)" style="width:70px;">
+        </div>`:''}
+        <div class="pec-row">
+          <span class="flabel">Coste mensual €</span>
+          <input type="number" value="${p.coste||0}" min="0" step="100" onchange="updatePerson(${p.id},'coste',this.value)" style="width:100px;">
+        </div>
+      </div>`).join('');
+  });
 }
 
-function renderProjects() {
-  const el = document.getElementById('proj-list');
-  if (!state.projects.length) { el.innerHTML='<div class="empty-state">No hay proyectos.</div>'; return; }
-
-  el.innerHTML = state.projects.map(proj => {
-    // calcular total horas del proyecto sumando todas las personas activas
-    const totalHProj = state.people.reduce((s,pe)=>{
-      const a = proj.assignations[pe.id];
-      return s + hPersonaProyecto(a);
-    },0);
-
-    const rows = state.people.map(pe => {
-      const a = proj.assignations[pe.id] || {active:false, reunCliente:1, reunInterna:1, horasDia:1};
-      const isActive = !!a.active;
-      const h = hPersonaProyecto(a);
-      return `
-      <tr class="${isActive?'':'inactive'}">
+/* ── RENDER PROYECTOS ── */
+function renderProyectos(){
+  const el=document.getElementById('proj-list');
+  if(!S.projects.length){el.innerHTML='<div class="empty">No hay proyectos aún.</div>';return;}
+  el.innerHTML=S.projects.map(proj=>{
+    const rows=S.people.map(pe=>{
+      const a=proj.assignations[pe.id]||{active:false,reunCliente:1,reunInterna:1,horasDia:1};
+      const on=!!a.active;
+      const isPartner=pe.type==='partner';
+      const badgeCls=pe.type==='intern'?'b-intern':pe.type==='partner'?'b-partner':'b-senior';
+      return `<tr class="${on?'':'off'}">
         <td>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-            <input type="checkbox" ${isActive?'checked':''} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
-            <span style="font-size:13px;">${esc(pe.name)}</span>
-            <span class="badge ${pe.type==='intern'?'badge-intern':'badge-senior'}" style="font-size:9px;">${pe.type==='intern'?'Becario':'Empleado'}</span>
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
+            <input type="checkbox" ${on?'checked':''} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
+            <span>${esc(pe.name)}</span>
+            <span class="badge ${badgeCls}" style="font-size:9px;">${pe.type==='intern'?'Bec':pe.type==='partner'?'Soc':'Emp'}</span>
           </label>
         </td>
-        <td>
-          <input type="number" value="${a.reunCliente||1}" min="0" max="10" step="0.5"
-            ${isActive?'':'disabled'}
-            onchange="updateAssign(${proj.id},${pe.id},'reunCliente',+this.value)"
-            title="Reunión cliente h/sem">
-          <div class="assign-sub">cliente</div>
-        </td>
-        <td>
-          <input type="number" value="${a.reunInterna||1}" min="0" max="10" step="0.5"
-            ${isActive?'':'disabled'}
-            onchange="updateAssign(${proj.id},${pe.id},'reunInterna',+this.value)"
-            title="Reunión interna h/sem">
-          <div class="assign-sub">interna</div>
-        </td>
-        <td>
-          <input type="number" value="${a.horasDia||1}" min="0" max="8" step="0.25"
-            ${isActive?'':'disabled'}
-            onchange="updateAssign(${proj.id},${pe.id},'horasDia',+this.value)"
-            title="Trabajo diario h/día">
-          <div class="assign-sub">h/día</div>
-        </td>
-        <td style="font-family:'DM Mono',monospace;font-size:12px;color:${isActive?'var(--text)':'var(--text3)'}">
-          ${isActive ? h.toFixed(1)+'h' : '—'}
-        </td>
+        ${!isPartner?`
+        <td><input type="number" value="${a.reunCliente||1}" min="0" max="10" step="0.5" ${on?'':'disabled'} onchange="updateAssign(${proj.id},${pe.id},'reunCliente',this.value)" title="Reun. cliente h/sem"><div class="assign-sub" style="font-size:9px;color:var(--text3);">cliente</div></td>
+        <td><input type="number" value="${a.reunInterna||1}" min="0" max="10" step="0.5" ${on?'':'disabled'} onchange="updateAssign(${proj.id},${pe.id},'reunInterna',this.value)" title="Reun. interna h/sem"><div class="assign-sub" style="font-size:9px;color:var(--text3);">interna</div></td>
+        <td><input type="number" value="${a.horasDia||1}" min="0" max="8" step="0.25" ${on?'':'disabled'} onchange="updateAssign(${proj.id},${pe.id},'horasDia',this.value)" title="h/día trabajo"><div class="assign-sub" style="font-size:9px;color:var(--text3);">h/día</div></td>
+        <td style="font-family:'DM Mono',monospace;font-size:12px;">${on?hPA(a).toFixed(1)+'h':'—'}</td>
+        `:`<td colspan="4" style="font-size:11px;color:var(--text3);">${on?'Asignado al proyecto':'—'}</td>`}
       </tr>`;
     }).join('');
 
+    // rentabilidad
+    const costeTotal=S.people.reduce((s,pe)=>s+costeProporcional(pe,proj),0);
+    const ing=proj.ingresos||0;
+    const margen=ing-costeTotal;
+    const pct=costeTotal>0?Math.round((margen/ing)*100):0;
+    const mCls=margen>0?'pos':margen<0?'neg':'zer';
+    const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
+    const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
+
     return `
-    <div class="item-card">
-      <div class="item-row">
-        <input type="text" value="${esc(proj.name)}" onchange="updateProject(${proj.id},'name',this.value)" style="width:200px;font-weight:500;">
-        <button class="del-btn" onclick="removeProject(${proj.id})">Eliminar</button>
+    <div class="proj-card">
+      <div class="proj-card-header">
+        <input type="text" value="${esc(proj.name)}" onchange="updateProject(${proj.id},'name',this.value)" style="font-weight:500;width:160px;">
+        <button class="del-btn" onclick="removeProject(${proj.id})">✕</button>
       </div>
-      <table class="assign-table">
-        <thead>
-          <tr>
-            <th>Persona</th>
-            <th>Reun. cliente</th>
-            <th>Reun. interna</th>
-            <th>Trabajo/día</th>
-            <th>Total/sem</th>
-          </tr>
-        </thead>
+      <div class="proj-ingresos">
+        <span class="flabel">Ingresos/mes €</span>
+        <input type="number" value="${proj.ingresos||0}" min="0" step="100" onchange="updateProject(${proj.id},'ingresos',this.value)" style="width:110px;">
+      </div>
+      <table class="assign-mini">
+        <thead><tr><th>Persona</th><th>R.cli</th><th>R.int</th><th>h/día</th><th>Total</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
-      <div class="proj-total">Total horas equipo en este proyecto: <strong>${totalHProj.toFixed(1)}h/sem</strong></div>
+      <div class="proj-rentabilidad" style="background:var(--bg);">
+        <div class="rent-row"><span>Ingresos</span><span>${fmt(ing)} €</span></div>
+        <div class="rent-row"><span>Coste equipo</span><span>${fmt(Math.round(costeTotal))} €</span></div>
+        <div class="rent-row total">
+          <span>Margen <span class="badge ${bCls}">${bLbl}</span></span>
+          <span class="${mCls}">${margen>=0?'+':''}${fmt(Math.round(margen))} € ${ing>0?'('+pct+'%)':''}</span>
+        </div>
+      </div>
     </div>`;
   }).join('');
 }
 
-function renderDashboard() {
-  const dash = document.getElementById('dashboard');
-  const sumEl = document.getElementById('summary');
-  if (!state.people.length) {
-    dash.innerHTML='<div class="empty-state">Añade personas al equipo para ver el dashboard.</div>';
-    sumEl.innerHTML=''; return;
-  }
+/* ── RENDER DASHBOARD ── */
+function renderDashboard(){
+  // SUMMARY
+  const nonPartners=S.people.filter(p=>p.type!=='partner');
+  let cFree=0,cOk=0,cWarn=0,cOver=0;
+  nonPartners.forEach(pe=>{
+    const tot=S.projects.reduce((s,p)=>{const a=p.assignations[pe.id];return s+(a&&a.active?hPA(a):0);},0);
+    const pct=pe.hours>0?(tot/pe.hours)*100:0;
+    if(pct<=70)cFree++;else if(pct<=90)cOk++;else if(pct<=105)cWarn++;else cOver++;
+  });
+  const totalIngMes=S.projects.reduce((s,p)=>s+(p.ingresos||0),0);
+  const totalCosteMes=S.people.reduce((s,p)=>s+(p.coste||0),0);
+  const margenTotal=totalIngMes-totalCosteMes;
+  document.getElementById('dash-summary').innerHTML=`
+    <div class="metric"><div class="mval">${S.people.length}</div><div class="mlbl">Personas</div></div>
+    <div class="metric"><div class="mval">${S.projects.length}</div><div class="mlbl">Proyectos</div></div>
+    <div class="metric"><div class="mval cg">${cOk}</div><div class="mlbl">Carga sana</div></div>
+    <div class="metric"><div class="mval ca">${cWarn}</div><div class="mlbl">Al límite</div></div>
+    <div class="metric"><div class="mval cr">${cOver}</div><div class="mlbl">Saturados</div></div>
+    <div class="metric"><div class="mval cb">${cFree}</div><div class="mlbl">Con margen</div></div>
+    <div class="metric"><div class="mval ${margenTotal>=0?'cg':'cr'}">${margenTotal>=0?'+':''}${fmt(Math.round(margenTotal/1000))}k€</div><div class="mlbl">Margen/mes</div></div>
+  `;
 
-  let c={free:0,ok:0,warn:0,over:0};
-
-  const cards = state.people.map(pe => {
-    // sumar horas de todos los proyectos donde esta persona está activa
-    const myProjects = state.projects.filter(p => {
-      const a = p.assignations[pe.id];
-      return a && a.active;
-    });
-    const tot = myProjects.reduce((s,p)=> s + hPersonaProyecto(p.assignations[pe.id]), 0);
-    const cap = pe.hours;
-    const pct = cap > 0 ? (tot/cap)*100 : 0;
-    const pr  = Math.round(pct);
-    const free = Math.max(0, cap-tot);
-
-    let cls,label,color;
-    if(pct<=70)      {cls='free';label='Con margen';  color='#378ADD';c.free++;}
-    else if(pct<=90) {cls='ok';  label='Carga sana';  color='#1D9E75';c.ok++;}
-    else if(pct<=105){cls='warn';label='En el límite';color='#EF9F27';c.warn++;}
-    else             {cls='over';label='Saturado';    color='#E24B4A';c.over++;}
-
-    const roleBadge = pe.type==='intern'
-      ? '<span class="badge badge-intern">Becario</span>'
-      : '<span class="badge badge-senior">Empleado</span>';
-
-    const blocks = myProjects.length
-      ? `<div class="proj-breakdown">${myProjects.map(p=>{
-          const a = p.assignations[pe.id];
-          return `<div class="proj-block">
-            <div class="proj-block-name">${esc(p.name)}</div>
-            <div class="proj-line"><span>Reunión cliente</span><span>${(a.reunCliente||0).toFixed(1)}h</span></div>
-            <div class="proj-line"><span>Reunión interna</span><span>${(a.reunInterna||0).toFixed(1)}h</span></div>
-            <div class="proj-line"><span>Trabajo diario</span><span>${((a.horasDia||0)*5).toFixed(1)}h</span></div>
-            <div class="proj-line total"><span>Total</span><span>${hPersonaProyecto(a).toFixed(1)}h/sem</span></div>
-          </div>`;
-        }).join('')}</div>`
-      : '<div style="font-size:12px;color:var(--text3);padding:.5rem 0;">Sin proyectos asignados.</div>';
-
-    return `
-    <div class="person-card">
-      <div class="pc-header">
-        <div>
-          <div class="pc-name">${esc(pe.name)} ${roleBadge}</div>
-          <div class="pc-meta">${myProjects.length} proyecto${myProjects.length!==1?'s':''} · ${tot.toFixed(1)}h ocupadas de ${cap}h</div>
-          <div class="free-hours ${free>8?'highlight':''}">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6l1.5 1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            ${free.toFixed(1)}h libres esta semana
+  // CARGA — solo empleados y becarios
+  const dashCarga=document.getElementById('dash-carga');
+  if(!nonPartners.length){dashCarga.innerHTML='<div class="empty">No hay empleados ni becarios.</div>';}
+  else{
+    dashCarga.innerHTML=nonPartners.map(pe=>{
+      const myP=S.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
+      const tot=myP.reduce((s,p)=>s+hPA(p.assignations[pe.id]),0);
+      const cap=pe.hours||1;
+      const pct=(tot/cap)*100;
+      const pr=Math.round(pct);
+      const free=Math.max(0,cap-tot);
+      let cls,lbl,color;
+      if(pct<=70){cls='b-free';lbl='Con margen';color='#378ADD';}
+      else if(pct<=90){cls='b-ok';lbl='Carga sana';color='#1D9E75';}
+      else if(pct<=105){cls='b-warn';lbl='Al límite';color='#EF9F27';}
+      else{cls='b-over';lbl='Saturado';color='#E24B4A';}
+      const rb=pe.type==='intern'?'b-intern':'b-senior';
+      const projRows=myP.map(p=>`<div class="dp-proj-row"><span>${esc(p.name)}</span><span>${hPA(p.assignations[pe.id]).toFixed(1)}h</span></div>`).join('');
+      return `
+      <div class="dash-person">
+        <div class="dp-header">
+          <div>
+            <div class="dp-name">${esc(pe.name)}<span class="badge ${rb}">${pe.type==='intern'?'Becario':'Empleado'}</span></div>
+            <div class="dp-meta">${tot.toFixed(1)}h / ${cap}h · ${myP.length} proyecto${myP.length!==1?'s':''}</div>
+          </div>
+          <div>
+            <div class="dp-pct" style="color:${color}">${pr}%</div>
+            <div style="text-align:right;margin-top:4px;"><span class="badge ${cls}">${lbl}</span></div>
           </div>
         </div>
-        <div class="pc-right">
-          <div class="pc-pct" style="color:${color}">${pr}%</div>
-          <div style="margin-top:6px;"><span class="badge badge-${cls}">${label}</span></div>
-        </div>
-      </div>
-      <div class="bar-wrap">
         <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pr,100)}%;background:${color};"></div></div>
-        <div class="bar-legend">
-          <span>0h</span>
-          <span style="color:${color};font-weight:500;">${tot.toFixed(1)} / ${cap}h</span>
-          <span>${cap}h</span>
-        </div>
-      </div>
-      ${blocks}
-    </div>`;
-  }).join('');
+        <div class="bar-leg"><span>0h</span><span>${tot.toFixed(1)} / ${cap}h</span></div>
+        <div class="dp-projs">${projRows||'<div style="font-size:11px;color:var(--text3);">Sin proyectos asignados</div>'}</div>
+        <div class="free-tag ${free>5?'ok':'warn'}">${free.toFixed(1)}h libres</div>
+      </div>`;
+    }).join('');
+  }
 
-  dash.innerHTML = cards;
-  sumEl.innerHTML = `
-    <div class="metric"><div class="metric-val">${state.people.length}</div><div class="metric-lbl">Personas</div></div>
-    <div class="metric"><div class="metric-val">${state.projects.length}</div><div class="metric-lbl">Proyectos</div></div>
-    <div class="metric"><div class="metric-val c-green">${c.ok}</div><div class="metric-lbl">Carga sana</div></div>
-    <div class="metric"><div class="metric-val c-amber">${c.warn}</div><div class="metric-lbl">En el límite</div></div>
-    <div class="metric"><div class="metric-val c-red">${c.over}</div><div class="metric-lbl">Saturados</div></div>
-    <div class="metric"><div class="metric-val c-blue">${c.free}</div><div class="metric-lbl">Con margen</div></div>`;
+  // RENTABILIDAD
+  const dashRent=document.getElementById('dash-rent');
+  if(!S.projects.length){dashRent.innerHTML='<div class="empty">No hay proyectos.</div>';}
+  else{
+    dashRent.innerHTML=S.projects.map(proj=>{
+      const ing=proj.ingresos||0;
+      const asignados=S.people.filter(pe=>{const a=proj.assignations[pe.id];return a&&a.active;});
+      const costeTotal=asignados.reduce((s,pe)=>s+costeProporcional(pe,proj),0);
+      const margen=ing-costeTotal;
+      const pct=ing>0?Math.round((margen/ing)*100):0;
+      const mCls=margen>100?'pos':margen<-100?'neg':'zer';
+      const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
+      const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
+      const personasRows=asignados.map(pe=>{
+        const c=costeProporcional(pe,proj);
+        return `<div class="dr-row"><span>${esc(pe.name)}</span><span style="font-family:'DM Mono',monospace;">${fmt(Math.round(c))} €</span></div>`;
+      }).join('');
+      return `
+      <div class="dr-card">
+        <div class="dr-name">${esc(proj.name)}<span class="badge ${bCls}">${bLbl}</span></div>
+        <div class="dr-row"><span>Ingresos/mes</span><span style="font-family:'DM Mono',monospace;">${fmt(ing)} €</span></div>
+        <div class="divider"></div>
+        ${personasRows}
+        <div class="dr-total">
+          <span>Margen</span>
+          <span class="${mCls}">${margen>=0?'+':''}${fmt(Math.round(margen))} € ${ing>0?'('+pct+'%)':''}</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
 }
 
-function renderAll(){ renderPeople(); renderProjects(); renderDashboard(); }
+function renderAll(){renderEquipo();renderProyectos();renderDashboard();}
 </script>
 </body>
 </html>
