@@ -442,7 +442,14 @@ window.doLogin=async function(){
   const btn=document.getElementById('login-btn'),err=document.getElementById('login-error');
   err.textContent='';btn.disabled=true;btn.textContent='Entrant...';
   try{await signInWithEmailAndPassword(auth,email,pass);}
-  catch(e){err.textContent='Email o contrasenya incorrectes';btn.disabled=false;btn.textContent='Entrar';}
+  catch(e){
+    console.error('Login error:',e.code,e.message);
+    const msg=e.code==='auth/invalid-credential'||e.code==='auth/wrong-password'||e.code==='auth/user-not-found'
+      ?'Email o contrasenya incorrectes'
+      :e.code==='auth/too-many-requests'?'Massa intents. Espera uns minuts.'
+      :'Error: '+e.code;
+    err.textContent=msg;btn.disabled=false;btn.textContent='Entrar';
+  }
 };
 window.doLogout=async function(){await signOut(auth);};
 
