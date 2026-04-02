@@ -867,11 +867,17 @@ function renderOptim(){
       if(!a||!a.active)return`<td style="text-align:center;padding:6px 10px;border-bottom:1px solid var(--border);"><span style="font-size:11px;color:var(--text3);">—</span></td>`;
       const h=+a.horas||0;
       const atMin=h<=MIN_H;
+      const btnStyle="font-size:13px;width:22px;height:22px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--surface);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;line-height:1;padding:0;";
       return`<td style="text-align:center;padding:6px 8px;border-bottom:1px solid var(--border);">
         <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-          <input type="range" min="${MIN_H}" max="${pe.hours}" step="0.5" value="${h}"
-            oninput="updateOptimH(${pi},${pe.id},+this.value)"
-            style="width:85px;">
+          <div style="display:flex;align-items:center;gap:4px;">
+            <button style="${btnStyle}" onclick="stepOptimH(${pi},${pe.id},-0.5)">−</button>
+            <input type="range" min="${MIN_H}" max="${pe.hours}" step="0.5" value="${h}"
+              oninput="updateOptimH(${pi},${pe.id},+this.value)"
+              id="slider-${pi}-${pe.id}"
+              style="width:70px;">
+            <button style="${btnStyle}" onclick="stepOptimH(${pi},${pe.id},+0.5)">+</button>
+          </div>
           <div style="display:flex;align-items:center;gap:4px;">
             <span style="font-size:11px;font-family:'DM Mono',monospace;color:var(--text);" id="ov-${pi}-${pe.id}">${h}h</span>
             ${atMin?`<span style="font-size:9px;padding:1px 5px;border-radius:99px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bd);">min</span>`:''}
@@ -949,6 +955,21 @@ window.showDashTab=function(tab){
 };
 
 window.selectOptimPerson=function(id){};
+
+window.stepOptimH=function(pi,peId,step){
+  const p=optim.projects[pi];
+  if(!p||!p.assignations[peId])return;
+  const pe=optim.people.find(p=>p.id===peId);
+  const cap=pe?pe.hours:40;
+  const cur=+p.assignations[peId].horas||0;
+  const nv=Math.min(cap,Math.max(MIN_H,Math.round((cur+step)*2)/2));
+  p.assignations[peId].horas=nv;
+  const slider=document.getElementById('slider-'+pi+'-'+peId);
+  if(slider)slider.value=nv;
+  const sv=document.getElementById('ov-'+pi+'-'+peId);
+  if(sv)sv.textContent=nv+'h';
+  renderOptim();
+};
 
 window.updateOptimH=function(pi,peId,val){
   const p=optim.projects[pi];
