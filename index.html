@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ca">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carga de Trabajo · Moodin</title>
+<title>Gestió Moodin</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -24,7 +24,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 /* LOGIN */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem;}
 .login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:2rem;width:100%;max-width:360px;}
-.login-logo{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;letter-spacing:-.02em;margin-bottom:.25rem;}
+.login-logo{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;margin-bottom:.25rem;}
 .login-logo span{color:var(--text3);}
 .login-sub{font-size:13px;color:var(--text3);margin-bottom:1.75rem;}
 .login-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.375rem;display:block;}
@@ -36,35 +36,53 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .login-error{font-size:12px;color:var(--red);margin-top:.75rem;text-align:center;min-height:18px;}
 
 /* HEADER */
-header{background:var(--surface);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:200;}
-.logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:-.02em;}
+header{background:var(--surface);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:300;}
+.logo{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;letter-spacing:-.02em;}
 .logo span{color:var(--text3);}
 .header-right{display:flex;align-items:center;gap:12px;}
 .sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--text3);transition:background .3s;}
 .dot.on{background:var(--green);}.dot.saving{background:var(--amber);}
-.user-pill{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:8px;}
+.user-pill{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:8px;}
 .logout-btn{font-size:11px;padding:3px 8px;border:1px solid var(--border2);border-radius:var(--rs);background:transparent;color:var(--text2);cursor:pointer;}
 .logout-btn:hover{background:var(--surface2);}
+.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;border:1px solid;white-space:nowrap;}
+.b-admin{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd);}
+.b-viewer{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
+
+/* NAV PRINCIPAL */
+.main-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:52px;z-index:200;}
+.mnav{font-size:13px;font-weight:500;padding:10px 18px;cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;}
+.mnav:hover{color:var(--text);}
+.mnav.active{color:var(--text);border-bottom-color:var(--text);}
+
+/* SUBNAV */
+.sub-nav{background:var(--surface2);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:93px;z-index:199;}
+.snav{font-size:12px;padding:8px 14px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;}
+.snav:hover{color:var(--text);}
+.snav.active{color:var(--text);border-bottom-color:var(--text);font-weight:500;}
+.sub-nav-hidden{display:none;}
+
+/* VIEWER BANNER */
 .viewer-banner{background:var(--blue-bg);border-bottom:1px solid var(--blue-bd);padding:6px 1.5rem;font-size:12px;color:var(--blue);text-align:center;}
 
-/* TABS */
-.tabs-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:52px;z-index:199;}
-.tnav{font-size:13px;padding:10px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;}
-.tnav:hover{color:var(--text);}
-.tnav.active{color:var(--text);border-bottom-color:var(--text);font-weight:500;}
-
+/* CONTAINER */
 .container{max-width:1200px;margin:0 auto;padding:1.5rem;}
-.tab-pane{display:none;}.tab-pane.active{display:block;}
+.section{display:none;}.section.active{display:block;}
+
+/* GENERIC */
 .btn{font-family:'DM Sans',sans-serif;font-size:13px;padding:5px 12px;border-radius:var(--rs);border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:background .15s;}
 .btn:hover{background:var(--surface2);}
 .divider{border:none;border-top:1px solid var(--border);margin:.5rem 0;}
-input[type=text],input[type=number],select{font-family:'DM Sans',sans-serif;font-size:13px;padding:4px 8px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s;}
-input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--text);}
+input[type=text],input[type=number],input[type=date],select{font-family:'DM Sans',sans-serif;font-size:13px;padding:4px 8px;border:1px solid var(--border2);border-radius:var(--rs);background:var(--surface);color:var(--text);outline:none;}
+input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:focus{border-color:var(--text);}
 input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--text);}
 input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!important;}
 .flabel{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;}
-.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 6px;border-radius:99px;border:1px solid;white-space:nowrap;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.section-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text2);}
+
+/* BADGES */
 .b-senior{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
 .b-intern{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-bd);}
 .b-partner{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd);}
@@ -75,12 +93,21 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
 .b-profit{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
 .b-loss{background:var(--red-bg);color:var(--red);border-color:var(--red-bd);}
 .b-break{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd);}
-.b-admin{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd);}
-.b-viewer{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
+.b-cobrado{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.b-facturado{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bd);}
+.b-pendiente{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-bd);}
+.b-retrasado{background:var(--red-bg);color:var(--red);border-color:var(--red-bd);}
+.b-fee{background:var(--green-bg);color:var(--green);border-color:var(--green-bd);}
+.b-proyecto{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bd);}
 
-/* EQUIPO */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
-.section-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text2);}
+/* SUMMARY METRICS */
+.summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.625rem;margin-bottom:1.5rem;}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.75rem 1rem;}
+.mval{font-size:22px;font-weight:500;font-family:'DM Mono',monospace;line-height:1;}
+.mval.cg{color:var(--green);}.mval.ca{color:var(--amber);}.mval.cr{color:var(--red);}.mval.cb{color:var(--blue);}
+.mlbl{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}
+
+/* CARGA - EQUIPO */
 .people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.75rem;margin-bottom:1.5rem;}
 .person-edit-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
 .pec-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
@@ -89,11 +116,10 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
 .del-btn{font-size:11px;padding:2px 7px;border:1px solid var(--border);border-radius:var(--rs);background:transparent;color:var(--text3);cursor:pointer;}
 .del-btn:hover{border-color:var(--red-bd);color:var(--red);background:var(--red-bg);}
 
-/* PROYECTOS */
+/* CARGA - PROYECTOS */
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.75rem;}
 .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
 .proj-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
-.proj-ingresos{display:flex;align-items:center;gap:8px;margin-bottom:.75rem;}
 .assign-mini{width:100%;border-collapse:collapse;}
 .assign-mini th{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:4px 6px;text-align:left;border-bottom:1px solid var(--border);}
 .assign-mini td{padding:5px 6px;border-bottom:1px solid var(--border);vertical-align:middle;font-size:12px;}
@@ -101,18 +127,13 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
 .assign-mini tr.off td{opacity:.38;}
 .hint{font-size:10px;color:var(--text3);margin-top:1px;font-family:'DM Mono',monospace;}
 .hint.red{color:var(--red);}
-.proj-rentabilidad{margin-top:.75rem;padding:.625rem .75rem;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);}
+.proj-rent{margin-top:.75rem;padding:.625rem .75rem;border-radius:var(--rs);border:1px solid var(--border);background:var(--bg);}
 .rent-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:var(--text2);}
 .rent-row.total{font-weight:500;color:var(--text);border-top:1px solid var(--border);margin-top:4px;padding-top:6px;font-family:'DM Mono',monospace;}
 .pos{color:var(--green);}.neg{color:var(--red);}.zer{color:var(--amber);}
 
-/* DASHBOARD */
-.dash-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.625rem;margin-bottom:1.5rem;}
-.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.75rem 1rem;}
-.mval{font-size:24px;font-weight:500;font-family:'DM Mono',monospace;line-height:1;}
-.mval.cg{color:var(--green);}.mval.ca{color:var(--amber);}.mval.cr{color:var(--red);}.mval.cb{color:var(--blue);}
-.mlbl{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem;margin-bottom:2rem;}
+/* CARGA - DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.75rem;margin-bottom:1.5rem;}
 .dash-person{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
 .dp-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;}
 .dp-name{font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
@@ -132,12 +153,71 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
 .dr-name{font-size:14px;font-weight:500;margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .dr-row{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);padding:2px 0;}
 .dr-total{display:flex;justify-content:space-between;font-size:13px;font-weight:500;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;}
+
+/* FINANZAS - CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.75rem;margin-bottom:2rem;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;gap:8px;}
+.card-row{display:flex;align-items:center;gap:8px;margin-bottom:.4rem;flex-wrap:wrap;}
+.card-row:last-child{margin-bottom:0;}
+.hitos-section{margin-top:.75rem;border-top:1px solid var(--border);padding-top:.75rem;}
+.hito-row{display:flex;align-items:center;gap:6px;margin-bottom:.375rem;flex-wrap:wrap;}
+.hito-pct{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;width:32px;}
+.add-hito-btn{font-size:11px;padding:2px 8px;border:1px dashed var(--border2);border-radius:var(--rs);background:transparent;color:var(--text3);cursor:pointer;margin-top:4px;}
+.add-hito-btn:hover{background:var(--surface2);color:var(--text);}
+
+/* FINANZAS - PREVISIÓN */
+.prev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.625rem;margin-bottom:1.5rem;}
+.mes-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.875rem 1rem;}
+.mes-card.actual{border-color:var(--text);border-width:2px;}
+.mes-nombre{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:.625rem;}
+.mes-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:var(--text2);}
+.mes-row span:last-child{font-family:'DM Mono',monospace;font-weight:500;}
+.mes-resultado{display:flex;justify-content:space-between;font-size:13px;font-weight:500;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;}
+.mes-bar{height:4px;border-radius:99px;background:var(--surface2);overflow:hidden;margin-top:6px;}
+.mes-bar-fill{height:100%;border-radius:99px;}
+
+/* FINANZAS - GASTOS */
+.gastos-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);}
+.gastos-table{border-collapse:collapse;font-size:13px;width:100%;}
+.gastos-table th{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;}
+.gastos-table th:first-child{text-align:left;}
+.gastos-table td{padding:7px 12px;border-bottom:1px solid var(--border);text-align:right;vertical-align:middle;}
+.gastos-table td:first-child{text-align:left;}
+.gastos-table tr:last-child td{border-bottom:none;}
+.gastos-table tr.cat-row td{background:var(--bg);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);padding:5px 12px;border-bottom:none;}
+.gastos-table tr.total-row td{background:var(--surface2);font-weight:500;font-family:'DM Mono',monospace;border-top:2px solid var(--border2);}
+.gastos-table tr.item-row{cursor:pointer;}
+.gastos-table tr.item-row:hover td{background:var(--bg);}
+.gastos-table tr.expand-row td{padding:0;border-bottom:1px solid var(--border);}
+.expand-inner{padding:.75rem 1rem;background:var(--bg);}
+.meses-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+.mes-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:5px 8px;}
+.mes-item-label{font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;}
+.mes-item-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--green);}
+.g-input{width:100%;font-size:12px;padding:3px 6px;text-align:right;border:1px solid var(--border2);border-radius:3px;background:var(--surface);font-family:'DM Mono',monospace;}
+.g-input:focus{border-color:var(--text);outline:none;}
+.g-input:disabled{background:var(--surface2);color:var(--text3);border-color:transparent;}
+.rec-input{width:110px;font-size:13px;padding:4px 8px;border:1px solid var(--green-bd);border-radius:var(--rs);background:var(--green-bg);color:var(--green);font-family:'DM Mono',monospace;text-align:right;}
+.rec-input:focus{outline:none;border-color:var(--green);}
+.th-total{background:var(--surface2)!important;color:var(--text2)!important;}
+.expand-arrow{font-size:10px;color:var(--text3);margin-left:6px;display:inline-block;transition:transform .2s;}
+.expand-arrow.open{transform:rotate(90deg);}
+
+/* RESUMEN */
+.resumen-table{width:100%;border-collapse:collapse;font-size:13px;}
+.resumen-table th{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.resumen-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.resumen-table tr:last-child td{border-bottom:none;}
+.resumen-table tr:hover td{background:var(--bg);}
+.mono{font-family:'DM Mono',monospace;}
+
 .loading{display:flex;align-items:center;justify-content:center;padding:4rem;color:var(--text3);font-size:13px;gap:10px;}
 .spinner{width:16px;height:16px;border:2px solid var(--border2);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--text);color:var(--surface);font-size:13px;padding:9px 15px;border-radius:var(--rs);opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
 .toast.show{opacity:1;}
-.empty{padding:1.5rem;text-align:center;color:var(--text3);font-size:13px;}
+.empty{padding:2rem;text-align:center;color:var(--text3);font-size:13px;}
 </style>
 </head>
 <body>
@@ -145,11 +225,11 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo">carga<span>/</span>equipo</div>
-    <div class="login-sub">Moodin · Acceso privado</div>
+    <div class="login-logo">gestió<span>/</span>moodin</div>
+    <div class="login-sub">Accés privat</div>
     <label class="login-label">Email</label>
     <input class="login-input" type="email" id="login-email" placeholder="tu@email.com">
-    <label class="login-label">Contraseña</label>
+    <label class="login-label">Contrasenya</label>
     <input class="login-input" type="password" id="login-pass" placeholder="••••••••"
       onkeydown="if(event.key==='Enter')doLogin()">
     <button class="login-btn" id="login-btn" onclick="doLogin()">Entrar</button>
@@ -160,44 +240,112 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
 <!-- APP -->
 <div id="app-wrap" style="display:none">
   <header>
-    <div class="logo">carga<span>/</span>equipo</div>
+    <div class="logo">gestió<span>/</span>moodin</div>
     <div class="header-right">
-      <div class="sync"><div class="dot" id="dot"></div><span id="slbl">Conectando...</span></div>
+      <div class="sync"><div class="dot" id="dot"></div><span id="slbl">Connectant...</span></div>
       <div class="user-pill">
         <span id="user-email"></span>
-        <span id="user-role-badge"></span>
-        <button class="logout-btn" onclick="doLogout()">Salir</button>
+        <span id="user-badge"></span>
+        <button class="logout-btn" onclick="doLogout()">Sortir</button>
       </div>
     </div>
   </header>
-  <div id="viewer-banner" class="viewer-banner" style="display:none">
-    Modo visualización — solo puedes ver el dashboard
-  </div>
-  <nav class="tabs-nav" id="tabs-nav">
-    <button class="tnav active" onclick="showTab('dashboard',this)">Dashboard</button>
+
+  <!-- NAV PRINCIPAL -->
+  <nav class="main-nav" id="main-nav">
+    <button class="mnav active" onclick="showMain('carga',this)">Carga de treball</button>
+    <button class="mnav" onclick="showMain('finanzas',this)">Finances</button>
   </nav>
+
+  <!-- SUBNAV CARGA -->
+  <nav class="sub-nav" id="subnav-carga">
+    <button class="snav active" onclick="showSub('carga','dashboard-carga',this)">Dashboard</button>
+    <button class="snav" id="snav-equipo" onclick="showSub('carga','equipo',this)">Equip</button>
+    <button class="snav" id="snav-proyectos-c" onclick="showSub('carga','proyectos-c',this)">Projectes</button>
+  </nav>
+
+  <!-- SUBNAV FINANZAS -->
+  <nav class="sub-nav sub-nav-hidden" id="subnav-finanzas">
+    <button class="snav active" onclick="showSub('finanzas','dashboard-fin',this)">Dashboard</button>
+    <button class="snav" id="snav-ingresos" onclick="showSub('finanzas','ingresos',this)">Ingressos</button>
+    <button class="snav" id="snav-gastos" onclick="showSub('finanzas','gastos',this)">Despeses</button>
+    <button class="snav" id="snav-resumen" onclick="showSub('finanzas','resumen-fin',this)">Resum</button>
+  </nav>
+
+  <div id="viewer-banner" class="viewer-banner" style="display:none">
+    Mode visualització — només pots veure els dashboards
+  </div>
+
   <div class="container">
-    <div id="data-loading" class="loading"><div class="spinner"></div>Cargando datos...</div>
-    <div id="app" style="display:none">
-      <div class="tab-pane active" id="tab-equipo">
-        <div class="section-header"><span class="section-title">Empleados</span><button class="btn" onclick="addPerson('senior')">+ Empleado</button></div>
+    <div id="data-loading" class="loading"><div class="spinner"></div>Carregant...</div>
+    <div id="app-content" style="display:none">
+
+      <!-- ══ CARGA DE TRABAJO ══ -->
+      <!-- Dashboard Carga -->
+      <div class="section active" id="sec-carga-dashboard-carga">
+        <div class="summary-row" id="dash-c-summary"></div>
+        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Càrrega de l'equip</span></div>
+        <div class="dash-grid" id="dash-c-carga"></div>
+        <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rendibilitat per projecte</span></div>
+        <div class="dash-rent-grid" id="dash-c-rent"></div>
+      </div>
+
+      <!-- Equip -->
+      <div class="section" id="sec-carga-equipo">
+        <div class="section-header"><span class="section-title">Empleats</span><button class="btn admin-only" onclick="addPerson('senior')">+ Empleat</button></div>
         <div class="people-grid" id="list-senior"></div>
-        <div class="section-header"><span class="section-title">Becarios</span><button class="btn" onclick="addPerson('intern')">+ Becario</button></div>
+        <div class="section-header"><span class="section-title">Becaris</span><button class="btn admin-only" onclick="addPerson('intern')">+ Becari</button></div>
         <div class="people-grid" id="list-intern"></div>
-        <div class="section-header"><span class="section-title">Socios</span><button class="btn" onclick="addPerson('partner')">+ Socio</button></div>
+        <div class="section-header"><span class="section-title">Socis</span><button class="btn admin-only" onclick="addPerson('partner')">+ Soci</button></div>
         <div class="people-grid" id="list-partner"></div>
       </div>
-      <div class="tab-pane" id="tab-proyectos">
-        <div class="section-header"><span class="section-title">Proyectos</span><button class="btn" onclick="addProject()">+ Proyecto</button></div>
+
+      <!-- Projectes Carga -->
+      <div class="section" id="sec-carga-proyectos-c">
+        <div class="section-header"><span class="section-title">Projectes</span><button class="btn admin-only" onclick="addProject()">+ Projecte</button></div>
         <div class="proj-grid" id="proj-list"></div>
       </div>
-      <div class="tab-pane active" id="tab-dashboard">
-        <div class="dash-summary" id="dash-summary"></div>
-        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Carga del equipo</span></div>
-        <div class="dash-grid" id="dash-carga"></div>
-        <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rentabilidad por proyecto</span></div>
-        <div class="dash-rent-grid" id="dash-rent"></div>
+
+      <!-- ══ FINANCES ══ -->
+      <!-- Dashboard Finances -->
+      <div class="section" id="sec-finanzas-dashboard-fin">
+        <div class="summary-row" id="dash-f-summary"></div>
+        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Previsió mensual 2026</span></div>
+        <div class="prev-grid" id="dash-f-prev"></div>
       </div>
+
+      <!-- Ingressos -->
+      <div class="section" id="sec-finanzas-ingresos">
+        <div class="section-header">
+          <span class="section-title">Fees recurrents</span>
+          <button class="btn admin-only" onclick="addFee()">+ Fee</button>
+        </div>
+        <div class="cards-grid" id="fees-list"></div>
+        <div class="section-header" style="margin-top:1rem">
+          <span class="section-title">Projectes tancats</span>
+          <button class="btn admin-only" onclick="addProyecto()">+ Projecte</button>
+        </div>
+        <div class="cards-grid" id="proyectos-fin-list"></div>
+      </div>
+
+      <!-- Despeses -->
+      <div class="section" id="sec-finanzas-gastos">
+        <div class="section-header">
+          <span class="section-title">Despeses 2026</span>
+          <span style="font-size:12px;color:var(--text3);">Marca "Rec." per repetir cada mes automàticament</span>
+        </div>
+        <div id="gastos-container"></div>
+      </div>
+
+      <!-- Resum -->
+      <div class="section" id="sec-finanzas-resumen-fin">
+        <div class="summary-row" id="resumen-summary"></div>
+        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Clients</span></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
+          <table class="resumen-table" id="resumen-table"></table>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -218,365 +366,688 @@ const FB={
   messagingSenderId:"183723016420",
   appId:"1:183723016420:web:72e48c81ed2c83ba066cf1"
 };
+const fbApp=initializeApp(FB);
+const db=getDatabase(fbApp);
+const auth=getAuth(fbApp);
+const cargaRef=ref(db,'estado5');
+const finRef=ref(db,'ingresos1');
 
-const firebaseApp = initializeApp(FB);
-const db  = getDatabase(firebaseApp);
-const auth= getAuth(firebaseApp);
-const dataRef = ref(db,'estado5');
+const ADMIN='marc@moodin.eu';
+const VIEWER='hola@moodin.eu';
 
-// ADMIN email
-const ADMIN_EMAIL = 'marc@moodin.eu';
+const MESOS=['01','02','03','04','05','06','07','08','09','10','11','12'];
+const MESOS_L=['Gen','Feb','Mar','Abr','Mai','Jun','Jul','Ago','Set','Oct','Nov','Des'];
+const AÑO=2026;
 
-let S=null, saveTO=null, firstData=true, isAdmin=false;
-const dot=document.getElementById('dot'), slbl=document.getElementById('slbl');
+const CATEGORIAS=[
+  {cat:'Personal',items:[{key:'socios',label:'Socis'},{key:'trabajadores',label:'Treballadors'},{key:'becarios',label:'Becaris'}]},
+  {cat:'Serveis professionals',items:[{key:'asesoria',label:'Assessoria comptable'},{key:'legal',label:'Serveis legals'}]},
+  {cat:'Oficina',items:[{key:'alquiler',label:'Lloguer oficina'},{key:'suministros',label:'Subministraments'},{key:'material_oficina',label:'Material oficina'},{key:'mobiliario',label:'Mobiliari'}]},
+  {cat:'Tecnologia',items:[{key:'informatico',label:'Material informàtic'},{key:'software',label:'Software i subscripcions'},{key:'web',label:'Web i hosting'}]},
+  {cat:'Comercial',items:[{key:'marketing',label:'Màrqueting i publicitat'},{key:'desplazamientos',label:'Desplaçaments i dietes'},{key:'formacion',label:'Formació'}]},
+  {cat:'Altres',items:[{key:'seguros',label:'Assegurances'},{key:'cuotas',label:'Quotes associacions'},{key:'otros',label:'Altres despeses'}]},
+];
+const ALL_KEYS=CATEGORIAS.flatMap(c=>c.items.map(i=>i.key));
 
-/* ── AUTH ── */
+function defaultGastos(){
+  const g={};
+  ALL_KEYS.forEach(k=>{g[k]={rec:true,recVal:0,meses:{}};MESOS.forEach(m=>{g[k].meses[m]=0;});});
+  return g;
+}
+
+let C=null,F=null; // carga state, finanzas state
+let cargaReady=false,finReady=false;
+let isAdmin=false,isViewer=false;
+let saveTO_c=null,saveTO_f=null;
+let isSavingGastos=false;
+let currentMain='carga',currentSub={carga:'dashboard-carga',finanzas:'dashboard-fin'};
+
+const dot=document.getElementById('dot'),slbl=document.getElementById('slbl');
+
+function sync(s){dot.className='dot '+(s==='on'?'on':s==='saving'?'saving':'');slbl.textContent=s==='on'?'Sincronitzat':s==='saving'?'Guardant...':'Connectant...';}
+function saveC(){sync('saving');clearTimeout(saveTO_c);saveTO_c=setTimeout(()=>set(cargaRef,C).then(()=>sync('on')).catch(()=>toast('Error al guardar')),700);}
+function saveF(){sync('saving');clearTimeout(saveTO_f);saveTO_f=setTimeout(()=>set(finRef,F).then(()=>sync('on')).catch(()=>toast('Error al guardar')),700);}
+function saveGastos(){isSavingGastos=true;sync('saving');clearTimeout(saveTO_f);saveTO_f=setTimeout(()=>set(finRef,F).then(()=>{sync('on');setTimeout(()=>{isSavingGastos=false;},2000);}).catch(()=>toast('Error al guardar')),700);}
+function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmt(n){return Math.round(Number(n)||0).toLocaleString('es-ES');}
+function fmtMes(ym){if(!ym)return '';const[y,m]=ym.split('-');return MESOS_L[+m-1]+' '+y;}
+function mesActual(){const n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0');}
+function mesesEntre(ini,fi){const out=[];if(!ini||!fi)return out;let[y,m]=ini.split('-').map(Number);const[fy,fm]=fi.split('-').map(Number);while(y<fy||(y===fy&&m<=fm)){out.push(y+'-'+String(m).padStart(2,'0'));m++;if(m>12){m=1;y++;}}return out;}
+
+/* AUTH */
 window.doLogin=async function(){
   const email=document.getElementById('login-email').value.trim();
-  const pass =document.getElementById('login-pass').value;
-  const btn  =document.getElementById('login-btn');
-  const err  =document.getElementById('login-error');
-  err.textContent='';
-  btn.disabled=true;
-  btn.textContent='Entrando...';
-  try{
-    await signInWithEmailAndPassword(auth,email,pass);
-  } catch(e){
-    err.textContent='Email o contraseña incorrectos';
-    btn.disabled=false;
-    btn.textContent='Entrar';
-  }
+  const pass=document.getElementById('login-pass').value;
+  const btn=document.getElementById('login-btn'),err=document.getElementById('login-error');
+  err.textContent='';btn.disabled=true;btn.textContent='Entrant...';
+  try{await signInWithEmailAndPassword(auth,email,pass);}
+  catch(e){err.textContent='Email o contrasenya incorrectes';btn.disabled=false;btn.textContent='Entrar';}
 };
+window.doLogout=async function(){await signOut(auth);};
 
-window.doLogout=async function(){
-  await signOut(auth);
-};
-
-onAuthStateChanged(auth, user=>{
+onAuthStateChanged(auth,user=>{
   if(user){
-    isAdmin = user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+    isAdmin=user.email.toLowerCase()===ADMIN.toLowerCase();
+    isViewer=user.email.toLowerCase()===VIEWER.toLowerCase();
     document.getElementById('login-screen').style.display='none';
     document.getElementById('app-wrap').style.display='block';
     document.getElementById('user-email').textContent=user.email;
-    document.getElementById('user-role-badge').innerHTML=
-      isAdmin?'<span class="badge b-admin">Admin</span>':'<span class="badge b-viewer">Viewer</span>';
-
-    // Tabs según rol
-    const nav=document.getElementById('tabs-nav');
-    if(isAdmin){
-      nav.innerHTML=`
-        <button class="tnav" onclick="showTab('equipo',this)">Equipo</button>
-        <button class="tnav" onclick="showTab('proyectos',this)">Proyectos</button>
-        <button class="tnav active" onclick="showTab('dashboard',this)">Dashboard</button>`;
-      document.getElementById('viewer-banner').style.display='none';
-    } else {
-      nav.innerHTML=`<button class="tnav active" onclick="showTab('dashboard',this)">Dashboard</button>`;
+    document.getElementById('user-badge').innerHTML=isAdmin?'<span class="badge b-admin">Admin</span>':'<span class="badge b-viewer">Viewer</span>';
+    // viewer: ocultar pestañas de edición
+    if(isViewer){
+      document.getElementById('snav-equipo').style.display='none';
+      document.getElementById('snav-proyectos-c').style.display='none';
+      document.getElementById('snav-ingresos').style.display='none';
+      document.getElementById('snav-gastos').style.display='none';
+      document.getElementById('snav-resumen').style.display='none';
       document.getElementById('viewer-banner').style.display='block';
+      document.querySelectorAll('.admin-only').forEach(e=>e.style.display='none');
     }
-    initData();
+    initCarga();
+    initFinanzas();
   } else {
     document.getElementById('login-screen').style.display='flex';
     document.getElementById('app-wrap').style.display='none';
-    S=null; firstData=true;
+    C=null;F=null;cargaReady=false;finReady=false;
   }
 });
 
-/* ── DATA ── */
-function initData(){
-  onValue(dataRef, snap=>{
-    const data=snap.val();
-    if(firstData){
-      firstData=false;
-      document.getElementById('data-loading').style.display='none';
-      document.getElementById('app').style.display='block';
-      sync('on');
-      if(!data){S=JSON.parse(JSON.stringify(DEFAULT));if(isAdmin)save();}
-      else{S=data;fixState();}
-      // mostrar dashboard por defecto
-      document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-      document.getElementById('tab-dashboard').classList.add('active');
-      renderAll();
-    } else if(data){
-      S=data;fixState();sync('on');renderAll();
-    }
-  },()=>{
-    document.getElementById('data-loading').innerHTML=
-      '<div style="color:var(--red);padding:2rem;text-align:center;">Error de conexión con Firebase.</div>';
-  });
+/* NAV */
+window.showMain=function(main,btn){
+  currentMain=main;
+  document.querySelectorAll('.mnav').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('subnav-carga').className='sub-nav'+(main==='carga'?'':' sub-nav-hidden');
+  document.getElementById('subnav-finanzas').className='sub-nav'+(main==='finanzas'?'':' sub-nav-hidden');
+  showSeccion(main,currentSub[main]);
+};
+window.showSub=function(main,sub,btn){
+  currentSub[main]=sub;
+  const navId='subnav-'+main;
+  document.querySelectorAll('#'+navId+' .snav').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  showSeccion(main,sub);
+};
+function showSeccion(main,sub){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById('sec-'+main+'-'+sub);
+  if(el)el.classList.add('active');
 }
 
-const DEFAULT={
+/* ════════════════════════════════════
+   CARGA DE TRABAJO
+════════════════════════════════════ */
+const DEFAULT_C={
   people:[
-    {id:1,name:'Ana García',  type:'senior',hours:40,coste:3200},
-    {id:2,name:'Luis Martín', type:'senior',hours:40,coste:2800},
-    {id:3,name:'María López', type:'intern', hours:20,coste:800},
-    {id:4,name:'Carlos Vega', type:'partner',hours:0, coste:5000},
+    {id:1,name:'Ana García',type:'senior',hours:40,coste:3200},
+    {id:2,name:'Luis Martín',type:'senior',hours:40,coste:2800},
+    {id:3,name:'María López',type:'intern',hours:20,coste:800},
+    {id:4,name:'Carlos Vega',type:'partner',hours:0,coste:5000},
   ],
   projects:[
-    {id:1,name:'Cliente Alfa',ingresos:4500,
-      assignations:{1:{active:true,horas:12},2:{active:true,horas:10},4:{active:true,pct:60}}},
-    {id:2,name:'Cliente Beta',ingresos:2200,
-      assignations:{1:{active:true,horas:5},3:{active:true,horas:8},4:{active:true,pct:40}}},
+    {id:1,name:'Cliente Alfa',ingresos:4500,assignations:{1:{active:true,horas:12},2:{active:true,horas:10},4:{active:true,pct:60}}},
+    {id:2,name:'Cliente Beta',ingresos:2200,assignations:{1:{active:true,horas:5},3:{active:true,horas:8},4:{active:true,pct:40}}},
   ],
   _pid:5,_ppid:3
 };
 
-function fixState(){
-  S.people=S.people||[];S.projects=S.projects||[];
-  S.projects.forEach(p=>{p.assignations=p.assignations||{};p.ingresos=p.ingresos||0;});
-  S._pid=S._pid||20;S._ppid=S._ppid||20;
+function fixC(){
+  C.people=C.people||[];C.projects=C.projects||[];
+  C.projects.forEach(p=>{p.assignations=p.assignations||{};p.ingresos=p.ingresos||0;});
+  C._pid=C._pid||20;C._ppid=C._ppid||20;
 }
-function sync(s){
-  dot.className='dot '+(s==='on'?'on':s==='saving'?'saving':'');
-  slbl.textContent=s==='on'?'Sincronizado':s==='saving'?'Guardando...':'Conectando...';
+function initCarga(){
+  onValue(cargaRef,snap=>{
+    const data=snap.val();
+    if(!cargaReady){
+      cargaReady=true;
+      if(!data){C=JSON.parse(JSON.stringify(DEFAULT_C));if(isAdmin)saveC();}
+      else{C=data;fixC();}
+      checkReady();
+    } else if(data){C=data;fixC();renderCarga();}
+  });
 }
-function save(){
-  if(!isAdmin)return;
-  sync('saving');clearTimeout(saveTO);
-  saveTO=setTimeout(()=>set(dataRef,S).then(()=>sync('on')).catch(()=>toast('Error al guardar')),700);
+function checkReady(){
+  if(cargaReady&&finReady){
+    document.getElementById('data-loading').style.display='none';
+    document.getElementById('app-content').style.display='block';
+    sync('on');
+    renderAll();
+  }
 }
-function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function fmt(n){return Math.round(Number(n)).toLocaleString('es-ES');}
+
 function hPA(a){if(!a||!a.active)return 0;return +a.horas||0;}
-function horasTotalesPer(peId){return S.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.horas||0:0);},0);}
-function pctTotalSocio(peId){return S.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.pct||0:0);},0);}
-function costePers(pe,proj){
+function horasTotPer(peId){return C.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.horas||0:0);},0);}
+function pctTotSocio(peId){return C.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.pct||0:0);},0);}
+function costePerC(pe,proj){
   const a=proj.assignations[pe.id];if(!a||!a.active)return 0;
   if(pe.type==='partner')return(pe.coste||0)*((+a.pct||0)/100);
-  const hEste=+a.horas||0,hTot=horasTotalesPer(pe.id);
-  if(hTot===0)return 0;
-  return(hEste/hTot)*(pe.coste||0);
+  const hE=+a.horas||0,hT=horasTotPer(pe.id);
+  if(hT===0)return 0;return(hE/hT)*(pe.coste||0);
 }
 
-/* ── ACCIONES (solo admin) ── */
-window.showTab=function(id,btn){
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
-};
-window.addPerson=function(type){if(!isAdmin)return;S.people.push({id:S._pid++,name:'Nueva persona',type,hours:type==='partner'?0:40,coste:0});save();renderEquipo();renderDashboard();};
-window.removePerson=function(id){if(!isAdmin)return;S.people=S.people.filter(p=>p.id!==id);S.projects.forEach(p=>{if(p.assignations)delete p.assignations[id];});save();renderAll();};
-window.updatePerson=function(id,k,v){if(!isAdmin)return;const p=S.people.find(p=>p.id===id);if(p)p[k]=(k==='hours'||k==='coste')?+v:v;save();renderEquipo();renderDashboard();};
-window.addProject=function(){if(!isAdmin)return;S.projects.push({id:S._ppid++,name:'Nuevo proyecto',ingresos:0,assignations:{}});save();renderProyectos();renderDashboard();};
-window.removeProject=function(id){if(!isAdmin)return;S.projects=S.projects.filter(p=>p.id!==id);save();renderAll();};
-window.updateProject=function(id,k,v){if(!isAdmin)return;const p=S.projects.find(p=>p.id===id);if(p)p[k]=k==='ingresos'?+v:v;save();renderProyectos();renderDashboard();};
+/* ACCIONES CARGA */
+window.addPerson=function(type){if(!isAdmin)return;C.people.push({id:C._pid++,name:'Nova persona',type,hours:type==='partner'?0:40,coste:0});saveC();renderEquipo();renderDashCarga();};
+window.removePerson=function(id){if(!isAdmin)return;C.people=C.people.filter(p=>p.id!==id);C.projects.forEach(p=>{if(p.assignations)delete p.assignations[id];});saveC();renderCarga();};
+window.updatePerson=function(id,k,v){if(!isAdmin)return;const p=C.people.find(p=>p.id===id);if(p)p[k]=(k==='hours'||k==='coste')?+v:v;saveC();renderEquipo();renderDashCarga();};
+window.addProject=function(){if(!isAdmin)return;C.projects.push({id:C._ppid++,name:'Nou projecte',ingresos:0,assignations:{}});saveC();renderProyectosC();renderDashCarga();};
+window.removeProject=function(id){if(!isAdmin)return;C.projects=C.projects.filter(p=>p.id!==id);saveC();renderCarga();};
+window.updateProject=function(id,k,v){if(!isAdmin)return;const p=C.projects.find(p=>p.id===id);if(p)p[k]=k==='ingresos'?+v:v;saveC();renderProyectosC();renderDashCarga();};
 window.toggleAssign=function(pjId,peId,chk){
   if(!isAdmin)return;
-  const p=S.projects.find(p=>p.id===pjId);if(!p)return;
-  const pe=S.people.find(p=>p.id===peId);
+  const p=C.projects.find(p=>p.id===pjId);if(!p)return;
+  const pe=C.people.find(p=>p.id===peId);
   if(!p.assignations[peId])p.assignations[peId]=pe&&pe.type==='partner'?{active:false,pct:0}:{active:false,horas:0};
-  p.assignations[peId].active=chk;
-  save();renderProyectos();renderDashboard();
+  p.assignations[peId].active=chk;saveC();renderProyectosC();renderDashCarga();
 };
-window.updateHoras=function(pjId,peId,v,inputEl){
+window.updateHoras=function(pjId,peId,v,el){
   if(!isAdmin)return;
-  const pe=S.people.find(p=>p.id===peId);
+  const pe=C.people.find(p=>p.id===peId);
   const val=+v,cap=pe?pe.hours:999;
-  const p=S.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
-  const actuales=+p.assignations[peId].horas||0;
-  const nuevasTot=horasTotalesPer(peId)-actuales+val;
-  if(val<0){inputEl.value=0;return;}
-  inputEl.classList.toggle('over',nuevasTot>cap);
-  if(nuevasTot>cap)toast(`⚠ ${pe.name} solo tiene ${cap}h/sem. Total: ${nuevasTot}h`);
-  p.assignations[peId].horas=val;save();renderDashboard();
+  const p=C.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
+  const act=+p.assignations[peId].horas||0;
+  const newT=horasTotPer(peId)-act+val;
+  el.classList.toggle('over',newT>cap);
+  if(newT>cap)toast(`⚠ ${pe.name} només té ${cap}h/sem. Total: ${newT}h`);
+  p.assignations[peId].horas=val;saveC();renderDashCarga();
 };
-window.updatePct=function(pjId,peId,v,inputEl){
+window.updatePct=function(pjId,peId,v,el){
   if(!isAdmin)return;
-  const pe=S.people.find(p=>p.id===peId);
+  const pe=C.people.find(p=>p.id===peId);
   const val=Math.min(100,Math.max(0,+v));
-  const p=S.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
-  const actuales=+p.assignations[peId].pct||0;
-  const nuevoTotal=pctTotalSocio(peId)-actuales+val;
-  inputEl.classList.toggle('over',nuevoTotal>100);
-  if(nuevoTotal>100)toast(`⚠ ${pe?pe.name:''} supera el 100% (total: ${nuevoTotal}%)`);
-  p.assignations[peId].pct=val;save();renderEquipo();renderDashboard();
+  const p=C.projects.find(p=>p.id===pjId);if(!p||!p.assignations[peId])return;
+  const act=+p.assignations[peId].pct||0;
+  const newT=pctTotSocio(peId)-act+val;
+  el.classList.toggle('over',newT>100);
+  if(newT>100)toast(`⚠ ${pe?pe.name:''} supera el 100% (total: ${newT}%)`);
+  p.assignations[peId].pct=val;saveC();renderEquipo();renderDashCarga();
 };
 
-/* ── RENDERS ── */
+/* RENDERS CARGA */
 function renderEquipo(){
+  const ro=isAdmin?'':'readonly disabled';
   ['senior','intern','partner'].forEach(type=>{
     const el=document.getElementById('list-'+type);
-    const list=S.people.filter(p=>p.type===type);
-    if(!list.length){el.innerHTML=`<div class="empty">No hay ${type==='senior'?'empleados':type==='intern'?'becarios':'socios'} aún.</div>`;return;}
+    const list=C.people.filter(p=>p.type===type);
+    if(!list.length){el.innerHTML=`<div class="empty">No hi ha ${type==='senior'?'empleats':type==='intern'?'becaris':'socis'} encara.</div>`;return;}
     el.innerHTML=list.map(p=>{
-      const usadas=type!=='partner'?horasTotalesPer(p.id):0;
-      const cap=p.hours||0,over=usadas>cap;
-      const totalPct=type==='partner'?pctTotalSocio(p.id):0,pctOver=totalPct>100;
-      const ro=!isAdmin?'readonly disabled':'';
-      return `
-      <div class="person-edit-card">
+      const usades=type!=='partner'?horasTotPer(p.id):0;
+      const cap=p.hours||0,over=usades>cap;
+      const totalPct=type==='partner'?pctTotSocio(p.id):0,pctOver=totalPct>100;
+      return `<div class="person-edit-card">
         <div class="pec-top">
           <input type="text" value="${esc(p.name)}" ${ro} onchange="updatePerson(${p.id},'name',this.value)" style="font-weight:500;width:150px;">
-          <button class="del-btn" onclick="removePerson(${p.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
+          <button class="del-btn admin-only" onclick="removePerson(${p.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
         </div>
         ${type!=='partner'?`
-        <div class="pec-row">
-          <span class="flabel">Horas disponibles/sem</span>
-          <input type="number" value="${cap}" min="1" max="50" step="1" ${ro} onchange="updatePerson(${p.id},'hours',this.value)" style="width:70px;">
-        </div>
-        <div class="pec-row">
-          <span class="flabel">Horas asignadas</span>
-          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${over?'var(--red)':usadas>0?'var(--green)':'var(--text3)'};">${usadas}h / ${cap}h ${over?'⚠':''}</span>
-        </div>`:''}
-        <div class="pec-row">
-          <span class="flabel">Coste mensual €</span>
-          <input type="number" value="${p.coste||0}" min="0" step="100" ${ro} onchange="updatePerson(${p.id},'coste',this.value)" style="width:110px;">
-        </div>
+        <div class="pec-row"><span class="flabel">Hores disponibles/sem</span>
+          <input type="number" value="${cap}" min="1" max="50" step="1" ${ro} onchange="updatePerson(${p.id},'hours',this.value)" style="width:70px;"></div>
+        <div class="pec-row"><span class="flabel">Hores assignades</span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${over?'var(--red)':usades>0?'var(--green)':'var(--text3)'};">${usades}h / ${cap}h ${over?'⚠':''}</span></div>`:''}
+        <div class="pec-row"><span class="flabel">Cost mensual €</span>
+          <input type="number" value="${p.coste||0}" min="0" step="100" ${ro} onchange="updatePerson(${p.id},'coste',this.value)" style="width:110px;"></div>
         ${type==='partner'?`
-        <div class="pec-row">
-          <span class="flabel">% asignado total</span>
-          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${pctOver?'var(--red)':totalPct===100?'var(--green)':'var(--amber)'};">${totalPct}% ${pctOver?'⚠ supera 100%':totalPct===100?'✓ completo':'de 100%'}</span>
-        </div>`:''}
+        <div class="pec-row"><span class="flabel">% assignat total</span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:${pctOver?'var(--red)':totalPct===100?'var(--green)':'var(--amber)'};">${totalPct}% ${pctOver?'⚠ supera 100%':totalPct===100?'✓ complet':'de 100%'}</span></div>`:''}
       </div>`;
     }).join('');
   });
 }
 
-function renderProyectos(){
+function renderProyectosC(){
   const el=document.getElementById('proj-list');
-  if(!S.projects.length){el.innerHTML='<div class="empty">No hay proyectos aún.</div>';return;}
-  const ro=!isAdmin?'readonly disabled':'';
-  el.innerHTML=S.projects.map(proj=>{
-    const rows=S.people.map(pe=>{
-      const isPartner=pe.type==='partner';
-      const a=proj.assignations[pe.id]||(isPartner?{active:false,pct:0}:{active:false,horas:0});
+  if(!C.projects.length){el.innerHTML='<div class="empty">No hi ha projectes.</div>';return;}
+  const ro=isAdmin?'':'readonly disabled';
+  el.innerHTML=C.projects.map(proj=>{
+    const rows=C.people.map(pe=>{
+      const isP=pe.type==='partner';
+      const a=proj.assignations[pe.id]||(isP?{active:false,pct:0}:{active:false,horas:0});
       const on=!!a.active;
-      const badgeCls=pe.type==='intern'?'b-intern':pe.type==='partner'?'b-partner':'b-senior';
-      const badgeLbl=pe.type==='intern'?'Bec':pe.type==='partner'?'Soc':'Emp';
-      if(isPartner){
-        const totalPct=pctTotalSocio(pe.id),over=totalPct>100;
+      const bCls=pe.type==='intern'?'b-intern':pe.type==='partner'?'b-partner':'b-senior';
+      const bLbl=pe.type==='intern'?'Bec':pe.type==='partner'?'Soc':'Emp';
+      if(isP){
+        const tPct=pctTotSocio(pe.id),ov=tPct>100;
         return `<tr class="${on?'':'off'}">
           <td><label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
             <input type="checkbox" ${on?'checked':''} ${ro} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
-            <span>${esc(pe.name)}</span><span class="badge ${badgeCls}" style="font-size:9px;">${badgeLbl}</span>
+            <span>${esc(pe.name)}</span><span class="badge ${bCls}" style="font-size:9px;">${bLbl}</span>
           </label></td>
           <td>${on?`<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;">
-            <input type="number" value="${+a.pct||0}" min="0" max="100" step="5" ${ro} class="${over?'over':''}"
+            <input type="number" value="${+a.pct||0}" min="0" max="100" step="5" ${ro} class="${ov?'over':''}"
               oninput="updatePct(${proj.id},${pe.id},this.value,this)" style="width:58px;font-size:12px;padding:3px 5px;">
             <span style="font-size:11px;color:var(--text3);">% → ${fmt((pe.coste||0)*(+a.pct||0)/100)} €</span>
-          </div>
-          <div class="hint ${over?'red':''}">total ${totalPct}% ${over?'⚠':''}</div>`:'—'}</td>
+          </div><div class="hint ${ov?'red':''}">total ${tPct}% ${ov?'⚠':''}</div>`:'—'}</td>
         </tr>`;
       } else {
-        const usadas=horasTotalesPer(pe.id),cap=pe.hours||0,over=usadas>cap;
+        const usades=horasTotPer(pe.id),cap=pe.hours||0,ov=usades>cap;
         return `<tr class="${on?'':'off'}">
           <td><label style="display:flex;align-items:center;gap:5px;cursor:pointer;">
             <input type="checkbox" ${on?'checked':''} ${ro} onchange="toggleAssign(${proj.id},${pe.id},this.checked)">
-            <span>${esc(pe.name)}</span><span class="badge ${badgeCls}" style="font-size:9px;">${badgeLbl}</span>
+            <span>${esc(pe.name)}</span><span class="badge ${bCls}" style="font-size:9px;">${bLbl}</span>
           </label></td>
           <td>${on?`<div style="display:flex;align-items:center;gap:5px;">
-            <input type="number" value="${+a.horas||0}" min="0" max="${cap}" step="0.5" ${ro} class="${over?'over':''}"
+            <input type="number" value="${+a.horas||0}" min="0" max="${cap}" step="0.5" ${ro} class="${ov?'over':''}"
               oninput="updateHoras(${proj.id},${pe.id},this.value,this)" style="width:62px;font-size:12px;padding:3px 5px;">
             <span style="font-size:11px;color:var(--text3);">h/sem</span>
-          </div>
-          <div class="hint ${over?'red':''}">asignadas: ${usadas}h / ${cap}h ${over?'⚠':''}</div>`:'—'}</td>
+          </div><div class="hint ${ov?'red':''}">assignades: ${usades}h / ${cap}h ${ov?'⚠':''}</div>`:'—'}</td>
         </tr>`;
       }
     }).join('');
-    const costeTotal=S.people.reduce((s,pe)=>s+costePers(pe,proj),0);
-    const ing=+proj.ingresos||0,margen=ing-costeTotal;
-    const pct=ing>0?Math.round((margen/ing)*100):0;
-    const mCls=margen>100?'pos':margen<-100?'neg':'zer';
-    const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
-    const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
-    return `
-    <div class="proj-card">
+    const costeT=C.people.reduce((s,pe)=>s+costePerC(pe,proj),0);
+    const ing=+proj.ingresos||0,mar=ing-costeT;
+    const pct=ing>0?Math.round((mar/ing)*100):0;
+    const mCls=mar>100?'pos':mar<-100?'neg':'zer';
+    const bCls=mar>100?'b-profit':mar<-100?'b-loss':'b-break';
+    const bLbl=mar>100?'Rendible':mar<-100?'Pèrdues':'Equilibri';
+    return `<div class="proj-card">
       <div class="proj-card-header">
         <input type="text" value="${esc(proj.name)}" ${ro} onchange="updateProject(${proj.id},'name',this.value)" style="font-weight:500;width:170px;">
         <button class="del-btn" onclick="removeProject(${proj.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
       </div>
-      <div class="proj-ingresos">
-        <span class="flabel">Ingresos/mes €</span>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem;">
+        <span class="flabel">Ingressos/mes €</span>
         <input type="number" value="${proj.ingresos||0}" min="0" step="100" ${ro} onchange="updateProject(${proj.id},'ingresos',this.value)" style="width:120px;">
       </div>
       <table class="assign-mini">
-        <thead><tr><th>Persona</th><th>Dedicación</th></tr></thead>
+        <thead><tr><th>Persona</th><th>Dedicació</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
-      <div class="proj-rentabilidad">
-        <div class="rent-row"><span>Ingresos</span><span>${fmt(ing)} €</span></div>
-        <div class="rent-row"><span>Coste equipo</span><span>${fmt(costeTotal)} €</span></div>
-        <div class="rent-row total"><span>Margen <span class="badge ${bCls}">${bLbl}</span></span>
-          <span class="${mCls}">${margen>=0?'+':''}${fmt(margen)} € ${ing>0?'('+pct+'%)':''}</span>
-        </div>
+      <div class="proj-rent">
+        <div class="rent-row"><span>Ingressos</span><span>${fmt(ing)} €</span></div>
+        <div class="rent-row"><span>Cost equip</span><span>${fmt(costeT)} €</span></div>
+        <div class="rent-row total"><span>Marge <span class="badge ${bCls}">${bLbl}</span></span>
+          <span class="${mCls}">${mar>=0?'+':''}${fmt(mar)} € ${ing>0?'('+pct+'%)':''}</span></div>
       </div>
     </div>`;
   }).join('');
 }
 
-function renderDashboard(){
-  const nonPartners=S.people.filter(p=>p.type!=='partner');
-  let cFree=0,cOk=0,cWarn=0,cOver=0;
-  nonPartners.forEach(pe=>{
-    const tot=horasTotalesPer(pe.id),pct=pe.hours>0?(tot/pe.hours)*100:0;
-    if(pct<=70)cFree++;else if(pct<=90)cOk++;else if(pct<=105)cWarn++;else cOver++;
+function renderDashCarga(){
+  if(!C)return;
+  const nonP=C.people.filter(p=>p.type!=='partner');
+  let cF=0,cO=0,cW=0,cOv=0;
+  nonP.forEach(pe=>{
+    const tot=horasTotPer(pe.id),pct=pe.hours>0?(tot/pe.hours)*100:0;
+    if(pct<=70)cF++;else if(pct<=90)cO++;else if(pct<=105)cW++;else cOv++;
   });
-  const totalIng=S.projects.reduce((s,p)=>s+(+p.ingresos||0),0);
-  const totalCoste=S.people.reduce((s,p)=>s+(+p.coste||0),0);
-  const margenTotal=totalIng-totalCoste;
-  document.getElementById('dash-summary').innerHTML=`
-    <div class="metric"><div class="mval">${S.people.length}</div><div class="mlbl">Personas</div></div>
-    <div class="metric"><div class="mval">${S.projects.length}</div><div class="mlbl">Proyectos</div></div>
-    <div class="metric"><div class="mval cg">${cOk}</div><div class="mlbl">Carga sana</div></div>
-    <div class="metric"><div class="mval ca">${cWarn}</div><div class="mlbl">Al límite</div></div>
-    <div class="metric"><div class="mval cr">${cOver}</div><div class="mlbl">Saturados</div></div>
-    <div class="metric"><div class="mval cb">${cFree}</div><div class="mlbl">Con margen</div></div>
-    <div class="metric"><div class="mval ${margenTotal>=0?'cg':'cr'}">${margenTotal>=0?'+':''}${fmt(margenTotal/1000)}k€</div><div class="mlbl">Margen/mes</div></div>`;
-  const dashCarga=document.getElementById('dash-carga');
-  if(!nonPartners.length){dashCarga.innerHTML='<div class="empty">No hay empleados ni becarios.</div>';}
-  else{dashCarga.innerHTML=nonPartners.map(pe=>{
-    const myP=S.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
-    const tot=horasTotalesPer(pe.id),cap=pe.hours||1,pct=(tot/cap)*100,pr=Math.round(pct),free=Math.max(0,cap-tot);
+  const totalIng=C.projects.reduce((s,p)=>s+(+p.ingresos||0),0);
+  const totalCost=C.people.reduce((s,p)=>s+(+p.coste||0),0);
+  const mar=totalIng-totalCost;
+  document.getElementById('dash-c-summary').innerHTML=`
+    <div class="metric"><div class="mval">${C.people.length}</div><div class="mlbl">Persones</div></div>
+    <div class="metric"><div class="mval">${C.projects.length}</div><div class="mlbl">Projectes</div></div>
+    <div class="metric"><div class="mval cg">${cO}</div><div class="mlbl">Càrrega sana</div></div>
+    <div class="metric"><div class="mval ca">${cW}</div><div class="mlbl">Al límit</div></div>
+    <div class="metric"><div class="mval cr">${cOv}</div><div class="mlbl">Saturats</div></div>
+    <div class="metric"><div class="mval cb">${cF}</div><div class="mlbl">Amb marge</div></div>
+    <div class="metric"><div class="mval ${mar>=0?'cg':'cr'}">${mar>=0?'+':''}${fmt(mar/1000)}k€</div><div class="mlbl">Marge/mes</div></div>`;
+
+  const dashCarga=document.getElementById('dash-c-carga');
+  dashCarga.innerHTML=nonP.map(pe=>{
+    const myP=C.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
+    const tot=horasTotPer(pe.id),cap=pe.hours||1,pct=(tot/cap)*100,pr=Math.round(pct),free=Math.max(0,cap-tot);
     let cls,lbl,color;
-    if(pct<=70){cls='b-free';lbl='Con margen';color='#378ADD';}
-    else if(pct<=90){cls='b-ok';lbl='Carga sana';color='#1D9E75';}
-    else if(pct<=105){cls='b-warn';lbl='Al límite';color='#EF9F27';}
-    else{cls='b-over';lbl='Saturado';color='#E24B4A';}
+    if(pct<=70){cls='b-free';lbl='Amb marge';color='#378ADD';}
+    else if(pct<=90){cls='b-ok';lbl='Càrrega sana';color='#1D9E75';}
+    else if(pct<=105){cls='b-warn';lbl='Al límit';color='#EF9F27';}
+    else{cls='b-over';lbl='Saturat';color='#E24B4A';}
     const rb=pe.type==='intern'?'b-intern':'b-senior';
-    const projRows=myP.map(p=>{const a=p.assignations[pe.id];return `<div class="dp-proj-row"><span>${esc(p.name)}</span><span>${(+a.horas||0).toFixed(1)}h</span></div>`;}).join('');
+    const projRows=myP.map(p=>{const a=p.assignations[pe.id];return`<div class="dp-proj-row"><span>${esc(p.name)}</span><span>${(+a.horas||0).toFixed(1)}h</span></div>`;}).join('');
     return `<div class="dash-person">
       <div class="dp-header">
-        <div>
-          <div class="dp-name">${esc(pe.name)}<span class="badge ${rb}">${pe.type==='intern'?'Becario':'Empleado'}</span></div>
-          <div class="dp-meta">${tot.toFixed(1)}h / ${cap}h · ${myP.length} proyecto${myP.length!==1?'s':''}</div>
-        </div>
+        <div><div class="dp-name">${esc(pe.name)}<span class="badge ${rb}">${pe.type==='intern'?'Becari':'Empleat'}</span></div>
+        <div class="dp-meta">${tot.toFixed(1)}h / ${cap}h · ${myP.length} projecte${myP.length!==1?'s':''}</div></div>
         <div><div class="dp-pct" style="color:${color}">${pr}%</div>
         <div style="text-align:right;margin-top:4px;"><span class="badge ${cls}">${lbl}</span></div></div>
       </div>
       <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pr,100)}%;background:${color};"></div></div>
       <div class="bar-leg"><span>0h</span><span>${tot.toFixed(1)} / ${cap}h</span></div>
-      <div class="dp-projs">${projRows||'<div style="font-size:11px;color:var(--text3);">Sin proyectos asignados</div>'}</div>
-      <div class="free-tag ${free>5?'ok':'warn'}">${free.toFixed(1)}h libres</div>
+      <div class="dp-projs">${projRows||'<div style="font-size:11px;color:var(--text3);">Sense projectes assignats</div>'}</div>
+      <div class="free-tag ${free>5?'ok':'warn'}">${free.toFixed(1)}h lliures</div>
     </div>`;
-  }).join('');}
-  const dashRent=document.getElementById('dash-rent');
-  if(!S.projects.length){dashRent.innerHTML='<div class="empty">No hay proyectos.</div>';}
-  else{dashRent.innerHTML=S.projects.map(proj=>{
+  }).join('');
+
+  const dashRent=document.getElementById('dash-c-rent');
+  dashRent.innerHTML=C.projects.map(proj=>{
     const ing=+proj.ingresos||0;
-    const asignados=S.people.filter(pe=>{const a=proj.assignations[pe.id];return a&&a.active;});
-    const costeTotal=asignados.reduce((s,pe)=>s+costePers(pe,proj),0);
-    const margen=ing-costeTotal,pct=ing>0?Math.round((margen/ing)*100):0;
-    const mCls=margen>100?'pos':margen<-100?'neg':'zer';
-    const bCls=margen>100?'b-profit':margen<-100?'b-loss':'b-break';
-    const bLbl=margen>100?'Rentable':margen<-100?'Pérdidas':'Equilibrio';
-    const personasRows=asignados.map(pe=>{
-      const c=costePers(pe,proj),a=proj.assignations[pe.id];
-      const detalle=pe.type==='partner'?`${+a.pct||0}%`:`${(+a.horas||0).toFixed(1)}h`;
-      return `<div class="dr-row"><span>${esc(pe.name)} <span style="font-size:10px;color:var(--text3);">(${detalle})</span></span><span style="font-family:'DM Mono',monospace;">${fmt(c)} €</span></div>`;
-    }).join('');
+    const asig=C.people.filter(pe=>{const a=proj.assignations[pe.id];return a&&a.active;});
+    const costeT=asig.reduce((s,pe)=>s+costePerC(pe,proj),0);
+    const mar=ing-costeT,pct=ing>0?Math.round((mar/ing)*100):0;
+    const mCls=mar>100?'pos':mar<-100?'neg':'zer';
+    const bCls=mar>100?'b-profit':mar<-100?'b-loss':'b-break';
+    const bLbl=mar>100?'Rendible':mar<-100?'Pèrdues':'Equilibri';
+    const rows=asig.map(pe=>{const c=costePerC(pe,proj);const a=proj.assignations[pe.id];const det=pe.type==='partner'?`${+a.pct||0}%`:`${(+a.horas||0).toFixed(1)}h`;
+      return`<div class="dr-row"><span>${esc(pe.name)} <span style="font-size:10px;color:var(--text3);">(${det})</span></span><span style="font-family:'DM Mono',monospace;">${fmt(c)} €</span></div>`;}).join('');
     return `<div class="dr-card">
       <div class="dr-name">${esc(proj.name)}<span class="badge ${bCls}">${bLbl}</span></div>
-      <div class="dr-row"><span>Ingresos/mes</span><span style="font-family:'DM Mono',monospace;">${fmt(ing)} €</span></div>
+      <div class="dr-row"><span>Ingressos/mes</span><span style="font-family:'DM Mono',monospace;">${fmt(ing)} €</span></div>
       <div class="divider"></div>
-      ${personasRows||'<div style="font-size:11px;color:var(--text3);">Sin personas asignadas</div>'}
-      <div class="dr-total"><span>Margen</span><span class="${mCls}">${margen>=0?'+':''}${fmt(margen)} € ${ing>0?'('+pct+'%)':''}</span></div>
+      ${rows||'<div style="font-size:11px;color:var(--text3);">Sense persones assignades</div>'}
+      <div class="dr-total"><span>Marge</span><span class="${mCls}">${mar>=0?'+':''}${fmt(mar)} € ${ing>0?'('+pct+'%)':''}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderCarga(){renderEquipo();renderProyectosC();renderDashCarga();}
+
+/* ════════════════════════════════════
+   FINANCES
+════════════════════════════════════ */
+const DEFAULT_F={
+  fees:[{id:1,cliente:'Client Exemple',importe:2500,inicio:'2026-01-01',fin:'2026-12-31',cobros:{}}],
+  proyectos:[{id:1,cliente:'Projecte Exemple',importe:12000,inicio:'2026-01-01',fin:'2026-06-30',
+    hitos:[{id:1,nombre:'Inici',pct:50,fechaFactura:'2026-01-15',estado:'cobrado'},{id:2,nombre:'Tancament',pct:50,fechaFactura:'2026-06-15',estado:'pendiente'}]}],
+  gastos:defaultGastos(),
+  _fid:2,_prid:2,_hid:10
+};
+
+function fixF(){
+  F.fees=F.fees||[];F.proyectos=F.proyectos||[];
+  if(!F.gastos)F.gastos=defaultGastos();
+  ALL_KEYS.forEach(k=>{
+    if(!F.gastos[k])F.gastos[k]={rec:true,recVal:0,meses:{}};
+    if(F.gastos[k].rec===undefined)F.gastos[k].rec=true;
+    if(!F.gastos[k].meses)F.gastos[k].meses={};
+    MESOS.forEach(m=>{if(F.gastos[k].meses[m]===undefined)F.gastos[k].meses[m]=0;});
+  });
+  F.fees.forEach(f=>{f.cobros=f.cobros||{};});
+  F.proyectos.forEach(p=>{p.hitos=p.hitos||[];});
+  F._fid=F._fid||20;F._prid=F._prid||20;F._hid=F._hid||100;
+}
+function initFinanzas(){
+  onValue(finRef,snap=>{
+    const data=snap.val();
+    if(!finReady){
+      finReady=true;
+      if(!data){F=JSON.parse(JSON.stringify(DEFAULT_F));if(isAdmin)saveF();}
+      else{F=data;fixF();}
+      checkReady();
+    } else if(data){
+      F=data;fixF();
+      if(isSavingGastos){renderPrevFin();renderResumenFin();}
+      else{renderFinances();}
+    }
+  });
+}
+
+function gastoValMes(key,mm){const g=F.gastos[key];if(!g)return 0;if(g.rec)return +g.recVal||0;return +g.meses[mm]||0;}
+function gastosMes(ym){const[,mm]=ym.split('-');return ALL_KEYS.reduce((s,k)=>s+gastoValMes(k,mm),0);}
+
+function calcIngressos(){
+  const por={};
+  F.fees.forEach(f=>{mesesEntre(f.inicio,f.fin).forEach(mes=>{
+    if(!por[mes])por[mes]={previsto:0,cobrado:0,facturado:0,pendiente:0};
+    const c=f.cobros[mes]||{estado:'pendiente'};
+    por[mes].previsto+=+f.importe||0;
+    if(c.estado==='cobrado')por[mes].cobrado+=+f.importe||0;
+    else if(c.estado==='facturado')por[mes].facturado+=+f.importe||0;
+    else por[mes].pendiente+=+f.importe||0;
+  });});
+  F.proyectos.forEach(p=>{p.hitos.forEach(h=>{
+    const mes=h.fechaFactura?h.fechaFactura.substring(0,7):null;
+    const imp=Math.round((+p.importe||0)*(+h.pct||0)/100);
+    if(mes){
+      if(!por[mes])por[mes]={previsto:0,cobrado:0,facturado:0,pendiente:0};
+      por[mes].previsto+=imp;
+      if(h.estado==='cobrado')por[mes].cobrado+=imp;
+      else if(h.estado==='facturado')por[mes].facturado+=imp;
+      else por[mes].pendiente+=imp;
+    }
+  });});
+  return por;
+}
+
+/* ACCIONES FINANCES */
+window.addFee=function(){if(!isAdmin)return;const h=new Date().toISOString().split('T')[0];F.fees.push({id:F._fid++,cliente:'Nou client',importe:0,inicio:h,fin:'',cobros:{}});saveF();renderIngressos();};
+window.removeFee=function(id){if(!isAdmin)return;F.fees=F.fees.filter(f=>f.id!==id);saveF();renderFinances();};
+window.updateFee=function(id,k,v){if(!isAdmin)return;const f=F.fees.find(f=>f.id===id);if(f)f[k]=k==='importe'?+v:v;saveF();renderFinances();};
+window.updateCobro=function(fid,mes,k,v){if(!isAdmin)return;const f=F.fees.find(f=>f.id===fid);if(!f)return;if(!f.cobros[mes])f.cobros[mes]={estado:'pendiente',fecha:''};f.cobros[mes][k]=v;saveF();renderFinances();};
+window.addProyectoF=function(){if(!isAdmin)return;const h=new Date().toISOString().split('T')[0];F.proyectos.push({id:F._prid++,cliente:'Nou projecte',importe:0,inicio:h,fin:'',hitos:[{id:F._hid++,nombre:'Inici',pct:50,fechaFactura:'',estado:'pendiente'},{id:F._hid++,nombre:'Tancament',pct:50,fechaFactura:'',estado:'pendiente'}]});saveF();renderIngressos();};
+window.removeProyectoF=function(id){if(!isAdmin)return;F.proyectos=F.proyectos.filter(p=>p.id!==id);saveF();renderFinances();};
+window.updateProyectoF=function(id,k,v){if(!isAdmin)return;const p=F.proyectos.find(p=>p.id===id);if(p)p[k]=k==='importe'?+v:v;saveF();renderFinances();};
+window.addHitoF=function(prid){if(!isAdmin)return;const p=F.proyectos.find(p=>p.id===prid);if(!p)return;p.hitos.push({id:F._hid++,nombre:'Fita',pct:0,fechaFactura:'',estado:'pendiente'});saveF();renderIngressos();};
+window.removeHitoF=function(prid,hid){if(!isAdmin)return;const p=F.proyectos.find(p=>p.id===prid);if(!p)return;p.hitos=p.hitos.filter(h=>h.id!==hid);saveF();renderFinances();};
+window.updateHitoF=function(prid,hid,k,v){if(!isAdmin)return;const p=F.proyectos.find(p=>p.id===prid);if(!p)return;const h=p.hitos.find(h=>h.id===hid);if(!h)return;h[k]=k==='pct'?+v:v;saveF();renderFinances();};
+window.toggleRec=function(key,val){if(!isAdmin)return;F.gastos[key].rec=val;saveGastos();renderGastos();renderPrevFin();renderResumenFin();};
+window.updateRecVal=function(key,val){if(!isAdmin)return;F.gastos[key].recVal=+val;updateTotalConcepte(key);saveGastos();renderPrevFin();renderResumenFin();};
+window.updateMesVal=function(key,m,val){if(!isAdmin)return;F.gastos[key].meses[m]=+val;updateTotalConcepte(key);saveGastos();renderPrevFin();renderResumenFin();};
+window.toggleExpand=function(key){const row=document.getElementById('expand-'+key);const arrow=document.getElementById('arrow-'+key);if(!row)return;const open=row.style.display==='none';row.style.display=open?'':'none';if(arrow)arrow.classList.toggle('open',open);};
+
+function updateTotalConcepte(key){
+  const g=F.gastos[key];
+  const total=g.rec?(+g.recVal||0)*12:MESOS.reduce((s,m)=>s+(+g.meses[m]||0),0);
+  const el=document.getElementById('total-'+key);if(el)el.textContent=fmt(total)+' €';
+  const tot=ALL_KEYS.reduce((s,k)=>{const gg=F.gastos[k];return s+(gg.rec?((+gg.recVal||0)*12):MESOS.reduce((ss,m)=>ss+(+gg.meses[m]||0),0));},0);
+  const tEl=document.getElementById('total-gastos-general');if(tEl)tEl.textContent=fmt(tot)+' €';
+}
+
+/* RENDERS FINANCES */
+function renderPrevFin(){
+  if(!F||!C)return;
+  const ing=calcIngressos();
+  const mesesAny=MESOS.map(m=>AÑO+'-'+m);
+  const actual=mesActual();
+  const totalIng=mesesAny.reduce((s,m)=>s+(ing[m]?.previsto||0),0);
+  const totalGast=mesesAny.reduce((s,m)=>s+gastosMes(m),0);
+  const res=totalIng-totalGast;
+  const totalCob=mesesAny.reduce((s,m)=>s+(ing[m]?.cobrado||0),0);
+  const mActIng=ing[actual]?.previsto||0,mActGast=gastosMes(actual),mActRes=mActIng-mActGast;
+  document.getElementById('dash-f-summary').innerHTML=`
+    <div class="metric"><div class="mval">${fmt(mActIng)} €</div><div class="mlbl">Ingressos aquest mes</div></div>
+    <div class="metric"><div class="mval cr">${fmt(mActGast)} €</div><div class="mlbl">Despeses aquest mes</div></div>
+    <div class="metric"><div class="mval ${mActRes>=0?'cg':'cr'}">${mActRes>=0?'+':''}${fmt(mActRes)} €</div><div class="mlbl">Resultat aquest mes</div></div>
+    <div class="metric"><div class="mval">${fmt(totalIng)} €</div><div class="mlbl">Ingressos 2026</div></div>
+    <div class="metric"><div class="mval cr">${fmt(totalGast)} €</div><div class="mlbl">Despeses 2026</div></div>
+    <div class="metric"><div class="mval ${res>=0?'cg':'cr'}">${res>=0?'+':''}${fmt(res)} €</div><div class="mlbl">Resultat 2026</div></div>
+    <div class="metric"><div class="mval cg">${fmt(totalCob)} €</div><div class="mlbl">Total cobrat</div></div>`;
+  document.getElementById('dash-f-prev').innerHTML=mesesAny.map(mes=>{
+    const i=ing[mes]||{previsto:0,cobrado:0,facturado:0,pendiente:0};
+    const g=gastosMes(mes),res=i.previsto-g,isAct=mes===actual;
+    const resCls=res>=0?'cg':'cr';
+    const barPct=i.previsto>0?Math.min(100,Math.round((i.cobrado/i.previsto)*100)):0;
+    return `<div class="mes-card ${isAct?'actual':''}">
+      <div class="mes-nombre">${fmtMes(mes)}${isAct?' · avui':''}</div>
+      <div class="mes-row"><span>Ingressos</span><span>${fmt(i.previsto)} €</span></div>
+      <div class="mes-row" style="color:var(--red)"><span>Despeses</span><span>${fmt(g)} €</span></div>
+      <div class="mes-resultado"><span>Resultat</span><span class="${resCls}">${res>=0?'+':''}${fmt(res)} €</span></div>
+      ${i.cobrado>0?`<div class="mes-bar"><div class="mes-bar-fill" style="width:${barPct}%;background:var(--green);"></div></div>
+      <div style="font-size:10px;color:var(--green);margin-top:2px;">✓ ${fmt(i.cobrado)} € cobrat</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderIngressos(){
+  const ro=isAdmin?'':'readonly disabled';
+  // FEES
+  const feesEl=document.getElementById('fees-list');
+  if(!F.fees.length){feesEl.innerHTML='<div class="empty">No hi ha fees.</div>';}
+  else{feesEl.innerHTML=F.fees.map(f=>{
+    const mesos=mesesEntre(f.inicio,f.fin);
+    const cobrat=mesos.filter(m=>f.cobros[m]&&f.cobros[m].estado==='cobrado').length*(+f.importe||0);
+    const mesRows=mesos.map(mes=>{
+      const c=f.cobros[mes]||{estado:'pendiente',fecha:''};
+      const bCls=c.estado==='cobrado'?'b-cobrado':c.estado==='facturado'?'b-facturado':c.estado==='retrasado'?'b-retrasado':'b-pendiente';
+      return `<div class="hito-row">
+        <span style="font-size:12px;font-family:'DM Mono',monospace;width:70px;color:var(--text2);">${fmtMes(mes)}</span>
+        <select style="font-size:12px;padding:3px 6px;" ${ro} onchange="updateCobro(${f.id},'${mes}','estado',this.value)">
+          <option value="pendiente" ${c.estado==='pendiente'?'selected':''}>Pendent</option>
+          <option value="facturado" ${c.estado==='facturado'?'selected':''}>Facturat</option>
+          <option value="cobrado"   ${c.estado==='cobrado'?'selected':''}>Cobrat</option>
+          <option value="retrasado" ${c.estado==='retrasado'?'selected':''}>Retardat</option>
+        </select>
+        <input type="date" value="${c.fecha||''}" ${ro} onchange="updateCobro(${f.id},'${mes}','fecha',this.value)" style="font-size:12px;padding:3px 5px;">
+        <span class="badge ${bCls}">${c.estado==='cobrado'?'Cobrat':c.estado==='facturado'?'Facturat':c.estado==='retrasado'?'Retardat':'Pendent'}</span>
+      </div>`;
+    }).join('');
+    return `<div class="card">
+      <div class="card-header">
+        <div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="text" value="${esc(f.cliente)}" ${ro} onchange="updateFee(${f.id},'cliente',this.value)" style="font-weight:500;width:170px;">
+            <span class="badge b-fee">Fee</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;">${fmt(f.importe)} €/mes · ${fmt(cobrat)} € cobrat</div>
+        </div>
+        <button class="del-btn" onclick="removeFee(${f.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
+      </div>
+      <div class="card-row"><span class="flabel">€/mes</span><input type="number" value="${f.importe||0}" min="0" step="100" ${ro} onchange="updateFee(${f.id},'importe',this.value)" style="width:110px;"></div>
+      <div class="card-row">
+        <span class="flabel">Inici</span><input type="date" value="${f.inicio||''}" ${ro} onchange="updateFee(${f.id},'inicio',this.value)">
+        <span class="flabel">Fi</span><input type="date" value="${f.fin||''}" ${ro} onchange="updateFee(${f.id},'fin',this.value)">
+      </div>
+      <div class="hitos-section">
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.5rem;">Estat per mes</div>
+        ${mesRows||'<div style="font-size:12px;color:var(--text3);">Defineix inici i fi per veure els mesos.</div>'}
+      </div>
+    </div>`;
+  }).join('');}
+
+  // PROJECTES
+  const projEl=document.getElementById('proyectos-fin-list');
+  if(!F.proyectos.length){projEl.innerHTML='<div class="empty">No hi ha projectes.</div>';}
+  else{projEl.innerHTML=F.proyectos.map(p=>{
+    const totalPct=p.hitos.reduce((s,h)=>s+(+h.pct||0),0);
+    const cobrat=p.hitos.filter(h=>h.estado==='cobrado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
+    const pctOv=totalPct>100,pctOk=totalPct===100;
+    const hitoRows=p.hitos.map(h=>{
+      const imp=Math.round((+p.importe||0)*(+h.pct||0)/100);
+      return `<div class="hito-row">
+        <input type="text" value="${esc(h.nombre)}" ${ro} onchange="updateHitoF(${p.id},${h.id},'nombre',this.value)" style="width:110px;font-size:12px;">
+        <input type="number" value="${h.pct||0}" min="0" max="100" step="5" ${ro} onchange="updateHitoF(${p.id},${h.id},'pct',this.value)" style="width:50px;font-size:12px;">
+        <span class="hito-pct">%</span>
+        <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">${fmt(imp)} €</span>
+        <input type="date" value="${h.fechaFactura||''}" ${ro} onchange="updateHitoF(${p.id},${h.id},'fechaFactura',this.value)" style="font-size:12px;padding:3px 5px;">
+        <select style="font-size:12px;padding:3px 5px;" ${ro} onchange="updateHitoF(${p.id},${h.id},'estado',this.value)">
+          <option value="pendiente" ${h.estado==='pendiente'?'selected':''}>Pendent</option>
+          <option value="facturado" ${h.estado==='facturado'?'selected':''}>Facturat</option>
+          <option value="cobrado"   ${h.estado==='cobrado'?'selected':''}>Cobrat</option>
+          <option value="retrasado" ${h.estado==='retrasado'?'selected':''}>Retardat</option>
+        </select>
+        <button class="del-btn" onclick="removeHitoF(${p.id},${h.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
+      </div>`;
+    }).join('');
+    return `<div class="card">
+      <div class="card-header">
+        <div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input type="text" value="${esc(p.cliente)}" ${ro} onchange="updateProyectoF(${p.id},'cliente',this.value)" style="font-weight:500;width:170px;">
+            <span class="badge b-proyecto">Projecte</span>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;">${fmt(p.importe)} € total · ${fmt(cobrat)} € cobrat</div>
+        </div>
+        <button class="del-btn" onclick="removeProyectoF(${p.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
+      </div>
+      <div class="card-row"><span class="flabel">Import total €</span><input type="number" value="${p.importe||0}" min="0" step="100" ${ro} onchange="updateProyectoF(${p.id},'importe',this.value)" style="width:120px;"></div>
+      <div class="card-row">
+        <span class="flabel">Inici</span><input type="date" value="${p.inicio||''}" ${ro} onchange="updateProyectoF(${p.id},'inicio',this.value)">
+        <span class="flabel">Fi</span><input type="date" value="${p.fin||''}" ${ro} onchange="updateProyectoF(${p.id},'fin',this.value)">
+      </div>
+      <div class="hitos-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;">
+          <span style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);">Fites de cobrament</span>
+          <span style="font-size:11px;font-family:'DM Mono',monospace;color:${pctOv?'var(--red)':pctOk?'var(--green)':'var(--amber)'};">${totalPct}% ${pctOv?'⚠':pctOk?'✓':''}</span>
+        </div>
+        ${hitoRows}
+        ${isAdmin?`<button class="add-hito-btn" onclick="addHitoF(${p.id})">+ Fita</button>`:''}
+      </div>
     </div>`;
   }).join('');}
 }
 
-function renderAll(){renderEquipo();renderProyectos();renderDashboard();}
+function renderGastos(){
+  const ro=isAdmin?'':'disabled';
+  let html=`<div class="gastos-wrap"><table class="gastos-table">
+    <thead><tr>
+      <th>Concepte</th>
+      <th style="text-align:center;width:60px;">Rec.</th>
+      <th style="width:140px;">€/mes fix</th>
+      <th class="th-total" style="width:120px;">Total any</th>
+    </tr></thead><tbody>`;
+  CATEGORIAS.forEach(cat=>{
+    html+=`<tr class="cat-row"><td colspan="4">${cat.cat}</td></tr>`;
+    cat.items.forEach(item=>{
+      const key=item.key,g=F.gastos[key],isRec=!!g.rec,recVal=+g.recVal||0;
+      const totalAny=isRec?recVal*12:MESOS.reduce((s,m)=>s+(+g.meses[m]||0),0);
+      html+=`<tr class="item-row" onclick="toggleExpand('${key}')">
+        <td><span>${item.label}</span><span class="expand-arrow" id="arrow-${key}">▶</span></td>
+        <td style="text-align:center;" onclick="event.stopPropagation()">
+          <input type="checkbox" ${isRec?'checked':''} ${ro} onchange="toggleRec('${key}',this.checked)">
+        </td>
+        <td onclick="event.stopPropagation()">
+          <input type="number" class="${isRec?'rec-input':'g-input'}" value="${isRec?recVal:''}"
+            placeholder="${isRec?'0':'—'}" min="0" step="10"
+            ${!isRec||!isAdmin?'disabled':''}
+            onchange="updateRecVal('${key}',this.value)">
+        </td>
+        <td style="font-family:'DM Mono',monospace;background:var(--surface2);" id="total-${key}">${fmt(totalAny)} €</td>
+      </tr>`;
+      const mesItems=MESOS.map((m,i)=>{
+        const val=isRec?recVal:(+g.meses[m]||0);
+        return `<div class="mes-item">
+          <div class="mes-item-label">${MESOS_L[i]}</div>
+          ${isRec?`<div class="mes-item-val">${val>0?fmt(val)+' €':'—'}</div>`
+            :`<input type="number" class="g-input" value="${val||''}" placeholder="0" min="0" step="10"
+              ${ro} onchange="updateMesVal('${key}','${m}',this.value)">`}
+        </div>`;
+      }).join('');
+      html+=`<tr class="expand-row" id="expand-${key}" style="display:none;">
+        <td colspan="4"><div class="expand-inner"><div class="meses-grid">${mesItems}</div></div></td>
+      </tr>`;
+    });
+  });
+  const totalG=ALL_KEYS.reduce((s,k)=>{const g=F.gastos[k];return s+(g.rec?((+g.recVal||0)*12):MESOS.reduce((ss,m)=>ss+(+g.meses[m]||0),0));},0);
+  html+=`<tr class="total-row"><td colspan="3">Total despeses 2026</td><td id="total-gastos-general">${fmt(totalG)} €</td></tr>
+  </tbody></table></div>`;
+  document.getElementById('gastos-container').innerHTML=html;
+}
+
+function renderResumenFin(){
+  const ing=calcIngressos();
+  const mesesAny=MESOS.map(m=>AÑO+'-'+m);
+  const totalIng=mesesAny.reduce((s,m)=>s+(ing[m]?.previsto||0),0);
+  const totalCob=mesesAny.reduce((s,m)=>s+(ing[m]?.cobrado||0),0);
+  const totalPend=mesesAny.reduce((s,m)=>s+(ing[m]?.pendiente||0),0);
+  const totalGast=mesesAny.reduce((s,m)=>s+gastosMes(m),0);
+  const res=totalIng-totalGast;
+  document.getElementById('resumen-summary').innerHTML=`
+    <div class="metric"><div class="mval">${fmt(totalIng)} €</div><div class="mlbl">Ingressos previstos</div></div>
+    <div class="metric"><div class="mval cg">${fmt(totalCob)} €</div><div class="mlbl">Cobrat</div></div>
+    <div class="metric"><div class="mval ca">${fmt(totalPend)} €</div><div class="mlbl">Pendent cobrament</div></div>
+    <div class="metric"><div class="mval cr">${fmt(totalGast)} €</div><div class="mlbl">Despeses 2026</div></div>
+    <div class="metric"><div class="mval ${res>=0?'cg':'cr'}">${res>=0?'+':''}${fmt(res)} €</div><div class="mlbl">Resultat 2026</div></div>`;
+  const rows=[
+    ...F.fees.map(f=>{
+      const m=mesesEntre(f.inicio,f.fin);
+      const c=m.filter(mm=>f.cobros[mm]&&f.cobros[mm].estado==='cobrado').length*(+f.importe||0);
+      const fa=m.filter(mm=>f.cobros[mm]&&f.cobros[mm].estado==='facturado').length*(+f.importe||0);
+      const pe=m.filter(mm=>!f.cobros[mm]||['pendiente','retrasado'].includes(f.cobros[mm].estado)).length*(+f.importe||0);
+      return `<tr><td><strong>${esc(f.cliente)}</strong></td><td><span class="badge b-fee">Fee</span></td>
+        <td class="mono">${fmt(m.length*(+f.importe||0))} €</td>
+        <td class="mono" style="color:var(--green);">${fmt(c)} €</td>
+        <td class="mono" style="color:var(--blue);">${fmt(fa)} €</td>
+        <td class="mono" style="color:var(--amber);">${fmt(pe)} €</td></tr>`;
+    }),
+    ...F.proyectos.map(p=>{
+      const c=p.hitos.filter(h=>h.estado==='cobrado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
+      const fa=p.hitos.filter(h=>h.estado==='facturado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
+      const pe=p.hitos.filter(h=>['pendiente','retrasado'].includes(h.estado)).reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
+      return `<tr><td><strong>${esc(p.cliente)}</strong></td><td><span class="badge b-proyecto">Projecte</span></td>
+        <td class="mono">${fmt(p.importe)} €</td>
+        <td class="mono" style="color:var(--green);">${fmt(c)} €</td>
+        <td class="mono" style="color:var(--blue);">${fmt(fa)} €</td>
+        <td class="mono" style="color:var(--amber);">${fmt(pe)} €</td></tr>`;
+    })
+  ].join('');
+  document.getElementById('resumen-table').innerHTML=`
+    <thead><tr><th>Client</th><th>Tipus</th><th>Total</th>
+      <th style="color:var(--green);">Cobrat</th><th style="color:var(--blue);">Facturat</th>
+      <th style="color:var(--amber);">Pendent</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem;">Sense dades</td></tr>'}</tbody>`;
+}
+
+function renderFinances(){renderPrevFin();renderIngressos();renderGastos();renderResumenFin();}
+function renderAll(){renderCarga();renderFinances();}
 </script>
 </body>
 </html>
