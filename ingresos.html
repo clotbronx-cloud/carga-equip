@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ingresos · Moodin</title>
+<title>Ingresos & Gastos · Moodin</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -36,9 +36,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
 /* HEADER */
 header{background:var(--surface);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;position:sticky;top:0;z-index:200;}
-.logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:-.02em;}
+.logo{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;letter-spacing:-.02em;display:flex;align-items:center;gap:12px;}
 .logo span{color:var(--text3);}
-.logo a{text-decoration:none;color:var(--text2);font-size:12px;margin-left:12px;}
+.logo a{text-decoration:none;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;}
 .logo a:hover{color:var(--text);}
 .header-right{display:flex;align-items:center;gap:12px;}
 .sync{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;}
@@ -49,12 +49,12 @@ header{background:var(--surface);border-bottom:1px solid var(--border);height:52
 .logout-btn:hover{background:var(--surface2);}
 
 /* TABS */
-.tabs-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:52px;z-index:199;}
-.tnav{font-size:13px;padding:10px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;}
+.tabs-nav{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;position:sticky;top:52px;z-index:199;overflow-x:auto;}
+.tnav{font-size:13px;padding:10px 16px;cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;margin-bottom:-1px;transition:all .15s;white-space:nowrap;}
 .tnav:hover{color:var(--text);}
 .tnav.active{color:var(--text);border-bottom-color:var(--text);font-weight:500;}
 
-.container{max-width:1200px;margin:0 auto;padding:1.5rem;}
+.container{max-width:1300px;margin:0 auto;padding:1.5rem;}
 .tab-pane{display:none;}.tab-pane.active{display:block;}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
 .section-title{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text2);}
@@ -75,41 +75,59 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:fo
 /* SUMMARY */
 .summary-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.625rem;margin-bottom:1.5rem;}
 .metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.75rem 1rem;}
-.mval{font-size:22px;font-weight:500;font-family:'DM Mono',monospace;line-height:1;}
+.mval{font-size:20px;font-weight:500;font-family:'DM Mono',monospace;line-height:1;}
 .mval.cg{color:var(--green);}.mval.ca{color:var(--amber);}.mval.cr{color:var(--red);}.mval.cb{color:var(--blue);}
 .mlbl{font-size:11px;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}
 
-/* CARDS GRID */
+/* CARDS */
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:.75rem;margin-bottom:2rem;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;}
 .card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem;gap:8px;}
-.card-name{font-size:14px;font-weight:500;}
-.card-meta{font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;}
 .card-row{display:flex;align-items:center;gap:8px;margin-bottom:.4rem;flex-wrap:wrap;}
 .card-row:last-child{margin-bottom:0;}
 .del-btn{font-size:11px;padding:2px 7px;border:1px solid var(--border);border-radius:var(--rs);background:transparent;color:var(--text3);cursor:pointer;flex-shrink:0;}
 .del-btn:hover{border-color:var(--red-bd);color:var(--red);background:var(--red-bg);}
-
-/* HITOS */
 .hitos-section{margin-top:.75rem;border-top:1px solid var(--border);padding-top:.75rem;}
 .hito-row{display:flex;align-items:center;gap:6px;margin-bottom:.375rem;flex-wrap:wrap;}
-.hito-row:last-child{margin-bottom:0;}
 .hito-pct{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;width:32px;}
 .add-hito-btn{font-size:11px;padding:2px 8px;border:1px dashed var(--border2);border-radius:var(--rs);background:transparent;color:var(--text3);cursor:pointer;margin-top:4px;}
 .add-hito-btn:hover{background:var(--surface2);color:var(--text);}
 
-/* TESORERÍA */
-.tesoro-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.625rem;margin-bottom:1.5rem;}
+/* GASTOS */
+.gastos-año-nav{display:flex;align-items:center;gap:8px;margin-bottom:1.5rem;}
+.año-btn{font-size:13px;padding:4px 12px;border:1px solid var(--border2);border-radius:var(--rs);background:transparent;color:var(--text2);cursor:pointer;}
+.año-btn.active{background:var(--text);color:var(--surface);border-color:var(--text);}
+.gastos-table-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);}
+.gastos-table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px;}
+.gastos-table th{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:8px 10px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap;}
+.gastos-table th:first-child{text-align:left;position:sticky;left:0;background:var(--surface);z-index:2;}
+.gastos-table th:last-child{background:var(--surface2);color:var(--text2);}
+.gastos-table td{padding:6px 8px;border-bottom:1px solid var(--border);text-align:right;vertical-align:middle;}
+.gastos-table td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);font-weight:500;z-index:1;min-width:160px;}
+.gastos-table tr:last-child td{border-bottom:none;}
+.gastos-table tr.total-row td{background:var(--surface2);font-weight:500;font-family:'DM Mono',monospace;border-top:2px solid var(--border2);}
+.gastos-table tr.total-row td:first-child{background:var(--surface2);}
+.gastos-table tr:hover td{background:var(--bg);}
+.gastos-table tr:hover td:first-child{background:var(--bg);}
+.gasto-input{width:72px;font-size:12px;padding:2px 5px;text-align:right;}
+.categoria-label{font-size:10px;color:var(--text3);font-weight:400;display:block;text-transform:none;letter-spacing:0;}
+.cat-header{background:var(--bg) !important;}
+.cat-header td{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);padding:4px 8px;border-bottom:none !important;}
+.cat-header td:first-child{background:var(--bg) !important;}
+
+/* PREVISIÓN */
+.prev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.625rem;margin-bottom:1.5rem;}
 .mes-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.875rem 1rem;}
 .mes-card.actual{border-color:var(--text);border-width:2px;}
-.mes-nombre{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:.5rem;}
-.mes-previsto{font-size:18px;font-weight:500;font-family:'DM Mono',monospace;color:var(--text);}
-.mes-cobrado{font-size:13px;font-family:'DM Mono',monospace;color:var(--green);margin-top:2px;}
-.mes-pendiente{font-size:11px;color:var(--amber);font-family:'DM Mono',monospace;margin-top:1px;}
-.mes-bar{height:4px;border-radius:99px;background:var(--surface2);margin-top:.5rem;overflow:hidden;}
-.mes-bar-fill{height:100%;border-radius:99px;background:var(--green);transition:width .4s;}
+.mes-nombre{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:.625rem;}
+.mes-row{display:flex;justify-content:space-between;font-size:12px;padding:2px 0;color:var(--text2);}
+.mes-row span:last-child{font-family:'DM Mono',monospace;font-weight:500;}
+.mes-resultado{display:flex;justify-content:space-between;font-size:13px;font-weight:500;font-family:'DM Mono',monospace;border-top:1px solid var(--border);margin-top:6px;padding-top:6px;}
+.mes-bar-wrap{margin-top:6px;}
+.mes-bar{height:4px;border-radius:99px;background:var(--surface2);overflow:hidden;margin-bottom:2px;}
+.mes-bar-fill{height:100%;border-radius:99px;}
 
-/* TABLA RESUMEN */
+/* RESUMEN TABLE */
 .resumen-table{width:100%;border-collapse:collapse;font-size:13px;}
 .resumen-table th{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
 .resumen-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
@@ -130,7 +148,7 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:fo
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-logo">ingresos<span>/</span>moodin</div>
+    <div class="login-logo">finanzas<span>/</span>moodin</div>
     <div class="login-sub">Acceso privado</div>
     <label class="login-label">Email</label>
     <input class="login-input" type="email" id="login-email" placeholder="tu@email.com">
@@ -146,8 +164,8 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:fo
 <div id="app-wrap" style="display:none">
   <header>
     <div class="logo">
-      ingresos<span>/</span>moodin
-      <a href="index.html">← Volver a carga</a>
+      finanzas<span>/</span>moodin
+      <a href="index.html">← Carga de trabajo</a>
     </div>
     <div class="header-right">
       <div class="sync"><div class="dot" id="dot"></div><span id="slbl">Conectando...</span></div>
@@ -158,20 +176,21 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:fo
     </div>
   </header>
   <nav class="tabs-nav">
-    <button class="tnav active" onclick="showTab('tesoreria',this)">Previsión</button>
-    <button class="tnav" onclick="showTab('fees',this)">Fees recurrentes</button>
-    <button class="tnav" onclick="showTab('proyectos',this)">Proyectos cerrados</button>
+    <button class="tnav active" onclick="showTab('prevision',this)">Previsión</button>
+    <button class="tnav" onclick="showTab('fees',this)">Fees</button>
+    <button class="tnav" onclick="showTab('proyectos',this)">Proyectos</button>
+    <button class="tnav" onclick="showTab('gastos',this)">Gastos</button>
     <button class="tnav" onclick="showTab('resumen',this)">Resumen</button>
   </nav>
   <div class="container">
     <div id="data-loading" class="loading"><div class="spinner"></div>Cargando...</div>
     <div id="app" style="display:none">
 
-      <!-- PREVISIÓN TESORERÍA -->
-      <div class="tab-pane active" id="tab-tesoreria">
-        <div class="summary-row" id="summary-tesoro"></div>
-        <div class="section-header"><span class="section-title">Previsión mensual de cobros</span></div>
-        <div class="tesoro-grid" id="tesoro-grid"></div>
+      <!-- PREVISIÓN -->
+      <div class="tab-pane active" id="tab-prevision">
+        <div class="summary-row" id="summary-prev"></div>
+        <div class="section-header"><span class="section-title">Resultado mensual</span></div>
+        <div class="prev-grid" id="prev-grid"></div>
       </div>
 
       <!-- FEES -->
@@ -183,7 +202,7 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:fo
         <div class="cards-grid" id="fees-list"></div>
       </div>
 
-      <!-- PROYECTOS CERRADOS -->
+      <!-- PROYECTOS -->
       <div class="tab-pane" id="tab-proyectos">
         <div class="section-header">
           <span class="section-title">Proyectos cerrados</span>
@@ -192,11 +211,22 @@ input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:fo
         <div class="cards-grid" id="proyectos-list"></div>
       </div>
 
+      <!-- GASTOS -->
+      <div class="tab-pane" id="tab-gastos">
+        <div class="section-header">
+          <span class="section-title">Gastos por mes</span>
+          <div class="gastos-año-nav" id="año-nav"></div>
+        </div>
+        <div class="gastos-table-wrap">
+          <table class="gastos-table" id="gastos-table"></table>
+        </div>
+      </div>
+
       <!-- RESUMEN -->
       <div class="tab-pane" id="tab-resumen">
         <div class="summary-row" id="summary-resumen"></div>
-        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Todos los clientes</span></div>
-        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;">
+        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Clientes</span></div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem;">
           <table class="resumen-table" id="resumen-table"></table>
         </div>
       </div>
@@ -222,35 +252,75 @@ const FB={
   appId:"1:183723016420:web:72e48c81ed2c83ba066cf1"
 };
 
-const firebaseApp=initializeApp(FB,'ingresos');
+const firebaseApp=initializeApp(FB,'finanzas');
 const db=getDatabase(firebaseApp);
 const auth=getAuth(firebaseApp);
-const dataRef=ref(db,'ingresos1');
+const dataRef=ref(db,'finanzas1');
 const ADMIN_EMAIL='marc@moodin.eu';
 
 let S=null,saveTO=null,firstData=true,isAdmin=false;
+let gastoAño=new Date().getFullYear();
 const dot=document.getElementById('dot'),slbl=document.getElementById('slbl');
 
+// Categorías de gastos con sus conceptos
+const CATEGORIAS=[
+  {cat:'Personal',items:[
+    {key:'socios',label:'Socios'},
+    {key:'trabajadores',label:'Trabajadores'},
+    {key:'becarios',label:'Becarios'},
+  ]},
+  {cat:'Servicios profesionales',items:[
+    {key:'asesoria',label:'Asesoría contable'},
+    {key:'legal',label:'Servicios legales'},
+  ]},
+  {cat:'Oficina',items:[
+    {key:'alquiler',label:'Alquiler oficina'},
+    {key:'suministros',label:'Suministros (luz, agua, internet)'},
+    {key:'material_oficina',label:'Material de oficina'},
+    {key:'mobiliario',label:'Mobiliario'},
+  ]},
+  {cat:'Tecnología',items:[
+    {key:'informatico',label:'Material informático'},
+    {key:'software',label:'Software y subscripciones'},
+    {key:'web',label:'Web y hosting'},
+  ]},
+  {cat:'Comercial',items:[
+    {key:'marketing',label:'Marketing y publicidad'},
+    {key:'desplazamientos',label:'Desplazamientos y dietas'},
+    {key:'formacion',label:'Formación'},
+  ]},
+  {cat:'Otros',items:[
+    {key:'seguros',label:'Seguros'},
+    {key:'cuotas',label:'Cuotas asociaciones'},
+    {key:'otros',label:'Otros gastos'},
+  ]},
+];
+
+const ALL_KEYS=CATEGORIAS.flatMap(c=>c.items.map(i=>i.key));
+
+function gastoDefault(){
+  const g={tipo:'fijo'};
+  ALL_KEYS.forEach(k=>{g[k]=0;});
+  // meses: si variable, importe por mes
+  g.meses={};
+  return g;
+}
+
 const DEFAULT={
-  fees:[
-    {id:1,cliente:'Cliente Ejemplo',importe:2500,inicio:'2024-01-01',fin:'2024-12-31',
-      cobros:{
-        '2024-01':{estado:'cobrado',fecha:'2024-01-05'},
-        '2024-02':{estado:'cobrado',fecha:'2024-02-07'},
-        '2024-03':{estado:'facturado',fecha:''},
-        '2024-04':{estado:'pendiente',fecha:''},
-      }
-    }
-  ],
-  proyectos:[
-    {id:1,cliente:'Proyecto Ejemplo',importe:12000,inicio:'2024-01-01',fin:'2024-06-30',
-      hitos:[
-        {id:1,nombre:'Inicio',pct:30,fechaFactura:'2024-01-15',fechaCobro:'2024-02-01',estado:'cobrado'},
-        {id:2,nombre:'Entrega parcial',pct:40,fechaFactura:'2024-03-15',fechaCobro:'',estado:'facturado'},
-        {id:3,nombre:'Cierre',pct:30,fechaFactura:'',fechaCobro:'',estado:'pendiente'},
-      ]
-    }
-  ],
+  fees:[{id:1,cliente:'Cliente Ejemplo',importe:2500,inicio:'2025-01-01',fin:'2025-12-31',cobros:{}}],
+  proyectos:[{id:1,cliente:'Proyecto Ejemplo',importe:12000,inicio:'2025-01-01',fin:'2025-06-30',
+    hitos:[
+      {id:1,nombre:'Inicio',pct:50,fechaFactura:'2025-01-15',estado:'cobrado'},
+      {id:2,nombre:'Cierre',pct:50,fechaFactura:'2025-06-15',estado:'pendiente'},
+    ]}],
+  gastos:{
+    2025: Object.assign(gastoDefault(),{
+      tipo:'fijo',
+      socios:6000,trabajadores:5000,becarios:800,asesoria:300,
+      alquiler:1200,suministros:200,software:300,web:50,
+      seguros:150,cuotas:100,desplazamientos:200,otros:100
+    })
+  },
   _fid:2,_prid:2,_hid:10
 };
 
@@ -273,8 +343,9 @@ onAuthStateChanged(auth,user=>{
     document.getElementById('app-wrap').style.display='block';
     document.getElementById('user-email').textContent=user.email;
     if(!isAdmin){
-      document.getElementById('btn-add-fee').style.display='none';
-      document.getElementById('btn-add-proj').style.display='none';
+      ['btn-add-fee','btn-add-proj'].forEach(id=>{
+        const el=document.getElementById(id);if(el)el.style.display='none';
+      });
     }
     initData();
   } else {
@@ -300,11 +371,15 @@ function initData(){
 }
 
 function fixState(){
-  S.fees=S.fees||[];S.proyectos=S.proyectos||[];
-  S._fid=S._fid||20;S._prid=S._prid||20;S._hid=S._hid||100;
+  S.fees=S.fees||[];S.proyectos=S.proyectos||[];S.gastos=S.gastos||{};
   S.fees.forEach(f=>{f.cobros=f.cobros||{};});
   S.proyectos.forEach(p=>{p.hitos=p.hitos||[];});
+  S._fid=S._fid||20;S._prid=S._prid||20;S._hid=S._hid||100;
+  // asegurar año actual en gastos
+  const y=new Date().getFullYear();
+  if(!S.gastos[y])S.gastos[y]=gastoDefault();
 }
+
 function sync(s){
   dot.className='dot '+(s==='on'?'on':s==='saving'?'saving':'');
   slbl.textContent=s==='on'?'Sincronizado':s==='saving'?'Guardando...':'Conectando...';
@@ -317,12 +392,11 @@ function save(){
 function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmt(n){return Math.round(Number(n)||0).toLocaleString('es-ES');}
-function fmtMes(ym){if(!ym)return '';const[y,m]=ym.split('-');const meses=['Ene','Feb','Mar','Apr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return meses[+m-1]+' '+y;}
+function fmtMes(ym){if(!ym)return '';const[y,m]=ym.split('-');const ms=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return ms[+m-1]+' '+y;}
 function mesActual(){const n=new Date();return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0');}
 function mesesEntre(inicio,fin){
-  const meses=[];
-  if(!inicio||!fin)return meses;
-  let[y,m]= inicio.split('-').map(Number);
+  const meses=[];if(!inicio||!fin)return meses;
+  let[y,m]=inicio.split('-').map(Number);
   const[fy,fm]=fin.split('-').map(Number);
   while(y<fy||(y===fy&&m<=fm)){
     meses.push(y+'-'+String(m).padStart(2,'0'));
@@ -331,150 +405,167 @@ function mesesEntre(inicio,fin){
   return meses;
 }
 
-/* Calcular cobros previstos y reales por mes */
-function calcTesoreria(){
+window.showTab=function(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='gastos')renderGastos();
+};
+
+/* ── CÁLCULOS INGRESOS ── */
+function calcIngresos(){
   const porMes={};
-  // FEES
   S.fees.forEach(f=>{
-    const meses=mesesEntre(f.inicio,f.fin);
-    meses.forEach(mes=>{
-      if(!porMes[mes])porMes[mes]={previsto:0,cobrado:0,facturado:0,pendiente:0,items:[]};
+    mesesEntre(f.inicio,f.fin).forEach(mes=>{
+      if(!porMes[mes])porMes[mes]={previsto:0,cobrado:0,facturado:0,pendiente:0};
       const cobro=f.cobros[mes]||{estado:'pendiente'};
       porMes[mes].previsto+=+f.importe||0;
       if(cobro.estado==='cobrado')porMes[mes].cobrado+=+f.importe||0;
       else if(cobro.estado==='facturado')porMes[mes].facturado+=+f.importe||0;
       else porMes[mes].pendiente+=+f.importe||0;
-      porMes[mes].items.push({nombre:f.cliente,importe:f.importe,estado:cobro.estado,tipo:'fee'});
     });
   });
-  // PROYECTOS - hitos por fecha de factura
   S.proyectos.forEach(p=>{
     p.hitos.forEach(h=>{
       const mes=h.fechaFactura?h.fechaFactura.substring(0,7):null;
-      const importeHito=Math.round((+p.importe||0)*(+h.pct||0)/100);
+      const imp=Math.round((+p.importe||0)*(+h.pct||0)/100);
       if(mes){
-        if(!porMes[mes])porMes[mes]={previsto:0,cobrado:0,facturado:0,pendiente:0,items:[]};
-        porMes[mes].previsto+=importeHito;
-        if(h.estado==='cobrado')porMes[mes].cobrado+=importeHito;
-        else if(h.estado==='facturado')porMes[mes].facturado+=importeHito;
-        else porMes[mes].pendiente+=importeHito;
-        porMes[mes].items.push({nombre:p.cliente+' · '+h.nombre,importe:importeHito,estado:h.estado,tipo:'proyecto'});
+        if(!porMes[mes])porMes[mes]={previsto:0,cobrado:0,facturado:0,pendiente:0};
+        porMes[mes].previsto+=imp;
+        if(h.estado==='cobrado')porMes[mes].cobrado+=imp;
+        else if(h.estado==='facturado')porMes[mes].facturado+=imp;
+        else porMes[mes].pendiente+=imp;
       }
     });
   });
   return porMes;
 }
 
-window.showTab=function(id,btn){
-  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
-};
+/* ── CÁLCULOS GASTOS ── */
+function gastosMes(ym){
+  // ym = '2025-04'
+  const[y,m]=ym.split('-').map(Number);
+  const gY=S.gastos[y];
+  if(!gY)return 0;
+  if(gY.tipo==='fijo'){
+    // suma todos los conceptos del año como fijo mensual
+    return ALL_KEYS.reduce((s,k)=>s+(+gY[k]||0),0);
+  } else {
+    // variable: busca el mes concreto
+    const mesData=(gY.meses&&gY.meses[String(m).padStart(2,'0')])||{};
+    return ALL_KEYS.reduce((s,k)=>s+(+mesData[k]||0),0);
+  }
+}
 
-/* ── FEES ── */
-window.addFee=function(){
-  if(!isAdmin)return;
-  const hoy=new Date().toISOString().split('T')[0];
-  S.fees.push({id:S._fid++,cliente:'Nuevo cliente',importe:0,inicio:hoy,fin:'',cobros:{}});
-  save();renderFees();
-};
-window.removeFee=function(id){if(!isAdmin)return;S.fees=S.fees.filter(f=>f.id!==id);save();renderAll();};
-window.updateFee=function(id,k,v){
-  if(!isAdmin)return;
-  const f=S.fees.find(f=>f.id===id);
-  if(f)f[k]=k==='importe'?+v:v;
-  save();renderAll();
-};
-window.updateCobro=function(fid,mes,k,v){
-  if(!isAdmin)return;
-  const f=S.fees.find(f=>f.id===fid);if(!f)return;
-  if(!f.cobros[mes])f.cobros[mes]={estado:'pendiente',fecha:''};
-  f.cobros[mes][k]=v;
-  save();renderAll();
-};
+function gastoConceptoMes(key,ym){
+  const[y,m]=ym.split('-').map(Number);
+  const gY=S.gastos[y];
+  if(!gY)return 0;
+  if(gY.tipo==='fijo')return +gY[key]||0;
+  const mesData=(gY.meses&&gY.meses[String(m).padStart(2,'0')])||{};
+  return +mesData[key]||0;
+}
 
-/* ── PROYECTOS ── */
-window.addProyecto=function(){
-  if(!isAdmin)return;
-  const hoy=new Date().toISOString().split('T')[0];
-  S.proyectos.push({id:S._prid++,cliente:'Nuevo proyecto',importe:0,inicio:hoy,fin:'',hitos:[
-    {id:S._hid++,nombre:'Inicio',pct:50,fechaFactura:'',fechaCobro:'',estado:'pendiente'},
-    {id:S._hid++,nombre:'Cierre',pct:50,fechaFactura:'',fechaCobro:'',estado:'pendiente'},
-  ]});
-  save();renderProyectos();
-};
-window.removeProyecto=function(id){if(!isAdmin)return;S.proyectos=S.proyectos.filter(p=>p.id!==id);save();renderAll();};
-window.updateProyecto=function(id,k,v){
-  if(!isAdmin)return;
-  const p=S.proyectos.find(p=>p.id===id);
-  if(p)p[k]=k==='importe'?+v:v;
-  save();renderAll();
-};
-window.addHito=function(prid){
-  if(!isAdmin)return;
-  const p=S.proyectos.find(p=>p.id===prid);if(!p)return;
-  p.hitos.push({id:S._hid++,nombre:'Hito',pct:0,fechaFactura:'',fechaCobro:'',estado:'pendiente'});
-  save();renderProyectos();
-};
-window.removeHito=function(prid,hid){
-  if(!isAdmin)return;
-  const p=S.proyectos.find(p=>p.id===prid);if(!p)return;
-  p.hitos=p.hitos.filter(h=>h.id!==hid);save();renderAll();
-};
-window.updateHito=function(prid,hid,k,v){
-  if(!isAdmin)return;
-  const p=S.proyectos.find(p=>p.id===prid);if(!p)return;
-  const h=p.hitos.find(h=>h.id===hid);if(!h)return;
-  h[k]=k==='pct'?+v:v;
-  save();renderAll();
-};
+/* ── RENDER PREVISIÓN ── */
+function renderPrevision(){
+  const ing=calcIngresos();
+  const actual=mesActual();
 
-const ro=()=>!isAdmin?'readonly disabled':'';
-const estadoBadge=e=>e==='cobrado'?'b-cobrado':e==='facturado'?'b-facturado':e==='retrasado'?'b-retrasado':'b-pendiente';
-const estadoLabel=e=>e==='cobrado'?'Cobrado':e==='facturado'?'Facturado':e==='retrasado'?'Retrasado':'Pendiente';
+  // generar 12 meses centrados en el actual
+  const mesesShow=[];
+  const now=new Date();
+  for(let i=-2;i<10;i++){
+    const d=new Date(now.getFullYear(),now.getMonth()+i,1);
+    mesesShow.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'));
+  }
 
+  // totales año actual
+  const añoActual=new Date().getFullYear();
+  const mesesAño=Array.from({length:12},(_,i)=>añoActual+'-'+String(i+1).padStart(2,'0'));
+  const totalIngAño=mesesAño.reduce((s,m)=>s+(ing[m]?.previsto||0),0);
+  const totalGastAño=mesesAño.reduce((s,m)=>s+gastosMes(m),0);
+  const resultadoAño=totalIngAño-totalGastAño;
+  const totalCobrado=Object.values(ing).reduce((s,m)=>s+m.cobrado,0);
+  const mesActualIng=ing[actual]?.previsto||0;
+  const mesActualGast=gastosMes(actual);
+
+  document.getElementById('summary-prev').innerHTML=`
+    <div class="metric"><div class="mval">${fmt(mesActualIng)} €</div><div class="mlbl">Ingresos este mes</div></div>
+    <div class="metric"><div class="mval cr">${fmt(mesActualGast)} €</div><div class="mlbl">Gastos este mes</div></div>
+    <div class="metric"><div class="mval ${mesActualIng-mesActualGast>=0?'cg':'cr'}">${mesActualIng-mesActualGast>=0?'+':''}${fmt(mesActualIng-mesActualGast)} €</div><div class="mlbl">Resultado este mes</div></div>
+    <div class="metric"><div class="mval">${fmt(totalIngAño)} €</div><div class="mlbl">Ingresos año</div></div>
+    <div class="metric"><div class="mval cr">${fmt(totalGastAño)} €</div><div class="mlbl">Gastos año</div></div>
+    <div class="metric"><div class="mval ${resultadoAño>=0?'cg':'cr'}">${resultadoAño>=0?'+':''}${fmt(resultadoAño)} €</div><div class="mlbl">Resultado año</div></div>
+    <div class="metric"><div class="mval cg">${fmt(totalCobrado)} €</div><div class="mlbl">Total cobrado</div></div>
+  `;
+
+  document.getElementById('prev-grid').innerHTML=mesesShow.map(mes=>{
+    const i=ing[mes]||{previsto:0,cobrado:0,facturado:0,pendiente:0};
+    const g=gastosMes(mes);
+    const resultado=i.previsto-g;
+    const isActual=mes===actual;
+    const resCls=resultado>=0?'cg':'cr';
+    const ingBar=i.previsto>0?Math.min(100,Math.round((i.cobrado/i.previsto)*100)):0;
+    return `<div class="mes-card ${isActual?'actual':''}">
+      <div class="mes-nombre">${fmtMes(mes)}${isActual?' · hoy':''}</div>
+      <div class="mes-row"><span>Ingresos</span><span>${fmt(i.previsto)} €</span></div>
+      <div class="mes-row" style="color:var(--red)"><span>Gastos</span><span>${fmt(g)} €</span></div>
+      <div class="mes-resultado">
+        <span>Resultado</span>
+        <span class="${resCls}">${resultado>=0?'+':''}${fmt(resultado)} €</span>
+      </div>
+      ${i.cobrado>0||i.facturado>0?`
+      <div class="mes-bar-wrap">
+        <div class="mes-bar"><div class="mes-bar-fill" style="width:${ingBar}%;background:var(--green);"></div></div>
+        <div style="font-size:10px;color:var(--text3);display:flex;justify-content:space-between;">
+          <span style="color:var(--green);">✓ ${fmt(i.cobrado)} €</span>
+          ${i.facturado>0?`<span style="color:var(--blue);">→ ${fmt(i.facturado)} €</span>`:''}
+        </div>
+      </div>`:''}
+    </div>`;
+  }).join('');
+}
+
+/* ── RENDER FEES ── */
 function renderFees(){
   const el=document.getElementById('fees-list');
   if(!S.fees.length){el.innerHTML='<div class="empty">No hay fees recurrentes.</div>';return;}
+  const ro=isAdmin?'':'readonly disabled';
   el.innerHTML=S.fees.map(f=>{
     const meses=mesesEntre(f.inicio,f.fin);
     const cobradoTotal=meses.filter(m=>f.cobros[m]&&f.cobros[m].estado==='cobrado').length*(+f.importe||0);
-    const totalEsperado=meses.length*(+f.importe||0);
+    const totalEsp=meses.length*(+f.importe||0);
     const mesRows=meses.map(mes=>{
       const c=f.cobros[mes]||{estado:'pendiente',fecha:''};
+      const bCls=c.estado==='cobrado'?'b-cobrado':c.estado==='facturado'?'b-facturado':c.estado==='retrasado'?'b-retrasado':'b-pendiente';
       return `<div class="hito-row">
         <span style="font-size:12px;font-family:'DM Mono',monospace;width:70px;color:var(--text2);">${fmtMes(mes)}</span>
-        <select style="font-size:12px;padding:3px 6px;" ${ro()} onchange="updateCobro(${f.id},'${mes}','estado',this.value)">
+        <select style="font-size:12px;padding:3px 6px;" ${ro} onchange="updateCobro(${f.id},'${mes}','estado',this.value)">
           <option value="pendiente" ${c.estado==='pendiente'?'selected':''}>Pendiente</option>
           <option value="facturado" ${c.estado==='facturado'?'selected':''}>Facturado</option>
           <option value="cobrado"   ${c.estado==='cobrado'?'selected':''}>Cobrado</option>
           <option value="retrasado" ${c.estado==='retrasado'?'selected':''}>Retrasado</option>
         </select>
-        <input type="date" value="${c.fecha||''}" ${ro()} onchange="updateCobro(${f.id},'${mes}','fecha',this.value)" style="font-size:12px;padding:3px 6px;" title="Fecha cobro">
-        <span class="badge ${estadoBadge(c.estado)}">${estadoLabel(c.estado)}</span>
+        <input type="date" value="${c.fecha||''}" ${ro} onchange="updateCobro(${f.id},'${mes}','fecha',this.value)" style="font-size:12px;padding:3px 6px;">
+        <span class="badge ${bCls}">${c.estado.charAt(0).toUpperCase()+c.estado.slice(1)}</span>
       </div>`;
     }).join('');
     return `<div class="card">
       <div class="card-header">
         <div>
           <div style="display:flex;align-items:center;gap:6px;">
-            <input type="text" value="${esc(f.cliente)}" ${ro()} onchange="updateFee(${f.id},'cliente',this.value)" style="font-weight:500;width:170px;">
+            <input type="text" value="${esc(f.cliente)}" ${ro} onchange="updateFee(${f.id},'cliente',this.value)" style="font-weight:500;width:170px;">
             <span class="badge b-fee">Fee</span>
           </div>
-          <div class="card-meta">${fmt(f.importe)} €/mes · ${meses.length} meses · ${fmt(cobradoTotal)} € cobrado de ${fmt(totalEsperado)} €</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;">${fmt(f.importe)} €/mes · ${fmt(cobradoTotal)} € cobrado de ${fmt(totalEsp)} €</div>
         </div>
         <button class="del-btn" onclick="removeFee(${f.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
       </div>
+      <div class="card-row"><span class="flabel">€/mes</span><input type="number" value="${f.importe||0}" min="0" step="100" ${ro} onchange="updateFee(${f.id},'importe',this.value)" style="width:110px;"></div>
       <div class="card-row">
-        <span class="flabel">Importe/mes €</span>
-        <input type="number" value="${f.importe||0}" min="0" step="100" ${ro()} onchange="updateFee(${f.id},'importe',this.value)" style="width:110px;">
-      </div>
-      <div class="card-row">
-        <span class="flabel">Inicio</span>
-        <input type="date" value="${f.inicio||''}" ${ro()} onchange="updateFee(${f.id},'inicio',this.value)">
-        <span class="flabel">Fin</span>
-        <input type="date" value="${f.fin||''}" ${ro()} onchange="updateFee(${f.id},'fin',this.value)">
+        <span class="flabel">Inicio</span><input type="date" value="${f.inicio||''}" ${ro} onchange="updateFee(${f.id},'inicio',this.value)">
+        <span class="flabel">Fin</span><input type="date" value="${f.fin||''}" ${ro} onchange="updateFee(${f.id},'fin',this.value)">
       </div>
       <div class="hitos-section">
         <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:.5rem;">Estado por mes</div>
@@ -484,22 +575,24 @@ function renderFees(){
   }).join('');
 }
 
+/* ── RENDER PROYECTOS ── */
 function renderProyectos(){
   const el=document.getElementById('proyectos-list');
   if(!S.proyectos.length){el.innerHTML='<div class="empty">No hay proyectos cerrados.</div>';return;}
+  const ro=isAdmin?'':'readonly disabled';
   el.innerHTML=S.proyectos.map(p=>{
     const totalPct=p.hitos.reduce((s,h)=>s+(+h.pct||0),0);
     const cobradoTotal=p.hitos.filter(h=>h.estado==='cobrado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
     const pctOver=totalPct>100,pctOk=totalPct===100;
     const hitoRows=p.hitos.map(h=>{
-      const importeH=Math.round((+p.importe||0)*(+h.pct||0)/100);
+      const imp=Math.round((+p.importe||0)*(+h.pct||0)/100);
       return `<div class="hito-row">
-        <input type="text" value="${esc(h.nombre)}" ${ro()} onchange="updateHito(${p.id},${h.id},'nombre',this.value)" style="width:110px;font-size:12px;">
-        <input type="number" value="${h.pct||0}" min="0" max="100" step="5" ${ro()} onchange="updateHito(${p.id},${h.id},'pct',this.value)" style="width:52px;font-size:12px;" title="% del total">
+        <input type="text" value="${esc(h.nombre)}" ${ro} onchange="updateHito(${p.id},${h.id},'nombre',this.value)" style="width:110px;font-size:12px;">
+        <input type="number" value="${h.pct||0}" min="0" max="100" step="5" ${ro} onchange="updateHito(${p.id},${h.id},'pct',this.value)" style="width:52px;font-size:12px;" title="% del total">
         <span class="hito-pct">%</span>
-        <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">${fmt(importeH)} €</span>
-        <input type="date" value="${h.fechaFactura||''}" ${ro()} onchange="updateHito(${p.id},${h.id},'fechaFactura',this.value)" style="font-size:12px;padding:3px 5px;" title="Fecha factura">
-        <select style="font-size:12px;padding:3px 5px;" ${ro()} onchange="updateHito(${p.id},${h.id},'estado',this.value)">
+        <span style="font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;">${fmt(imp)} €</span>
+        <input type="date" value="${h.fechaFactura||''}" ${ro} onchange="updateHito(${p.id},${h.id},'fechaFactura',this.value)" style="font-size:12px;padding:3px 5px;" title="Fecha factura">
+        <select style="font-size:12px;padding:3px 5px;" ${ro} onchange="updateHito(${p.id},${h.id},'estado',this.value)">
           <option value="pendiente" ${h.estado==='pendiente'?'selected':''}>Pendiente</option>
           <option value="facturado" ${h.estado==='facturado'?'selected':''}>Facturado</option>
           <option value="cobrado"   ${h.estado==='cobrado'?'selected':''}>Cobrado</option>
@@ -512,22 +605,17 @@ function renderProyectos(){
       <div class="card-header">
         <div>
           <div style="display:flex;align-items:center;gap:6px;">
-            <input type="text" value="${esc(p.cliente)}" ${ro()} onchange="updateProyecto(${p.id},'cliente',this.value)" style="font-weight:500;width:170px;">
+            <input type="text" value="${esc(p.cliente)}" ${ro} onchange="updateProyecto(${p.id},'cliente',this.value)" style="font-weight:500;width:170px;">
             <span class="badge b-proyecto">Proyecto</span>
           </div>
-          <div class="card-meta">${fmt(p.importe)} € total · ${fmt(cobradoTotal)} € cobrado</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px;font-family:'DM Mono',monospace;">${fmt(p.importe)} € total · ${fmt(cobradoTotal)} € cobrado</div>
         </div>
         <button class="del-btn" onclick="removeProyecto(${p.id})" ${!isAdmin?'style="display:none"':''}>✕</button>
       </div>
+      <div class="card-row"><span class="flabel">Importe total €</span><input type="number" value="${p.importe||0}" min="0" step="100" ${ro} onchange="updateProyecto(${p.id},'importe',this.value)" style="width:120px;"></div>
       <div class="card-row">
-        <span class="flabel">Importe total €</span>
-        <input type="number" value="${p.importe||0}" min="0" step="100" ${ro()} onchange="updateProyecto(${p.id},'importe',this.value)" style="width:120px;">
-      </div>
-      <div class="card-row">
-        <span class="flabel">Inicio</span>
-        <input type="date" value="${p.inicio||''}" ${ro()} onchange="updateProyecto(${p.id},'inicio',this.value)">
-        <span class="flabel">Fin</span>
-        <input type="date" value="${p.fin||''}" ${ro()} onchange="updateProyecto(${p.id},'fin',this.value)">
+        <span class="flabel">Inicio</span><input type="date" value="${p.inicio||''}" ${ro} onchange="updateProyecto(${p.id},'inicio',this.value)">
+        <span class="flabel">Fin</span><input type="date" value="${p.fin||''}" ${ro} onchange="updateProyecto(${p.id},'fin',this.value)">
       </div>
       <div class="hitos-section">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;">
@@ -541,63 +629,110 @@ function renderProyectos(){
   }).join('');
 }
 
-function renderTesoreria(){
-  const tesoro=calcTesoreria();
-  const meses=Object.keys(tesoro).sort();
-  const actual=mesActual();
+/* ── RENDER GASTOS ── */
+function renderGastos(){
+  // Nav años
+  const años=[gastoAño-1,gastoAño,gastoAño+1];
+  document.getElementById('año-nav').innerHTML=años.map(a=>
+    `<button class="año-btn ${a===gastoAño?'active':''}" onclick="setAño(${a})">${a}</button>`
+  ).join('');
 
-  // Mostrar 12 meses: 3 pasados + actual + 8 futuros mínimo
-  const todosMeses=new Set([...meses]);
-  let[y,m]=[new Date().getFullYear(),new Date().getMonth()-2];
-  for(let i=0;i<12;i++){
-    if(m<1){m+=12;y--;}if(m>12){m-=12;y++;}
-    todosMeses.add(y+'-'+String(m).padStart(2,'0'));
-    m++;
+  const gY=S.gastos[gastoAño]||(S.gastos[gastoAño]=gastoDefault());
+  const tipo=gY.tipo||'fijo';
+  const meses=Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0'));
+  const mesesLabel=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const ro=isAdmin?'':'readonly disabled';
+
+  // cabecera
+  let thead=`<thead><tr>
+    <th>Concepto</th>`;
+  if(tipo==='fijo'){
+    thead+=`<th>Mensual fijo</th><th style="background:var(--surface2);">Total año</th>`;
+  } else {
+    meses.forEach((m,i)=>thead+=`<th>${mesesLabel[i]}</th>`);
+    thead+=`<th style="background:var(--surface2);">Total año</th>`;
   }
-  const mesesMostrar=[...todosMeses].sort().slice(0,14);
+  thead+=`<th style="min-width:80px;">Tipo</th></tr></thead>`;
 
-  const totalPrevisto=meses.reduce((s,m)=>s+(tesoro[m]?.previsto||0),0);
-  const totalCobrado=meses.reduce((s,m)=>s+(tesoro[m]?.cobrado||0),0);
-  const totalPendiente=meses.reduce((s,m)=>s+(tesoro[m]?.pendiente||0),0);
-  const mesActualData=tesoro[actual]||{previsto:0,cobrado:0,pendiente:0,facturado:0};
+  // filas por categoría
+  let tbody='<tbody>';
+  CATEGORIAS.forEach(cat=>{
+    tbody+=`<tr class="cat-header"><td colspan="${tipo==='fijo'?3:15}">${cat.cat}</td></tr>`;
+    cat.items.forEach(item=>{
+      const key=item.key;
+      let totalAño=0;
+      let celdas='';
+      if(tipo==='fijo'){
+        const val=+gY[key]||0;
+        totalAño=val*12;
+        celdas=`<td><input type="number" class="gasto-input" value="${val}" min="0" step="10" ${ro}
+          onchange="updateGastoFijo(${gastoAño},'${key}',this.value)"></td>`;
+      } else {
+        meses.forEach(m=>{
+          const val=+((gY.meses&&gY.meses[m]&&gY.meses[m][key])||0);
+          totalAño+=val;
+          celdas+=`<td><input type="number" class="gasto-input" value="${val||''}" placeholder="0" min="0" step="10" ${ro}
+            onchange="updateGastoVariable(${gastoAño},'${m}','${key}',this.value)"></td>`;
+        });
+      }
+      tbody+=`<tr>
+        <td>${item.label}</td>
+        ${celdas}
+        <td style="font-family:'DM Mono',monospace;background:var(--surface2);font-size:12px;">${fmt(totalAño)}</td>
+        <td></td>
+      </tr>`;
+    });
+  });
 
-  document.getElementById('summary-tesoro').innerHTML=`
-    <div class="metric"><div class="mval cg">${fmt(totalCobrado)} €</div><div class="mlbl">Total cobrado</div></div>
-    <div class="metric"><div class="mval cb">${fmt(tesoro[actual]?.facturado||0)} €</div><div class="mlbl">Facturado este mes</div></div>
-    <div class="metric"><div class="mval ca">${fmt(totalPendiente)} €</div><div class="mlbl">Pendiente de cobro</div></div>
-    <div class="metric"><div class="mval">${fmt(mesActualData.previsto)} €</div><div class="mlbl">Previsto este mes</div></div>
-    <div class="metric"><div class="mval">${fmt(totalPrevisto)} €</div><div class="mlbl">Previsto total</div></div>
-  `;
+  // fila total
+  let totalRow='<tr class="total-row"><td>TOTAL GASTOS</td>';
+  if(tipo==='fijo'){
+    const mensual=ALL_KEYS.reduce((s,k)=>s+(+gY[k]||0),0);
+    totalRow+=`<td>${fmt(mensual)} €</td><td>${fmt(mensual*12)} €</td>`;
+  } else {
+    let totalGeneral=0;
+    meses.forEach(m=>{
+      const mesTotal=ALL_KEYS.reduce((s,k)=>s+(+((gY.meses&&gY.meses[m]&&gY.meses[m][k])||0)),0);
+      totalGeneral+=mesTotal;
+      totalRow+=`<td>${fmt(mesTotal)} €</td>`;
+    });
+    totalRow+=`<td>${fmt(totalGeneral)} €</td>`;
+  }
+  totalRow+=`<td></td></tr>`;
+  tbody+=totalRow+'</tbody>';
 
-  const maxPrevisto=Math.max(...mesesMostrar.map(m=>tesoro[m]?.previsto||0),1);
-  document.getElementById('tesoro-grid').innerHTML=mesesMostrar.map(mes=>{
-    const d=tesoro[mes]||{previsto:0,cobrado:0,facturado:0,pendiente:0};
-    const isActual=mes===actual;
-    const pct=Math.round((d.cobrado/Math.max(d.previsto,1))*100);
-    return `<div class="mes-card ${isActual?'actual':''}">
-      <div class="mes-nombre">${fmtMes(mes)}${isActual?' ·  hoy':''}</div>
-      <div class="mes-previsto">${fmt(d.previsto)} €</div>
-      ${d.cobrado>0?`<div class="mes-cobrado">✓ ${fmt(d.cobrado)} € cobrado</div>`:''}
-      ${d.facturado>0?`<div style="font-size:13px;font-family:'DM Mono',monospace;color:var(--blue);margin-top:2px;">→ ${fmt(d.facturado)} € facturado</div>`:''}
-      ${d.pendiente>0?`<div class="mes-pendiente">⏳ ${fmt(d.pendiente)} € pendiente</div>`:''}
-      <div class="mes-bar"><div class="mes-bar-fill" style="width:${Math.min(pct,100)}%;"></div></div>
-    </div>`;
-  }).join('');
+  // selector tipo + botón año
+  const tipoSelector=isAdmin?`
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
+      <span class="flabel">Tipo de imputación:</span>
+      <select onchange="setTipoGasto(${gastoAño},this.value)" style="font-size:13px;">
+        <option value="fijo" ${tipo==='fijo'?'selected':''}>Fijo mensual (mismo importe cada mes)</option>
+        <option value="variable" ${tipo==='variable'?'selected':''}>Variable (introduzco cada mes)</option>
+      </select>
+    </div>`:'';
+
+  document.getElementById('gastos-table').outerHTML=
+    `<div class="gastos-table-wrap">${tipoSelector}<div style="overflow-x:auto;"><table class="gastos-table" id="gastos-table">${thead}${tbody}</table></div></div>`;
 }
 
+/* ── RENDER RESUMEN ── */
 function renderResumen(){
-  const tesoro=calcTesoreria();
-  const totalIng=Object.values(tesoro).reduce((s,m)=>s+m.previsto,0);
-  const totalCob=Object.values(tesoro).reduce((s,m)=>s+m.cobrado,0);
-  const totalPend=Object.values(tesoro).reduce((s,m)=>s+m.pendiente,0);
-  const totalFact=Object.values(tesoro).reduce((s,m)=>s+m.facturado,0);
+  const ing=calcIngresos();
+  const mesesTodos=Object.keys(ing).sort();
+  const totalIng=mesesTodos.reduce((s,m)=>s+ing[m].previsto,0);
+  const totalCob=mesesTodos.reduce((s,m)=>s+ing[m].cobrado,0);
+  const totalPend=mesesTodos.reduce((s,m)=>s+ing[m].pendiente,0);
+  const añoActual=new Date().getFullYear();
+  const mesesAño=Array.from({length:12},(_,i)=>añoActual+'-'+String(i+1).padStart(2,'0'));
+  const totalGast=mesesAño.reduce((s,m)=>s+gastosMes(m),0);
+  const resultado=totalIng-totalGast;
 
   document.getElementById('summary-resumen').innerHTML=`
-    <div class="metric"><div class="mval">${S.fees.length+S.proyectos.length}</div><div class="mlbl">Clientes activos</div></div>
-    <div class="metric"><div class="mval">${fmt(totalIng)} €</div><div class="mlbl">Facturación prevista</div></div>
+    <div class="metric"><div class="mval">${fmt(totalIng)} €</div><div class="mlbl">Ingresos previstos</div></div>
     <div class="metric"><div class="mval cg">${fmt(totalCob)} €</div><div class="mlbl">Cobrado</div></div>
-    <div class="metric"><div class="mval cb">${fmt(totalFact)} €</div><div class="mlbl">Facturado</div></div>
-    <div class="metric"><div class="mval ca">${fmt(totalPend)} €</div><div class="mlbl">Pendiente</div></div>
+    <div class="metric"><div class="mval ca">${fmt(totalPend)} €</div><div class="mlbl">Pendiente cobro</div></div>
+    <div class="metric"><div class="mval cr">${fmt(totalGast)} €</div><div class="mlbl">Gastos año</div></div>
+    <div class="metric"><div class="mval ${resultado>=0?'cg':'cr'}">${resultado>=0?'+':''}${fmt(resultado)} €</div><div class="mlbl">Resultado año</div></div>
   `;
 
   const rows=[
@@ -605,46 +740,61 @@ function renderResumen(){
       const meses=mesesEntre(f.inicio,f.fin);
       const cobrado=meses.filter(m=>f.cobros[m]&&f.cobros[m].estado==='cobrado').length*(+f.importe||0);
       const facturado=meses.filter(m=>f.cobros[m]&&f.cobros[m].estado==='facturado').length*(+f.importe||0);
-      const pendiente=meses.filter(m=>!f.cobros[m]||f.cobros[m].estado==='pendiente').length*(+f.importe||0);
-      const total=meses.length*(+f.importe||0);
-      return `<tr>
-        <td><strong>${esc(f.cliente)}</strong></td>
-        <td><span class="badge b-fee">Fee</span></td>
-        <td class="mono">${fmt(f.importe)} €/mes</td>
-        <td class="mono">${fmt(total)} €</td>
+      const pendiente=meses.filter(m=>!f.cobros[m]||f.cobros[m].estado==='pendiente'||f.cobros[m].estado==='retrasado').length*(+f.importe||0);
+      return `<tr><td><strong>${esc(f.cliente)}</strong></td><td><span class="badge b-fee">Fee</span></td>
+        <td class="mono">${fmt(meses.length*(+f.importe||0))} €</td>
         <td class="mono" style="color:var(--green);">${fmt(cobrado)} €</td>
         <td class="mono" style="color:var(--blue);">${fmt(facturado)} €</td>
-        <td class="mono" style="color:var(--amber);">${fmt(pendiente)} €</td>
-      </tr>`;
+        <td class="mono" style="color:var(--amber);">${fmt(pendiente)} €</td></tr>`;
     }),
     ...S.proyectos.map(p=>{
       const cobrado=p.hitos.filter(h=>h.estado==='cobrado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
       const facturado=p.hitos.filter(h=>h.estado==='facturado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
       const pendiente=p.hitos.filter(h=>h.estado==='pendiente'||h.estado==='retrasado').reduce((s,h)=>s+Math.round((+p.importe||0)*(+h.pct||0)/100),0);
-      return `<tr>
-        <td><strong>${esc(p.cliente)}</strong></td>
-        <td><span class="badge b-proyecto">Proyecto</span></td>
-        <td class="mono">${fmt(p.importe)} € total</td>
+      return `<tr><td><strong>${esc(p.cliente)}</strong></td><td><span class="badge b-proyecto">Proyecto</span></td>
         <td class="mono">${fmt(p.importe)} €</td>
         <td class="mono" style="color:var(--green);">${fmt(cobrado)} €</td>
         <td class="mono" style="color:var(--blue);">${fmt(facturado)} €</td>
-        <td class="mono" style="color:var(--amber);">${fmt(pendiente)} €</td>
-      </tr>`;
+        <td class="mono" style="color:var(--amber);">${fmt(pendiente)} €</td></tr>`;
     })
   ].join('');
 
   document.getElementById('resumen-table').innerHTML=`
-    <thead><tr>
-      <th>Cliente</th><th>Tipo</th><th>Importe</th><th>Total</th>
+    <thead><tr><th>Cliente</th><th>Tipo</th><th>Total</th>
       <th style="color:var(--green);">Cobrado</th>
       <th style="color:var(--blue);">Facturado</th>
-      <th style="color:var(--amber);">Pendiente</th>
-    </tr></thead>
-    <tbody>${rows||'<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:2rem;">Sin datos</td></tr>'}</tbody>
-  `;
+      <th style="color:var(--amber);">Pendiente</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:2rem;">Sin datos</td></tr>'}</tbody>`;
 }
 
-function renderAll(){renderFees();renderProyectos();renderTesoreria();renderResumen();}
+/* ── ACCIONES FEES ── */
+window.addFee=function(){if(!isAdmin)return;const hoy=new Date().toISOString().split('T')[0];S.fees.push({id:S._fid++,cliente:'Nuevo cliente',importe:0,inicio:hoy,fin:'',cobros:{}});save();renderFees();};
+window.removeFee=function(id){if(!isAdmin)return;S.fees=S.fees.filter(f=>f.id!==id);save();renderAll();};
+window.updateFee=function(id,k,v){if(!isAdmin)return;const f=S.fees.find(f=>f.id===id);if(f)f[k]=k==='importe'?+v:v;save();renderAll();};
+window.updateCobro=function(fid,mes,k,v){if(!isAdmin)return;const f=S.fees.find(f=>f.id===fid);if(!f)return;if(!f.cobros[mes])f.cobros[mes]={estado:'pendiente',fecha:''};f.cobros[mes][k]=v;save();renderAll();};
+
+/* ── ACCIONES PROYECTOS ── */
+window.addProyecto=function(){if(!isAdmin)return;const hoy=new Date().toISOString().split('T')[0];S.proyectos.push({id:S._prid++,cliente:'Nuevo proyecto',importe:0,inicio:hoy,fin:'',hitos:[{id:S._hid++,nombre:'Inicio',pct:50,fechaFactura:'',estado:'pendiente'},{id:S._hid++,nombre:'Cierre',pct:50,fechaFactura:'',estado:'pendiente'}]});save();renderProyectos();};
+window.removeProyecto=function(id){if(!isAdmin)return;S.proyectos=S.proyectos.filter(p=>p.id!==id);save();renderAll();};
+window.updateProyecto=function(id,k,v){if(!isAdmin)return;const p=S.proyectos.find(p=>p.id===id);if(p)p[k]=k==='importe'?+v:v;save();renderAll();};
+window.addHito=function(prid){if(!isAdmin)return;const p=S.proyectos.find(p=>p.id===prid);if(!p)return;p.hitos.push({id:S._hid++,nombre:'Hito',pct:0,fechaFactura:'',estado:'pendiente'});save();renderProyectos();};
+window.removeHito=function(prid,hid){if(!isAdmin)return;const p=S.proyectos.find(p=>p.id===prid);if(!p)return;p.hitos=p.hitos.filter(h=>h.id!==hid);save();renderAll();};
+window.updateHito=function(prid,hid,k,v){if(!isAdmin)return;const p=S.proyectos.find(p=>p.id===prid);if(!p)return;const h=p.hitos.find(h=>h.id===hid);if(!h)return;h[k]=k==='pct'?+v:v;save();renderAll();};
+
+/* ── ACCIONES GASTOS ── */
+window.setAño=function(a){gastoAño=a;if(!S.gastos[a])S.gastos[a]=gastoDefault();renderGastos();};
+window.setTipoGasto=function(año,tipo){if(!isAdmin)return;if(!S.gastos[año])S.gastos[año]=gastoDefault();S.gastos[año].tipo=tipo;save();renderGastos();};
+window.updateGastoFijo=function(año,key,val){if(!isAdmin)return;if(!S.gastos[año])S.gastos[año]=gastoDefault();S.gastos[año][key]=+val;save();renderPrevision();renderResumen();};
+window.updateGastoVariable=function(año,mes,key,val){
+  if(!isAdmin)return;
+  if(!S.gastos[año])S.gastos[año]=gastoDefault();
+  if(!S.gastos[año].meses)S.gastos[año].meses={};
+  if(!S.gastos[año].meses[mes])S.gastos[año].meses[mes]={};
+  S.gastos[año].meses[mes][key]=+val;
+  save();renderPrevision();renderResumen();
+};
+
+function renderAll(){renderPrevision();renderFees();renderProyectos();renderResumen();}
 </script>
 </body>
 </html>
