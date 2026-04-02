@@ -971,8 +971,8 @@ window.updateOptimHoras=function(peId,projId,val,sliderEl){
 };
 
 window.applyOptim=function(){
-  if(!isAdmin){toast('Només l'administrador pot aplicar canvis.');return;}
-  if(!confirm('Aplicar els canvis d'optimització a les dades reals?'))return;
+  if(!isAdmin){toast('Nomes ladministrador pot aplicar canvis.');return;}
+  if(!confirm('Aplicar els canvis a les dades reals?'))return;
   C=JSON.parse(JSON.stringify(optim));
   saveC();
   optim=null;
