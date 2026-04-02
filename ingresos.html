@@ -543,7 +543,7 @@ function renderGastos(){
   },0);
   html+=`<tr class="total-row">
     <td colspan="3">Total gastos 2026</td>
-    <td>${fmt(totalGeneral)} €</td>
+    <td id="total-gastos-general">${fmt(totalGeneral)} €</td>
   </tr></tbody></table></div>`;
 
   document.getElementById('gastos-container').innerHTML=html;
@@ -705,6 +705,19 @@ function renderResumen(){
 }
 
 /* ── ACCIONES GASTOS ── */
+function updateTotalConcepto(key){
+  const g=S.gastos[key];
+  const total=g.rec?(+g.recVal||0)*12:MESES.reduce((s,m)=>s+(+g.meses[m]||0),0);
+  const el=document.getElementById('total-'+key);
+  if(el)el.textContent=fmt(total)+' €';
+  // actualizar total general
+  const totalGeneral=ALL_KEYS.reduce((s,k)=>{
+    const gg=S.gastos[k];
+    return s+(gg.rec?((+gg.recVal||0)*12):MESES.reduce((ss,m)=>ss+(+gg.meses[m]||0),0));
+  },0);
+  const totalEl=document.getElementById('total-gastos-general');
+  if(totalEl)totalEl.textContent=fmt(totalGeneral)+' €';
+}
 window.toggleRec=function(key,val){
   if(!isAdmin)return;
   S.gastos[key].rec=val;
@@ -713,11 +726,13 @@ window.toggleRec=function(key,val){
 window.updateRecVal=function(key,val){
   if(!isAdmin)return;
   S.gastos[key].recVal=+val;
+  updateTotalConcepto(key);
   save();renderPrevision();renderResumen();
 };
 window.updateMesVal=function(key,m,val){
   if(!isAdmin)return;
   S.gastos[key].meses[m]=+val;
+  updateTotalConcepto(key);
   save();renderPrevision();renderResumen();
 };
 
