@@ -1098,15 +1098,15 @@ function renderPrevFin(){
   const totalGast=mesesAny.reduce((s,m)=>s+gastosMes(m),0);
   const res=totalIng-totalGast;
   const totalCob=mesesAny.reduce((s,m)=>s+(ing[m]?.cobrado||0),0);
-  const mActIng=ing[actual]?.previsto||0,mActGast=gastosMes(actual),mActRes=mActIng-mActGast;
+  const totalFact=mesesAny.reduce((s,m)=>s+(ing[m]?.facturado||0),0);
+  const totalPend=mesesAny.reduce((s,m)=>s+(ing[m]?.pendiente||0),0);
   document.getElementById('dash-f-summary').innerHTML=`
-    <div class="metric"><div class="mval">${fmt(mActIng)} €</div><div class="mlbl">Ingressos aquest mes</div></div>
-    <div class="metric"><div class="mval cr">${fmt(mActGast)} €</div><div class="mlbl">Despeses aquest mes</div></div>
-    <div class="metric"><div class="mval ${mActRes>=0?'cg':'cr'}">${mActRes>=0?'+':''}${fmt(mActRes)} €</div><div class="mlbl">Resultat aquest mes</div></div>
     <div class="metric"><div class="mval">${fmt(totalIng)} €</div><div class="mlbl">Ingressos 2026</div></div>
     <div class="metric"><div class="mval cr">${fmt(totalGast)} €</div><div class="mlbl">Despeses 2026</div></div>
     <div class="metric"><div class="mval ${res>=0?'cg':'cr'}">${res>=0?'+':''}${fmt(res)} €</div><div class="mlbl">Resultat 2026</div></div>
-    <div class="metric"><div class="mval cg">${fmt(totalCob)} €</div><div class="mlbl">Total cobrat</div></div>`;
+    <div class="metric"><div class="mval cg">${fmt(totalCob)} €</div><div class="mlbl">Total cobrat</div></div>
+    <div class="metric"><div class="mval cb">${fmt(totalFact)} €</div><div class="mlbl">Facturat pendent cobro</div></div>
+    <div class="metric"><div class="mval ca">${fmt(totalPend)} €</div><div class="mlbl">Pendent facturar</div></div>`;
   document.getElementById('dash-f-prev').innerHTML=mesesAny.map(mes=>{
     const i=ing[mes]||{previsto:0,cobrado:0,facturado:0,pendiente:0};
     const g=gastosMes(mes),res=i.previsto-g,isAct=mes===actual;
