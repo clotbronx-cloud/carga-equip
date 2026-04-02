@@ -283,11 +283,31 @@ input.over{border-color:var(--red-bd)!important;background:var(--red-bg)!importa
       <!-- ══ CARGA DE TRABAJO ══ -->
       <!-- Dashboard Carga -->
       <div class="section active" id="sec-carga-dashboard-carga">
-        <div class="summary-row" id="dash-c-summary"></div>
-        <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Càrrega de l'equip</span></div>
-        <div class="dash-grid" id="dash-c-carga"></div>
-        <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rendibilitat per projecte</span></div>
-        <div class="dash-rent-grid" id="dash-c-rent"></div>
+        <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:1.5rem;">
+          <button id="tab-foto-btn" onclick="showDashTab('foto')" style="font-size:13px;padding:8px 18px;border:none;border-bottom:2px solid var(--text);background:none;color:var(--text);font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;margin-bottom:-1px;">Foto actual</button>
+          <button id="tab-optim-btn" onclick="showDashTab('optim')" style="font-size:13px;padding:8px 18px;border:none;border-bottom:2px solid transparent;background:none;color:var(--text2);font-family:'DM Sans',sans-serif;cursor:pointer;margin-bottom:-1px;">Optimització</button>
+        </div>
+        <div id="dash-tab-foto">
+          <div class="summary-row" id="dash-c-summary"></div>
+          <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Càrrega de l'equip</span></div>
+          <div class="dash-grid" id="dash-c-carga"></div>
+          <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rendiment per hora · foto actual</span></div>
+          <div id="dash-c-eph"></div>
+          <div class="section-header" style="margin-bottom:.75rem;margin-top:.5rem"><span class="section-title">Rendibilitat per projecte</span></div>
+          <div class="dash-rent-grid" id="dash-c-rent"></div>
+        </div>
+        <div id="dash-tab-optim" style="display:none;">
+          <div style="background:var(--amber-bg);border:1px solid var(--amber-bd);border-radius:var(--rs);padding:.75rem 1rem;margin-bottom:1.5rem;font-size:13px;color:var(--amber);display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <span>Mode simulació — els canvis no afecten les dades reals fins que fas clic a "Aplicar canvis".</span>
+            <button onclick="applyOptim()" style="font-size:13px;padding:6px 16px;border-radius:var(--rs);border:none;background:var(--text);color:var(--surface);cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;white-space:nowrap;">Aplicar canvis</button>
+          </div>
+          <div class="summary-row" id="optim-summary"></div>
+          <div class="section-header" style="margin-bottom:.75rem"><span class="section-title">Selecciona una persona</span></div>
+          <div id="optim-person-sel" style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;"></div>
+          <div id="optim-content"></div>
+          <div class="section-header" style="margin-bottom:.75rem;margin-top:1rem"><span class="section-title">Càrrega resultant</span></div>
+          <div class="dash-grid" id="optim-carga"></div>
+        </div>
       </div>
 
       <!-- Equip -->
@@ -729,7 +749,231 @@ function renderDashCarga(){
   }).join('');
 }
 
-function renderCarga(){renderEquipo();renderProyectosC();renderDashCarga();}
+function renderCarga(){renderEquipo();renderProyectosC();renderDashCarga();renderEph();}
+
+/* ── RENDIMENT PER HORA (foto actual) ── */
+function renderEph(){
+  const el=document.getElementById('dash-c-eph');
+  if(!el||!C)return;
+  const nonP=C.people.filter(p=>p.type!=='partner');
+  el.innerHTML=nonP.map(pe=>{
+    const myP=C.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
+    if(!myP.length)return'';
+    const totH=myP.reduce((s,p)=>s+(+p.assignations[pe.id].horas||0),0);
+    const cph=pe.coste/(pe.hours*4);
+    const sorted=[...myP].map(proj=>{
+      const hores=+proj.assignations[pe.id].horas||0;
+      const totalHProj=Object.values(proj.assignations).filter(a=>a.active).reduce((s,a)=>s+(+a.horas||0),0);
+      const ingProp=totalHProj>0?proj.ingresos*(hores/totalHProj):0;
+      const eph=hores>0?Math.round(ingProp/(hores*4)):0;
+      return{...proj,hores,ingProp,eph};
+    }).sort((a,b)=>b.eph-a.eph);
+    const maxEph=sorted[0]?.eph||1;
+    const rb=pe.type==='intern'?'b-intern':'b-senior';
+    const rows=sorted.map((p,i)=>{
+      const pct=Math.round((p.eph/maxEph)*100);
+      const color=p.eph>150?'#1D9E75':p.eph>80?'#BA7517':'#A32D2D';
+      const tag=i===0?'<span style="font-size:9px;padding:1px 6px;border-radius:99px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);margin-left:4px;">Millor ROI</span>':
+                i===sorted.length-1&&sorted.length>1?'<span style="font-size:9px;padding:1px 6px;border-radius:99px;background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd);margin-left:4px;">Menor ROI</span>':'';
+      return`<div style="display:flex;align-items:center;gap:10px;padding:.5rem 0;border-bottom:1px solid var(--border);">
+        <span style="font-size:13px;font-weight:500;color:var(--text3);width:18px;">${i+1}</span>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:500;color:var(--text);">${esc(p.name)}${tag}</div>
+          <div style="font-size:11px;color:var(--text3);">${p.hores}h/sem · ${fmt(Math.round(p.ingProp))} € proporcional/mes</div>
+        </div>
+        <div style="width:100px;">
+          <div style="height:5px;border-radius:99px;background:var(--surface2);overflow:hidden;">
+            <div style="width:${pct}%;height:100%;background:${color};border-radius:99px;"></div>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:500;font-family:'DM Mono',monospace;color:${color};width:60px;text-align:right;">${p.eph} €/h</div>
+      </div>`;
+    }).join('');
+    // insight
+    let insight='';
+    if(sorted.length>=2){
+      const best=sorted[0],worst=sorted[sorted.length-1],diff=best.eph-worst.eph;
+      if(diff>30)insight=`<div style="margin-top:.5rem;font-size:12px;color:var(--text2);padding:.5rem .75rem;background:var(--green-bg);border-radius:var(--rs);">
+        Moure 2h/sem de <strong>${esc(worst.name)}</strong> a <strong>${esc(best.name)}</strong> generaria aprox. <strong style="color:var(--green);">+${fmt(Math.round(diff*2*4))} €/mes</strong> en valor proporcional.
+      </div>`;
+    }
+    return`<div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;margin-bottom:.75rem;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem;">
+        <span style="font-size:14px;font-weight:500;color:var(--text);">${esc(pe.name)}</span>
+        <span class="badge ${rb}">${pe.type==='intern'?'Becari':'Empleat'}</span>
+        <span style="font-size:12px;color:var(--text3);margin-left:auto;font-family:'DM Mono',monospace;">cost ${fmt(Math.round(cph))} €/h</span>
+      </div>
+      ${rows}
+      ${insight}
+    </div>`;
+  }).join('');
+}
+
+/* ── OPTIMITZACIÓ ── */
+let optim=null;
+let optimSel=0;
+
+function initOptim(){
+  optim=JSON.parse(JSON.stringify(C));
+  optimSel=optim.people.filter(p=>p.type!=='partner')[0]?.id||0;
+  renderOptim();
+}
+
+function horasTotPerOptim(peId){
+  return optim.projects.reduce((s,p)=>{const a=p.assignations[peId];return s+(a&&a.active?+a.horas||0:0);},0);
+}
+
+function renderOptim(){
+  if(!optim)return;
+  const nonP=optim.people.filter(p=>p.type!=='partner');
+  // person selector
+  document.getElementById('optim-person-sel').innerHTML=nonP.map(pe=>
+    `<button onclick="selectOptimPerson(${pe.id})" style="font-size:13px;padding:6px 14px;border:0.5px solid ${pe.id===optimSel?'var(--text)':'var(--border2)'};border-radius:var(--rs);background:${pe.id===optimSel?'var(--text)':'transparent'};color:${pe.id===optimSel?'var(--surface)':'var(--text2)'};cursor:pointer;font-family:'DM Sans',sans-serif;">${esc(pe.name)}</button>`
+  ).join('');
+
+  // summary
+  let cF=0,cO=0,cW=0,cOv=0;
+  nonP.forEach(pe=>{
+    const tot=horasTotPerOptim(pe.id),pct=pe.hours>0?(tot/pe.hours)*100:0;
+    if(pct<=70)cF++;else if(pct<=90)cO++;else if(pct<=105)cW++;else cOv++;
+  });
+  document.getElementById('optim-summary').innerHTML=`
+    <div class="metric"><div class="mval cg">${cO}</div><div class="mlbl">Càrrega sana</div></div>
+    <div class="metric"><div class="mval ca">${cW}</div><div class="mlbl">Al límit</div></div>
+    <div class="metric"><div class="mval cr">${cOv}</div><div class="mlbl">Saturats</div></div>
+    <div class="metric"><div class="mval cb">${cF}</div><div class="mlbl">Amb marge</div></div>`;
+
+  // persona seleccionada
+  const pe=optim.people.find(p=>p.id===optimSel);
+  if(!pe){document.getElementById('optim-content').innerHTML='';renderOptimCarga();return;}
+  const myP=optim.projects.filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
+  const totH=horasTotPerOptim(pe.id),cap=pe.hours;
+  const pct=Math.round((totH/cap)*100);
+  const barColor=pct>105?'#E24B4A':pct>90?'#EF9F27':'#1D9E75';
+
+  const sorted=[...myP].map(proj=>{
+    const hores=+proj.assignations[pe.id].horas||0;
+    const totalHProj=Object.values(proj.assignations).filter(a=>a.active).reduce((s,a)=>s+(+a.horas||0),0);
+    const ingProp=totalHProj>0?proj.ingresos*(hores/totalHProj):0;
+    const eph=hores>0?Math.round(ingProp/(hores*4)):0;
+    return{...proj,hores,ingProp,eph};
+  }).sort((a,b)=>b.eph-a.eph);
+  const maxEph=sorted[0]?.eph||1;
+
+  const rows=sorted.map((p,i)=>{
+    const ephColor=p.eph>150?'#1D9E75':p.eph>80?'#BA7517':'#A32D2D';
+    const tag=i===0?'<span style="font-size:9px;padding:1px 6px;border-radius:99px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);margin-left:4px;">Millor ROI</span>':
+              i===sorted.length-1&&sorted.length>1?'<span style="font-size:9px;padding:1px 6px;border-radius:99px;background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd);margin-left:4px;">Menor ROI</span>':'';
+    return`<div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--rs);padding:.75rem;margin-bottom:.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;">
+        <div>
+          <span style="font-size:13px;font-weight:500;">${esc(p.name)}</span>${tag}
+          <div style="font-size:11px;color:var(--text3);">${fmt(p.ingresos)} €/mes · ${fmt(Math.round(p.ingProp))} € proporcional</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:18px;font-weight:500;font-family:'DM Mono',monospace;color:${ephColor};">${p.eph} €/h</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:11px;color:var(--text3);width:60px;">Hores/sem</span>
+        <input type="range" min="0" max="${cap}" step="0.5" value="${p.hores}"
+          oninput="updateOptimHoras(${pe.id},${p.id},+this.value,this)"
+          style="flex:1;">
+        <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text);width:35px;text-align:right;" id="ov-${pe.id}-${p.id}">${p.hores}h</span>
+        <div style="width:60px;height:5px;border-radius:99px;background:var(--surface2);overflow:hidden;">
+          <div style="width:${Math.min(100,Math.round((p.eph/maxEph)*100))}%;height:100%;background:${ephColor};border-radius:99px;"></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // insight
+  let insight='';
+  if(sorted.length>=2){
+    const best=sorted[0],worst=sorted[sorted.length-1],diff=best.eph-worst.eph;
+    if(diff>30)insight=`<div style="margin-top:.75rem;font-size:12px;color:var(--amber);padding:.625rem .75rem;background:var(--amber-bg);border-radius:var(--rs);border:1px solid var(--amber-bd);">
+      Suggeriment: mou hores de <strong>${esc(worst.name)}</strong> (${worst.eph} €/h) a <strong>${esc(best.name)}</strong> (${best.eph} €/h) per millorar el rendiment.
+    </div>`;
+  }
+
+  document.getElementById('optim-content').innerHTML=`
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem;">
+        <span style="font-size:14px;font-weight:500;">${esc(pe.name)}</span>
+        <span style="font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;">${totH.toFixed(1)}h / ${cap}h · ${pct}%</span>
+        ${pct>105?'<span class="badge b-over">Saturat</span>':pct>90?'<span class="badge b-warn">Al límit</span>':pct<=70?'<span class="badge b-free">Amb marge</span>':'<span class="badge b-ok">Càrrega sana</span>'}
+      </div>
+      <div style="height:6px;border-radius:99px;background:var(--surface2);overflow:hidden;margin-bottom:1rem;">
+        <div style="width:${Math.min(pct,100)}%;height:100%;background:${barColor};border-radius:99px;"></div>
+      </div>
+      ${rows}
+      ${insight}
+    </div>`;
+
+  renderOptimCarga();
+}
+
+function renderOptimCarga(){
+  const nonP=optim?optim.people.filter(p=>p.type!=='partner'):[];
+  document.getElementById('optim-carga').innerHTML=nonP.map(pe=>{
+    const myP=(optim.projects||[]).filter(p=>{const a=p.assignations[pe.id];return a&&a.active;});
+    const tot=horasTotPerOptim(pe.id),cap=pe.hours||1,pct=(tot/cap)*100,pr=Math.round(pct),free=Math.max(0,cap-tot);
+    let cls,lbl,color;
+    if(pct<=70){cls='b-free';lbl='Amb marge';color='#378ADD';}
+    else if(pct<=90){cls='b-ok';lbl='Càrrega sana';color='#1D9E75';}
+    else if(pct<=105){cls='b-warn';lbl='Al límit';color='#EF9F27';}
+    else{cls='b-over';lbl='Saturat';color='#E24B4A';}
+    const rb=pe.type==='intern'?'b-intern':'b-senior';
+    const projRows=myP.map(p=>{const a=p.assignations[pe.id];return`<div class="dp-proj-row"><span>${esc(p.name)}</span><span>${(+a.horas||0).toFixed(1)}h</span></div>`;}).join('');
+    return`<div class="dash-person">
+      <div class="dp-header">
+        <div><div class="dp-name">${esc(pe.name)}<span class="badge ${rb}">${pe.type==='intern'?'Becari':'Empleat'}</span></div>
+        <div class="dp-meta">${tot.toFixed(1)}h / ${cap}h · ${myP.length} projecte${myP.length!==1?'s':''}</div></div>
+        <div><div class="dp-pct" style="color:${color}">${pr}%</div>
+        <div style="text-align:right;margin-top:4px;"><span class="badge ${cls}">${lbl}</span></div></div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pr,100)}%;background:${color};"></div></div>
+      <div class="bar-leg"><span>0h</span><span>${tot.toFixed(1)} / ${cap}h</span></div>
+      <div class="dp-projs">${projRows||'<div style="font-size:11px;color:var(--text3);">Sense projectes assignats</div>'}</div>
+      <div class="free-tag ${free>5?'ok':'warn'}">${free.toFixed(1)}h lliures</div>
+    </div>`;
+  }).join('');
+}
+
+window.showDashTab=function(tab){
+  document.getElementById('dash-tab-foto').style.display=tab==='foto'?'':'none';
+  document.getElementById('dash-tab-optim').style.display=tab==='optim'?'':'none';
+  document.getElementById('tab-foto-btn').style.borderBottomColor=tab==='foto'?'var(--text)':'transparent';
+  document.getElementById('tab-foto-btn').style.color=tab==='foto'?'var(--text)':'var(--text2)';
+  document.getElementById('tab-foto-btn').style.fontWeight=tab==='foto'?'500':'400';
+  document.getElementById('tab-optim-btn').style.borderBottomColor=tab==='optim'?'var(--text)':'transparent';
+  document.getElementById('tab-optim-btn').style.color=tab==='optim'?'var(--text)':'var(--text2)';
+  document.getElementById('tab-optim-btn').style.fontWeight=tab==='optim'?'500':'400';
+  if(tab==='optim'){if(!optim)initOptim();else renderOptim();}
+};
+
+window.selectOptimPerson=function(id){optimSel=id;renderOptim();};
+
+window.updateOptimHoras=function(peId,projId,val,sliderEl){
+  const p=optim.projects.find(p=>p.id===projId);
+  if(!p||!p.assignations[peId])return;
+  p.assignations[peId].horas=val;
+  const sv=document.getElementById(`ov-${peId}-${projId}`);
+  if(sv)sv.textContent=val+'h';
+  renderOptim();
+};
+
+window.applyOptim=function(){
+  if(!isAdmin){toast('Només l'administrador pot aplicar canvis.');return;}
+  if(!confirm('Aplicar els canvis d'optimització a les dades reals?'))return;
+  C=JSON.parse(JSON.stringify(optim));
+  saveC();
+  optim=null;
+  renderDashCarga();
+  renderEph();
+  showDashTab('foto');
+  toast('Canvis aplicats correctament.');
+};
 
 /* ════════════════════════════════════
    FINANCES
