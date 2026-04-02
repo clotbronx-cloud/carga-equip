@@ -331,6 +331,8 @@ onAuthStateChanged(auth,user=>{
   }
 });
 
+let isSavingGastos=false;
+
 function initData(){
   onValue(dataRef,snap=>{
     const data=snap.val();
@@ -342,7 +344,15 @@ function initData(){
       if(!data){S=JSON.parse(JSON.stringify(DEFAULT));if(isAdmin)save();}
       else{S=data;fixState();}
       renderAll();
-    } else if(data){S=data;fixState();sync('on');renderAll();}
+    } else if(data){
+      S=data;fixState();sync('on');
+      // si estamos editando gastos no rerenderizamos la tabla para no cerrar desplegables
+      if(isSavingGastos){
+        renderPrevision();renderFees();renderProyectos();renderResumen();
+      } else {
+        renderAll();
+      }
+    }
   });
 }
 
@@ -705,12 +715,22 @@ function renderResumen(){
 }
 
 /* ── ACCIONES GASTOS ── */
+function saveGastos(){
+  if(!isAdmin)return;
+  isSavingGastos=true;
+  sync('saving');clearTimeout(saveTO);
+  saveTO=setTimeout(()=>{
+    set(dataRef,S).then(()=>{
+      sync('on');
+      setTimeout(()=>{isSavingGastos=false;},2000);
+    }).catch(()=>toast('Error al guardar'));
+  },700);
+}
 function updateTotalConcepto(key){
   const g=S.gastos[key];
   const total=g.rec?(+g.recVal||0)*12:MESES.reduce((s,m)=>s+(+g.meses[m]||0),0);
   const el=document.getElementById('total-'+key);
   if(el)el.textContent=fmt(total)+' €';
-  // actualizar total general
   const totalGeneral=ALL_KEYS.reduce((s,k)=>{
     const gg=S.gastos[k];
     return s+(gg.rec?((+gg.recVal||0)*12):MESES.reduce((ss,m)=>ss+(+gg.meses[m]||0),0));
@@ -721,19 +741,19 @@ function updateTotalConcepto(key){
 window.toggleRec=function(key,val){
   if(!isAdmin)return;
   S.gastos[key].rec=val;
-  save();renderGastos();renderPrevision();renderResumen();
+  saveGastos();renderGastos();renderPrevision();renderResumen();
 };
 window.updateRecVal=function(key,val){
   if(!isAdmin)return;
   S.gastos[key].recVal=+val;
   updateTotalConcepto(key);
-  save();renderPrevision();renderResumen();
+  saveGastos();renderPrevision();renderResumen();
 };
 window.updateMesVal=function(key,m,val){
   if(!isAdmin)return;
   S.gastos[key].meses[m]=+val;
   updateTotalConcepto(key);
-  save();renderPrevision();renderResumen();
+  saveGastos();renderPrevision();renderResumen();
 };
 
 /* ── ACCIONES FEES ── */
