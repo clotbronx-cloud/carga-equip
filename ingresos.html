@@ -95,28 +95,32 @@ input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--te
 .add-hito-btn:hover{background:var(--surface2);color:var(--text);}
 
 /* GASTOS TABLE */
-.gastos-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow-x:auto;}
-.gastos-table{border-collapse:collapse;font-size:12px;width:max-content;min-width:100%;}
-.gastos-table th{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:7px 10px;border-bottom:1px solid var(--border);text-align:right;white-space:nowrap;}
-.gastos-table th.left{text-align:left;}
-.gastos-table th.sticky{position:sticky;left:0;background:var(--surface);z-index:2;}
-.gastos-table td{padding:5px 8px;border-bottom:1px solid var(--border);text-align:right;vertical-align:middle;white-space:nowrap;}
-.gastos-table td.left{text-align:left;position:sticky;left:0;background:var(--surface);z-index:1;min-width:170px;max-width:170px;}
-.gastos-table td.center{text-align:center;}
+.gastos-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);}
+.gastos-table{border-collapse:collapse;font-size:13px;width:100%;}
+.gastos-table th{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);padding:8px 12px;border-bottom:1px solid var(--border);text-align:right;}
+.gastos-table th:first-child{text-align:left;}
+.gastos-table td{padding:7px 12px;border-bottom:1px solid var(--border);text-align:right;vertical-align:middle;}
+.gastos-table td:first-child{text-align:left;}
 .gastos-table tr:last-child td{border-bottom:none;}
-.gastos-table tr.cat-row td{background:var(--bg);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);padding:5px 8px;border-bottom:none;}
-.gastos-table tr.cat-row td.left{background:var(--bg);}
+.gastos-table tr.cat-row td{background:var(--bg);font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);padding:5px 12px;border-bottom:none;}
 .gastos-table tr.total-row td{background:var(--surface2);font-weight:500;font-family:'DM Mono',monospace;border-top:2px solid var(--border2);}
-.gastos-table tr.total-row td.left{background:var(--surface2);font-size:12px;}
-.gastos-table tr:not(.cat-row):not(.total-row):hover td{background:var(--bg);}
-.gastos-table tr:not(.cat-row):not(.total-row):hover td.left{background:var(--bg);}
-.g-input{width:80px;font-size:12px;padding:3px 5px;text-align:right;border:1px solid var(--border2);border-radius:3px;background:var(--surface);font-family:'DM Mono',monospace;}
+.gastos-table tr.item-row{cursor:pointer;}
+.gastos-table tr.item-row:hover td{background:var(--bg);}
+.gastos-table tr.expand-row td{padding:0;border-bottom:1px solid var(--border);}
+.expand-inner{padding:.75rem 1rem;background:var(--bg);}
+.meses-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+.mes-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:5px 8px;}
+.mes-item-label{font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;}
+.mes-item-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--green);}
+.g-input{width:100%;font-size:12px;padding:3px 6px;text-align:right;border:1px solid var(--border2);border-radius:3px;background:var(--surface);font-family:'DM Mono',monospace;box-sizing:border-box;}
 .g-input:focus{border-color:var(--text);outline:none;}
 .g-input:disabled{background:var(--surface2);color:var(--text3);border-color:transparent;}
-.rec-input{width:92px;font-size:12px;padding:3px 5px;border:1px solid var(--green-bd);border-radius:3px;background:var(--green-bg);color:var(--green);font-family:'DM Mono',monospace;text-align:right;}
+.rec-input{width:110px;font-size:13px;padding:4px 8px;border:1px solid var(--green-bd);border-radius:var(--rs);background:var(--green-bg);color:var(--green);font-family:'DM Mono',monospace;text-align:right;}
 .rec-input:focus{outline:none;border-color:var(--green);}
 .rec-badge{font-size:9px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd);padding:1px 5px;border-radius:99px;white-space:nowrap;}
 .th-total{background:var(--surface2) !important;color:var(--text2) !important;}
+.expand-arrow{font-size:10px;color:var(--text3);margin-left:6px;transition:transform .2s;}
+.expand-arrow.open{transform:rotate(90deg);}
 
 /* PREVISIÓN */
 .prev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.625rem;margin-bottom:1.5rem;}
@@ -472,66 +476,87 @@ function renderPrevision(){
 /* ── RENDER GASTOS ── */
 function renderGastos(){
   const ro=isAdmin?'':'disabled';
-  // cabecera
   let html=`<div class="gastos-wrap"><table class="gastos-table">
     <thead><tr>
-      <th class="left sticky">Concepto</th>
-      <th style="text-align:center;min-width:50px;">Rec.</th>
-      <th style="min-width:100px;">€/mes fijo</th>`;
-  MESES_LABEL.forEach(ml=>html+=`<th>${ml}</th>`);
-  html+=`<th class="th-total">Total año</th></tr></thead><tbody>`;
+      <th>Concepto</th>
+      <th style="text-align:center;width:60px;">Rec.</th>
+      <th style="width:140px;">€/mes fijo</th>
+      <th class="th-total" style="width:120px;">Total año</th>
+    </tr></thead><tbody>`;
 
   CATEGORIAS.forEach(cat=>{
-    html+=`<tr class="cat-row"><td class="left" colspan="16">${cat.cat}</td></tr>`;
+    html+=`<tr class="cat-row"><td colspan="4">${cat.cat}</td></tr>`;
     cat.items.forEach(item=>{
       const key=item.key;
       const g=S.gastos[key];
       const isRec=!!g.rec;
       const recVal=+g.recVal||0;
-      let totalAño=0;
+      const totalAño=isRec?recVal*12:MESES.reduce((s,m)=>s+(+g.meses[m]||0),0);
 
-      html+=`<tr>
-        <td class="left">${item.label}</td>
-        <td class="center">
-          <input type="checkbox" ${isRec?'checked':''} ${ro}
-            onchange="toggleRec('${key}',this.checked)">
+      // fila principal
+      html+=`<tr class="item-row" onclick="toggleExpand('${key}')">
+        <td><span>${item.label}</span><span class="expand-arrow" id="arrow-${key}">▶</span></td>
+        <td style="text-align:center;" onclick="event.stopPropagation()">
+          <input type="checkbox" ${isRec?'checked':''} ${ro} onchange="toggleRec('${key}',this.checked)">
         </td>
-        <td>
-          <input type="number" class="${isRec?'rec-input':'g-input'}" value="${isRec?recVal:''}"
-            placeholder="${isRec?'':'—'}" min="0" step="10"
-            ${!isRec||!isAdmin?'disabled':ro}
+        <td onclick="event.stopPropagation()">
+          <input type="number" class="${isRec?'rec-input':'g-input'}"
+            value="${isRec?recVal:''}" placeholder="${isRec?'0':'—'}"
+            min="0" step="10"
+            ${!isRec||!isAdmin?'disabled':''}
             onchange="updateRecVal('${key}',this.value)">
-        </td>`;
+        </td>
+        <td style="font-family:'DM Mono',monospace;background:var(--surface2);" id="total-${key}">${fmt(totalAño)} €</td>
+      </tr>`;
 
-      MESES.forEach((m,i)=>{
+      // fila expandible con los 12 meses en grid
+      const mesItems=MESES.map((m,i)=>{
         const val=isRec?recVal:(+g.meses[m]||0);
-        totalAño+=val;
         if(isRec){
-          html+=`<td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--green);">${val>0?fmt(val):'—'}</td>`;
+          return `<div class="mes-item">
+            <div class="mes-item-label">${MESES_LABEL[i]}</div>
+            <div class="mes-item-val">${val>0?fmt(val)+' €':'—'}</div>
+          </div>`;
         } else {
-          html+=`<td><input type="number" class="g-input" value="${val||''}" placeholder="0" min="0" step="10"
-            ${ro} onchange="updateMesVal('${key}','${m}',this.value)"></td>`;
+          return `<div class="mes-item">
+            <div class="mes-item-label">${MESES_LABEL[i]}</div>
+            <input type="number" class="g-input" value="${val||''}" placeholder="0" min="0" step="10"
+              ${ro} onchange="updateMesVal('${key}','${m}',this.value)">
+          </div>`;
         }
-      });
+      }).join('');
 
-      if(isRec)totalAño=recVal*12;
-      html+=`<td style="font-family:'DM Mono',monospace;background:var(--surface2);font-size:12px;">${fmt(totalAño)} €</td></tr>`;
+      html+=`<tr class="expand-row" id="expand-${key}" style="display:none;">
+        <td colspan="4">
+          <div class="expand-inner">
+            <div class="meses-grid">${mesItems}</div>
+          </div>
+        </td>
+      </tr>`;
     });
   });
 
-  // fila total
-  html+=`<tr class="total-row"><td class="left">TOTAL GASTOS</td><td></td><td></td>`;
-  let totalGeneral=0;
-  MESES.forEach(m=>{
-    const mesTotal=ALL_KEYS.reduce((s,k)=>s+gastoValMes(k,m),0);
-    totalGeneral+=mesTotal;
-    html+=`<td>${fmt(mesTotal)} €</td>`;
-  });
-  html+=`<td>${fmt(totalGeneral)} €</td></tr>`;
-  html+=`</tbody></table></div>`;
+  // total general
+  const totalGeneral=ALL_KEYS.reduce((s,k)=>{
+    const g=S.gastos[k];
+    return s+(g.rec?((+g.recVal||0)*12):MESES.reduce((ss,m)=>ss+(+g.meses[m]||0),0));
+  },0);
+  html+=`<tr class="total-row">
+    <td colspan="3">Total gastos 2026</td>
+    <td>${fmt(totalGeneral)} €</td>
+  </tr></tbody></table></div>`;
 
   document.getElementById('gastos-container').innerHTML=html;
 }
+
+window.toggleExpand=function(key){
+  const row=document.getElementById('expand-'+key);
+  const arrow=document.getElementById('arrow-'+key);
+  if(!row)return;
+  const open=row.style.display==='none';
+  row.style.display=open?'':'none';
+  if(arrow)arrow.classList.toggle('open',open);
+};
 
 /* ── RENDER FEES ── */
 function renderFees(){
